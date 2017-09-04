@@ -1,0 +1,5 @@
+".\Objects\STARTUP.obj",
+".\Objects\main.obj",
+".\Objects\HD7279.obj" 
+TO ".\Objects\key&LED" 
+PRINT(".\Listings\key&LED.m51") RAMSIZE(256) 

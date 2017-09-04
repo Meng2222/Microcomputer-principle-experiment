@@ -1,0 +1,55 @@
+C51 COMPILER V9.56.0.0   DELAY                                                             09/04/2017 20:13:21 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE DELAY
+OBJECT MODULE PLACED IN .\Objects\delay.obj
+COMPILER INVOKED BY: D:\Program Files (x86)\Keil\C51\BIN\C51.EXE delay.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRI
+                    -NT(.\Listings\delay.lst) OBJECT(.\Objects\delay.obj)
+
+line level    source
+
+   1          #include "delay.h"
+   2          
+   3          void DelayMs(unsigned int timeMs)
+   4          {
+   5   1      #define TIME_1_MS (355)
+   6   1              unsigned int nMsCounter = 0;
+   7   1              unsigned short msCounter = 0;
+   8   1              unsigned char  i = 0;
+   9   1              for(nMsCounter = 0 ; nMsCounter < timeMs ; nMsCounter++)
+  10   1              {
+  11   2                      for(msCounter = 0 ; msCounter < TIME_1_MS ; msCounter++)
+  12   2                      {
+  13   3                              i = 1;
+  14   3                      }
+  15   2              }
+  16   1      }
+  17          
+  18          void Delay10Us(unsigned int timeUs)
+  19          {
+  20   1      #define TIME_10_US (4)
+  21   1              unsigned int nUsCounter = 0;
+  22   1              unsigned char usCounter = 0;
+  23   1              for(nUsCounter = 0 ; nUsCounter < timeUs ; nUsCounter++)
+  24   1              {
+  25   2                      for(usCounter = 0 ; usCounter < TIME_10_US ; usCounter++)
+  26   2                      {
+  27   3                      
+  28   3                      }
+  29   2              }
+  30   1      }
+  31          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     58    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
