@@ -1,4 +1,4 @@
-C51 COMPILER V9.56.0.0   MAIN                                                              09/04/2017 21:22:16 PAGE 1   
+C51 COMPILER V9.56.0.0   MAIN                                                              09/05/2017 23:58:13 PAGE 1   
 
 
 C51 COMPILER V9.56.0.0, COMPILATION OF MODULE MAIN
@@ -27,7 +27,7 @@ line level    source
   17          
   18          void main(void)
   19          {
-  20   1      #define ROLL_PERIOD (25)
+  20   1      #define ROLL_PERIOD (15)
   21   1              ledStatus_t status = rollingLeft;
   22   1              unsigned char i,j = 0;
   23   1              unsigned char keyState = 0;
@@ -46,120 +46,122 @@ line level    source
   36   1      //      }
   37   1              while(1)
   38   1              {
-  39   2                      DelayMs(10);
-  40   2                      keyState = KeyRead();
-  41   2                      switch(status)
-  42   2                      {
-  43   3                              case rollingLeft:
-  44   3                                      if(keyState==0xff)
-  45   3                                      {
-  46   4                                              rollPeriod--;
-  47   4                                              if(rollPeriod == 0)
-  48   4                                              {
-  49   5                                                      rollPeriod = ROLL_PERIOD;
-  50   5                                                      HD7279SendByte(RTL_CYCLE);
-  51   5                                              }
-  52   4                                      }
-  53   3                                      else if(keyState == KEY10)
-  54   3                                      {
-C51 COMPILER V9.56.0.0   MAIN                                                              09/04/2017 21:22:16 PAGE 2   
+  39   2                      DelayMs(20);
+  40   2      
+  41   2                      keyState = KeyRead();
+  42   2      
+  43   2                      switch(status)
+  44   2                      {
+  45   3                              case rollingLeft:
+  46   3                                      if(keyState==0xff)
+  47   3                                      {
+  48   4                                              rollPeriod--;
+  49   4                                              if(rollPeriod == 0)
+  50   4                                              {
+  51   5                                                      rollPeriod = ROLL_PERIOD;
+  52   5                                                      HD7279SendByte(RTL_CYCLE);
+  53   5                                              }
+  54   4                                      }
+C51 COMPILER V9.56.0.0   MAIN                                                              09/05/2017 23:58:13 PAGE 2   
 
-  55   4                                              rollPeriod = ROLL_PERIOD;
-  56   4                                              HD7279SendByte(CMD_RESET);
-  57   4                                              status = showKeyNumTogether;
-  58   4                                      }
-  59   3                              break;
-  60   3                              case rollingRight:
-  61   3                                      if(keyState == 0xff)
-  62   3                                      {
-  63   4                                              rollPeriod--;
-  64   4                                              if(rollPeriod == 0)
-  65   4                                              {
-  66   5                                                      rollPeriod = ROLL_PERIOD;
-  67   5                                                      HD7279SendByte(RTR_CYCLE);
-  68   5                                              }
-  69   4                                      }
-  70   3                                      else if(keyState == KEY10)
-  71   3                                      {
-  72   4                                              rollPeriod = ROLL_PERIOD;
-  73   4                                              HD7279SendByte(CMD_RESET);
-  74   4                                              status = showKeyNumTogether;                            
-  75   4                                      }
-  76   3                              break;
-  77   3                              case showKeyNumTogether:
-  78   3                                      switch(keyState)
-  79   3                                      {
-  80   4                                              case KEY0:
-  81   4                                                      for(i = 0 ; i < 8 ; i++)
-  82   4                                                      {
-  83   5                                                              LedWrite(0x97 - i, realCode[0]);
-  84   5                                                      }
-  85   4                                              break;
-  86   4                                              case KEY1:
-  87   4                                                      for(i = 0 ; i < 8 ; i++)
-  88   4                                                      {
-  89   5                                                              LedWrite(0x97 - i, realCode[1]);
-  90   5                                                      }
-  91   4                                              break;
-  92   4                                              case KEY2:
-  93   4                                                      for(i = 0 ; i < 8 ; i++)
-  94   4                                                      {
-  95   5                                                              LedWrite(0x97 - i, realCode[2]);
-  96   5                                                      }
-  97   4                                              break;
-  98   4                                              case KEY3:
-  99   4                                                      for(i = 0 ; i < 8 ; i++)
- 100   4                                                      {
- 101   5                                                              LedWrite(0x97 - i, realCode[3]);
- 102   5                                                      }
- 103   4                                              break;
- 104   4                                              case KEY4:
- 105   4                                                      for(i = 0 ; i < 8 ; i++)
- 106   4                                                      {
- 107   5                                                              LedWrite(0x97 - i, realCode[4]);
- 108   5                                                      }                                       
- 109   4                                              break;
- 110   4                                              case KEY5:
- 111   4                                                      for(i = 0 ; i < 8 ; i++)
- 112   4                                                      {
- 113   5                                                              LedWrite(0x97 - i, realCode[5]);
- 114   5                                                      }                                       
- 115   4                                              break;
- 116   4                                              case KEY6:
-C51 COMPILER V9.56.0.0   MAIN                                                              09/04/2017 21:22:16 PAGE 3   
+  55   3                                      else if(keyState == KEY10)
+  56   3                                      {
+  57   4                                              rollPeriod = ROLL_PERIOD;
+  58   4                                              HD7279SendByte(CMD_RESET);
+  59   4                                              status = showKeyNumTogether;
+  60   4                                      }
+  61   3                              break;
+  62   3                              case rollingRight:
+  63   3                                      if(keyState == 0xff)
+  64   3                                      {
+  65   4                                              rollPeriod--;
+  66   4                                              if(rollPeriod == 0)
+  67   4                                              {
+  68   5                                                      rollPeriod = ROLL_PERIOD;
+  69   5                                                      HD7279SendByte(RTR_CYCLE);
+  70   5                                              }
+  71   4                                      }
+  72   3                                      else if(keyState == KEY10)
+  73   3                                      {
+  74   4                                              rollPeriod = ROLL_PERIOD;
+  75   4                                              HD7279SendByte(CMD_RESET);
+  76   4                                              status = showKeyNumTogether;                            
+  77   4                                      }
+  78   3                              break;
+  79   3                              case showKeyNumTogether:
+  80   3                                      switch(keyState)
+  81   3                                      {
+  82   4                                              case KEY0:
+  83   4                                                      for(i = 0 ; i < 8 ; i++)
+  84   4                                                      {
+  85   5                                                              LedWrite(0x97 - i, realCode[0]);
+  86   5                                                      }
+  87   4                                              break;
+  88   4                                              case KEY1:
+  89   4                                                      for(i = 0 ; i < 8 ; i++)
+  90   4                                                      {
+  91   5                                                              LedWrite(0x97 - i, realCode[1]);
+  92   5                                                      }
+  93   4                                              break;
+  94   4                                              case KEY2:
+  95   4                                                      for(i = 0 ; i < 8 ; i++)
+  96   4                                                      {
+  97   5                                                              LedWrite(0x97 - i, realCode[2]);
+  98   5                                                      }
+  99   4                                              break;
+ 100   4                                              case KEY3:
+ 101   4                                                      for(i = 0 ; i < 8 ; i++)
+ 102   4                                                      {
+ 103   5                                                              LedWrite(0x97 - i, realCode[3]);
+ 104   5                                                      }
+ 105   4                                              break;
+ 106   4                                              case KEY4:
+ 107   4                                                      for(i = 0 ; i < 8 ; i++)
+ 108   4                                                      {
+ 109   5                                                              LedWrite(0x97 - i, realCode[4]);
+ 110   5                                                      }                                       
+ 111   4                                              break;
+ 112   4                                              case KEY5:
+ 113   4                                                      for(i = 0 ; i < 8 ; i++)
+ 114   4                                                      {
+ 115   5                                                              LedWrite(0x97 - i, realCode[5]);
+ 116   5                                                      }                                       
+C51 COMPILER V9.56.0.0   MAIN                                                              09/05/2017 23:58:13 PAGE 3   
 
- 117   4                                                      for(i = 0 ; i < 8 ; i++)
- 118   4                                                      {
- 119   5                                                              LedWrite(0x97 - i, realCode[6]);
- 120   5                                                      }                                       
- 121   4                                              break;
- 122   4                                              case KEY7:
- 123   4                                                      for(i = 0 ; i < 8 ; i++)
- 124   4                                                      {
- 125   5                                                              LedWrite(0x97 - i, realCode[7]);
- 126   5                                                      }                                       break;
- 127   4                                              case KEY8:
- 128   4                                                      for(i = 0 ; i < 8 ; i++)
- 129   4                                                      {
- 130   5                                                              LedWrite(0x97 - i, realCode[8]);
- 131   5                                                      }                                       
- 132   4                                              break;
- 133   4                                              case KEY9:
- 134   4                                                      for(i = 0 ; i < 8 ; i++)
- 135   4                                                      {
- 136   5                                                              LedWrite(0x97 - i, realCode[9]);
- 137   5                                                      }                                       
- 138   4                                              break;
- 139   4                                              default:
+ 117   4                                              break;
+ 118   4                                              case KEY6:
+ 119   4                                                      for(i = 0 ; i < 8 ; i++)
+ 120   4                                                      {
+ 121   5                                                              LedWrite(0x97 - i, realCode[6]);
+ 122   5                                                      }                                       
+ 123   4                                              break;
+ 124   4                                              case KEY7:
+ 125   4                                                      for(i = 0 ; i < 8 ; i++)
+ 126   4                                                      {
+ 127   5                                                              LedWrite(0x97 - i, realCode[7]);
+ 128   5                                                      }                                       break;
+ 129   4                                              case KEY8:
+ 130   4                                                      for(i = 0 ; i < 8 ; i++)
+ 131   4                                                      {
+ 132   5                                                              LedWrite(0x97 - i, realCode[8]);
+ 133   5                                                      }                                       
+ 134   4                                              break;
+ 135   4                                              case KEY9:
+ 136   4                                                      for(i = 0 ; i < 8 ; i++)
+ 137   4                                                      {
+ 138   5                                                              LedWrite(0x97 - i, realCode[9]);
+ 139   5                                                      }                                       
  140   4                                              break;
- 141   4                                      }       
- 142   3                              break;
- 143   3                              case idle:
+ 141   4                                              default:
+ 142   4                                              break;
+ 143   4                                      }       
  144   3                              break;
- 145   3                      }
- 146   2      
- 147   2              }
- 148   1      }
+ 145   3                              case idle:
+ 146   3                              break;
+ 147   3                      }
+ 148   2      
+ 149   2              }
+ 150   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE

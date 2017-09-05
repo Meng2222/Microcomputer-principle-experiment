@@ -1,4 +1,4 @@
-C51 COMPILER V9.56.0.0   HD7279                                                            09/04/2017 21:21:11 PAGE 1   
+C51 COMPILER V9.56.0.0   HD7279                                                            09/05/2017 23:56:22 PAGE 1   
 
 
 C51 COMPILER V9.56.0.0, COMPILATION OF MODULE HD7279
@@ -47,7 +47,7 @@ line level    source
   37   1              {
   38   2                      clk = 1;
   39   2                      Delay10Us(2);
-  40   2                      receiveData<<=1;
+  40   2                      receiveData*=2;
   41   2                      if(dat)
   42   2                      {
   43   3                              receiveData|=0x01;
@@ -62,7 +62,7 @@ line level    source
   52   1              dat = 0;
   53   1              return receiveData;
   54   1      }
-C51 COMPILER V9.56.0.0   HD7279                                                            09/04/2017 21:21:11 PAGE 2   
+C51 COMPILER V9.56.0.0   HD7279                                                            09/05/2017 23:56:22 PAGE 2   
 
   55          
   56          void LedWrite(unsigned char cmd , unsigned char dataSend)
@@ -76,7 +76,7 @@ line level    source
   64          {
   65   1              HD7279SendByte(CMD_READ);
   66   1              
-  67   1              return HD7279ReceiveByte();
+  67   1              return (HD7279ReceiveByte());
   68   1      }
 
 

@@ -37,7 +37,7 @@ unsigned char HD7279ReceiveByte(void)
 	{
 		clk = 1;
 		Delay10Us(2);
-		receiveData<<=1;
+		receiveData*=2;
 		if(dat)
 		{
 			receiveData|=0x01;
@@ -64,5 +64,5 @@ unsigned char KeyRead(void)
 {
 	HD7279SendByte(CMD_READ);
 	
-	return HD7279ReceiveByte();
+	return (HD7279ReceiveByte());
 }

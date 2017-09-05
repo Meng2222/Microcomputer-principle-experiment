@@ -23,22 +23,22 @@ sbit clk = P1^7;
 #define SEGOFF 0xc0
 #define BLINKCTL 0x88
 
-#define KEY0 (0)
-#define KEY1 (1)
-#define KEY2 (2)
+#define KEY0 (27)
+#define KEY1 (19)
+#define KEY2 (11)
 #define KEY3 (3)
-#define KEY4 (8)
-#define KEY5 (9)
+#define KEY4 (26)
+#define KEY5 (18)
 #define KEY6 (10)
-#define KEY7 (11)
-#define KEY8 (16)
+#define KEY7 (2)
+#define KEY8 (25)
 #define KEY9 (17)
-#define KEY10 (18)
-#define KEY11 (19)
+#define KEY10 (9)
+#define KEY11 (1)
 #define KEY12 (24)
-#define KEY13 (25)
-#define KEY14 (26)
-#define KEY15 (27)
+#define KEY13 (16)
+#define KEY14 (8)
+#define KEY15 (0)
 
 
 void HD7279SendByte(unsigned char sendData);

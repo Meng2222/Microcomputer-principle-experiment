@@ -17,7 +17,7 @@ unsigned char code realCode[] = \
 
 void main(void)
 {
-#define ROLL_PERIOD (25)
+#define ROLL_PERIOD (15)
 	ledStatus_t status = rollingLeft;
 	unsigned char i,j = 0;
 	unsigned char keyState = 0;
@@ -36,8 +36,10 @@ void main(void)
 //	}
 	while(1)
 	{
-		DelayMs(10);
+		DelayMs(20);
+
 		keyState = KeyRead();
+
 		switch(status)
 		{
 			case rollingLeft:
