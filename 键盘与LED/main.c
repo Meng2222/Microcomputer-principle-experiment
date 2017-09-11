@@ -2,6 +2,7 @@
 #include "delay.h"
 #include "main.h"
 #include "basicIO.h"
+#include "decode.h"
 
 typedef enum
 {
@@ -16,6 +17,7 @@ typedef enum
 {
 	keyLed,
 	basicIO,
+	decode,
 	statusIdle
 }status_t;
 
@@ -23,12 +25,14 @@ void main(void)
 {
 #define ROLL_PERIOD (15)
 	ledStatus_t ledStatus = inputRoll2Left;
-	status_t status = basicIO;
+	status_t status = decode;
 	unsigned char i,j = 0;
 	unsigned char keyState = 0;
 	unsigned char rollPeriod = ROLL_PERIOD;
 	unsigned char keyFlag = 0;
 	unsigned char ioInput = 0;
+	unsigned char ioOutput = 0;
+	unsigned short timeCounter = 0;
 	P1 = 0x00;
 	
 	DelayMs(25);
@@ -221,6 +225,19 @@ void main(void)
 					}
 				}
 				
+			break;
+			case decode:
+				timeCounter++;
+				timeCounter%=20;
+				if(timeCounter/10)
+				{
+					decodeAdress1 = ioOutput;
+				}
+				else
+				{
+					decodeAdress2 = ioOutput;
+				}
+			
 			break;
 			case statusIdle:
 			break;
