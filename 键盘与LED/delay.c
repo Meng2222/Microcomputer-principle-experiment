@@ -1,5 +1,6 @@
 #include "delay.h"
 
+//毫秒延时函数
 void DelayMs(unsigned int timeMs)
 {
 #define TIME_1_MS (355)
@@ -15,6 +16,7 @@ void DelayMs(unsigned int timeMs)
 	}
 }
 
+//10微秒延时函数
 void Delay10Us(unsigned int timeUs)
 {
 #define TIME_10_US (4)

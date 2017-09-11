@@ -4,6 +4,7 @@
 #include "basicIO.h"
 #include "decode.h"
 
+//数码管显示状态枚举变量
 typedef enum
 {
 	rollingLeft,
@@ -13,6 +14,7 @@ typedef enum
 	idle
 }ledStatus_t;
 
+//程序运行状态枚举变量
 typedef enum
 {
 	keyLed,
@@ -23,16 +25,24 @@ typedef enum
 
 void main(void)
 {
+//数码管滚动显示的周期
 #define ROLL_PERIOD (15)
 	ledStatus_t ledStatus = inputRoll2Left;
-	status_t status = decode;
+	status_t status = basicIO;
 	unsigned char i,j = 0;
+	//按键状态，没有按下时为0xff，按下时为按下按键的编号
 	unsigned char keyState = 0;
 	unsigned char rollPeriod = ROLL_PERIOD;
+	//按键是否按下标志位
 	unsigned char keyFlag = 0;
+	//简单IO输入值
 	unsigned char ioInput = 0;
+	//译码实验输出用变量
 	unsigned char ioOutput = 0;
+	//译码实验闪烁计时变量
 	unsigned short timeCounter = 0;
+	
+	//将HD7279对应引脚全部拉低
 	P1 = 0x00;
 	
 	DelayMs(25);
@@ -51,12 +61,17 @@ void main(void)
 		
 		switch(status)
 		{
+			//按键和LED
 			case keyLed:
+				
+				//读取按键状态
 				keyState = KeyRead();
 
 				switch(ledStatus)
 				{
+					//向左滚动
 					case rollingLeft:
+						//没有按键按下时循环向左滚动
 						if(keyState==0xff)
 						{
 							rollPeriod--;
@@ -66,6 +81,7 @@ void main(void)
 								HD7279SendByte(RTL_CYCLE);
 							}
 						}
+						//按下KEY10后进入一同显示数字状态
 						else if(keyState == KEY10)
 						{
 							rollPeriod = ROLL_PERIOD;
@@ -73,7 +89,9 @@ void main(void)
 							ledStatus = showKeyNumTogether;
 						}
 					break;
+					//循环向右滚动
 					case rollingRight:
+						//没有按键按下时循环向右滚动
 						if(keyState == 0xff)
 						{
 							rollPeriod--;
@@ -83,6 +101,7 @@ void main(void)
 								HD7279SendByte(RTR_CYCLE);
 							}
 						}
+						//按下KEY10时进入一同显示按下数字状态
 						else if(keyState == KEY10)
 						{
 							rollPeriod = ROLL_PERIOD;
@@ -90,6 +109,7 @@ void main(void)
 							ledStatus = showKeyNumTogether;				
 						}
 					break;
+					//所有数码管一同显示按下按键对应数字
 					case showKeyNumTogether:
 						switch(keyState)
 						{
@@ -157,6 +177,7 @@ void main(void)
 							break;
 						}	
 					break;
+						//每次按键时不循环左移并显示按键对应的数字
 					case inputRoll2Left:
 						if(keyState!=0xff&&keyFlag==0)
 						{
@@ -204,15 +225,23 @@ void main(void)
 						}
 							
 					break;
+					//空闲状态
 					case idle:
 					break;
 					default:
 					break;
 				}
 			break;
+			//简单IO实验
 			case basicIO:
+				
+				//从74LS245地址读取简单IO输入
 				ioInput = chip245Adress;
+			
+				//将简单IO输入输出到74LS374
 				chip374Adress = ~ioInput;
+			
+				//在数码管上显示简单IO输入状态
 				for(i = 0 ; i < 8 ; i++)
 				{
 					if((ioInput>>i)&0x01)
@@ -221,11 +250,12 @@ void main(void)
 					}
 					else
 					{
-						LedWrite(0x97 - 7 + i, realCode[0]);					
+						LedWrite(0x97 - 7 + i, realCode[0]);
 					}
 				}
 				
 			break;
+			//译码器实验
 			case decode:
 				timeCounter++;
 				timeCounter%=20;

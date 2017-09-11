@@ -1,4 +1,4 @@
-C51 COMPILER V9.56.0.0   MAIN                                                              09/11/2017 20:09:08 PAGE 1   
+C51 COMPILER V9.56.0.0   MAIN                                                              09/11/2017 20:55:47 PAGE 1   
 
 
 C51 COMPILER V9.56.0.0, COMPILATION OF MODULE MAIN
@@ -14,258 +14,288 @@ line level    source
    4          #include "basicIO.h"
    5          #include "decode.h"
    6          
-   7          typedef enum
-   8          {
-   9                  rollingLeft,
-  10                  rollingRight,
-  11                  showKeyNumTogether,
-  12                  inputRoll2Left,
-  13                  idle
-  14          }ledStatus_t;
-  15          
-  16          typedef enum
-  17          {
-  18                  keyLed,
-  19                  basicIO,
-  20                  decode,
-  21                  statusIdle
-  22          }status_t;
-  23          
-  24          void main(void)
-  25          {
-  26   1      #define ROLL_PERIOD (15)
-  27   1              ledStatus_t ledStatus = inputRoll2Left;
-  28   1              status_t status = decode;
-  29   1              unsigned char i,j = 0;
-  30   1              unsigned char keyState = 0;
-  31   1              unsigned char rollPeriod = ROLL_PERIOD;
-  32   1              unsigned char keyFlag = 0;
-  33   1              unsigned char ioInput = 0;
-  34   1              unsigned char ioOutput = 0;
-  35   1              unsigned short timeCounter = 0;
-  36   1              P1 = 0x00;
-  37   1              
-  38   1              DelayMs(25);
-  39   1              
-  40   1      //      for(j = 0 ; j < 10 ; j++)
-  41   1      //      {
-  42   1      //      for(i = 0 ; i < 8 ; i++)
-  43   1      //      {
-  44   1      //              LedWrite(0x97 - i, realCode[8 - i]);
-  45   1      //      }
-  46   1      //      DelayMs(250);
-  47   1      //      }
-  48   1              while(1)
-  49   1              {
-  50   2                      DelayMs(20);
-  51   2                      
-  52   2                      switch(status)
-  53   2                      {
-  54   3                              case keyLed:
-C51 COMPILER V9.56.0.0   MAIN                                                              09/11/2017 20:09:08 PAGE 2   
+   7          //数码管显示状态枚举变量
+   8          typedef enum
+   9          {
+  10                  rollingLeft,
+  11                  rollingRight,
+  12                  showKeyNumTogether,
+  13                  inputRoll2Left,
+  14                  idle
+  15          }ledStatus_t;
+  16          
+  17          //程序运行状态枚举变量
+  18          typedef enum
+  19          {
+  20                  keyLed,
+  21                  basicIO,
+  22                  decode,
+  23                  statusIdle
+  24          }status_t;
+  25          
+  26          void main(void)
+  27          {
+  28   1      //数码管滚动显示的周期
+  29   1      #define ROLL_PERIOD (15)
+  30   1              ledStatus_t ledStatus = inputRoll2Left;
+  31   1              status_t status = basicIO;
+  32   1              unsigned char i,j = 0;
+  33   1              //按键状态，没有按下时为0xff，按下时为按下按键的编号
+  34   1              unsigned char keyState = 0;
+  35   1              unsigned char rollPeriod = ROLL_PERIOD;
+  36   1              //按键是否按下标志位
+  37   1              unsigned char keyFlag = 0;
+  38   1              //简单IO输入值
+  39   1              unsigned char ioInput = 0;
+  40   1              //译码实验输出用变量
+  41   1              unsigned char ioOutput = 0;
+  42   1              //译码实验闪烁计时变量
+  43   1              unsigned short timeCounter = 0;
+  44   1              
+  45   1              //将HD7279对应引脚全部拉低
+  46   1              P1 = 0x00;
+  47   1              
+  48   1              DelayMs(25);
+  49   1              
+  50   1      //      for(j = 0 ; j < 10 ; j++)
+  51   1      //      {
+  52   1      //      for(i = 0 ; i < 8 ; i++)
+  53   1      //      {
+  54   1      //              LedWrite(0x97 - i, realCode[8 - i]);
+C51 COMPILER V9.56.0.0   MAIN                                                              09/11/2017 20:55:47 PAGE 2   
 
-  55   3                                      keyState = KeyRead();
-  56   3      
-  57   3                                      switch(ledStatus)
-  58   3                                      {
-  59   4                                              case rollingLeft:
-  60   4                                                      if(keyState==0xff)
-  61   4                                                      {
-  62   5                                                              rollPeriod--;
-  63   5                                                              if(rollPeriod == 0)
-  64   5                                                              {
-  65   6                                                                      rollPeriod = ROLL_PERIOD;
-  66   6                                                                      HD7279SendByte(RTL_CYCLE);
-  67   6                                                              }
-  68   5                                                      }
-  69   4                                                      else if(keyState == KEY10)
-  70   4                                                      {
-  71   5                                                              rollPeriod = ROLL_PERIOD;
-  72   5                                                              HD7279SendByte(CMD_RESET);
-  73   5                                                              ledStatus = showKeyNumTogether;
-  74   5                                                      }
-  75   4                                              break;
-  76   4                                              case rollingRight:
-  77   4                                                      if(keyState == 0xff)
-  78   4                                                      {
-  79   5                                                              rollPeriod--;
-  80   5                                                              if(rollPeriod == 0)
-  81   5                                                              {
-  82   6                                                                      rollPeriod = ROLL_PERIOD;
-  83   6                                                                      HD7279SendByte(RTR_CYCLE);
-  84   6                                                              }
-  85   5                                                      }
-  86   4                                                      else if(keyState == KEY10)
-  87   4                                                      {
-  88   5                                                              rollPeriod = ROLL_PERIOD;
-  89   5                                                              HD7279SendByte(CMD_RESET);
-  90   5                                                              ledStatus = showKeyNumTogether;                         
-  91   5                                                      }
-  92   4                                              break;
-  93   4                                              case showKeyNumTogether:
-  94   4                                                      switch(keyState)
-  95   4                                                      {
-  96   5                                                              case KEY0:
-  97   5                                                                      for(i = 0 ; i < 8 ; i++)
-  98   5                                                                      {
-  99   6                                                                              LedWrite(0x97 - i, realCode[0]);
- 100   6                                                                      }
- 101   5                                                              break;
- 102   5                                                              case KEY1:
- 103   5                                                                      for(i = 0 ; i < 8 ; i++)
- 104   5                                                                      {
- 105   6                                                                              LedWrite(0x97 - i, realCode[1]);
- 106   6                                                                      }
- 107   5                                                              break;
- 108   5                                                              case KEY2:
- 109   5                                                                      for(i = 0 ; i < 8 ; i++)
- 110   5                                                                      {
- 111   6                                                                              LedWrite(0x97 - i, realCode[2]);
- 112   6                                                                      }
- 113   5                                                              break;
- 114   5                                                              case KEY3:
- 115   5                                                                      for(i = 0 ; i < 8 ; i++)
- 116   5                                                                      {
-C51 COMPILER V9.56.0.0   MAIN                                                              09/11/2017 20:09:08 PAGE 3   
+  55   1      //      }
+  56   1      //      DelayMs(250);
+  57   1      //      }
+  58   1              while(1)
+  59   1              {
+  60   2                      DelayMs(20);
+  61   2                      
+  62   2                      switch(status)
+  63   2                      {
+  64   3                              //按键和LED
+  65   3                              case keyLed:
+  66   3                                      
+  67   3                                      //读取按键状态
+  68   3                                      keyState = KeyRead();
+  69   3      
+  70   3                                      switch(ledStatus)
+  71   3                                      {
+  72   4                                              //向左滚动
+  73   4                                              case rollingLeft:
+  74   4                                                      //没有按键按下时循环向左滚动
+  75   4                                                      if(keyState==0xff)
+  76   4                                                      {
+  77   5                                                              rollPeriod--;
+  78   5                                                              if(rollPeriod == 0)
+  79   5                                                              {
+  80   6                                                                      rollPeriod = ROLL_PERIOD;
+  81   6                                                                      HD7279SendByte(RTL_CYCLE);
+  82   6                                                              }
+  83   5                                                      }
+  84   4                                                      //按下KEY10后进入一同显示数字状态
+  85   4                                                      else if(keyState == KEY10)
+  86   4                                                      {
+  87   5                                                              rollPeriod = ROLL_PERIOD;
+  88   5                                                              HD7279SendByte(CMD_RESET);
+  89   5                                                              ledStatus = showKeyNumTogether;
+  90   5                                                      }
+  91   4                                              break;
+  92   4                                              //循环向右滚动
+  93   4                                              case rollingRight:
+  94   4                                                      //没有按键按下时循环向右滚动
+  95   4                                                      if(keyState == 0xff)
+  96   4                                                      {
+  97   5                                                              rollPeriod--;
+  98   5                                                              if(rollPeriod == 0)
+  99   5                                                              {
+ 100   6                                                                      rollPeriod = ROLL_PERIOD;
+ 101   6                                                                      HD7279SendByte(RTR_CYCLE);
+ 102   6                                                              }
+ 103   5                                                      }
+ 104   4                                                      //按下KEY10时进入一同显示按下数字状态
+ 105   4                                                      else if(keyState == KEY10)
+ 106   4                                                      {
+ 107   5                                                              rollPeriod = ROLL_PERIOD;
+ 108   5                                                              HD7279SendByte(CMD_RESET);
+ 109   5                                                              ledStatus = showKeyNumTogether;                         
+ 110   5                                                      }
+ 111   4                                              break;
+ 112   4                                              //所有数码管一同显示按下按键对应数字
+ 113   4                                              case showKeyNumTogether:
+ 114   4                                                      switch(keyState)
+ 115   4                                                      {
+ 116   5                                                              case KEY0:
+C51 COMPILER V9.56.0.0   MAIN                                                              09/11/2017 20:55:47 PAGE 3   
 
- 117   6                                                                              LedWrite(0x97 - i, realCode[3]);
- 118   6                                                                      }
- 119   5                                                              break;
- 120   5                                                              case KEY4:
- 121   5                                                                      for(i = 0 ; i < 8 ; i++)
- 122   5                                                                      {
- 123   6                                                                              LedWrite(0x97 - i, realCode[4]);
- 124   6                                                                      }                                       
- 125   5                                                              break;
- 126   5                                                              case KEY5:
- 127   5                                                                      for(i = 0 ; i < 8 ; i++)
- 128   5                                                                      {
- 129   6                                                                              LedWrite(0x97 - i, realCode[5]);
- 130   6                                                                      }                                       
- 131   5                                                              break;
- 132   5                                                              case KEY6:
- 133   5                                                                      for(i = 0 ; i < 8 ; i++)
- 134   5                                                                      {
- 135   6                                                                              LedWrite(0x97 - i, realCode[6]);
- 136   6                                                                      }                                       
- 137   5                                                              break;
- 138   5                                                              case KEY7:
- 139   5                                                                      for(i = 0 ; i < 8 ; i++)
- 140   5                                                                      {
- 141   6                                                                              LedWrite(0x97 - i, realCode[7]);
- 142   6                                                                      }                                       
- 143   5                                                              break;
- 144   5                                                              case KEY8:
- 145   5                                                                      for(i = 0 ; i < 8 ; i++)
- 146   5                                                                      {
- 147   6                                                                              LedWrite(0x97 - i, realCode[8]);
- 148   6                                                                      }                                       
- 149   5                                                              break;
- 150   5                                                              case KEY9:
- 151   5                                                                      for(i = 0 ; i < 8 ; i++)
- 152   5                                                                      {
- 153   6                                                                              LedWrite(0x97 - i, realCode[9]);
- 154   6                                                                      }                                       
- 155   5                                                              break;
- 156   5                                                              default:
+ 117   5                                                                      for(i = 0 ; i < 8 ; i++)
+ 118   5                                                                      {
+ 119   6                                                                              LedWrite(0x97 - i, realCode[0]);
+ 120   6                                                                      }
+ 121   5                                                              break;
+ 122   5                                                              case KEY1:
+ 123   5                                                                      for(i = 0 ; i < 8 ; i++)
+ 124   5                                                                      {
+ 125   6                                                                              LedWrite(0x97 - i, realCode[1]);
+ 126   6                                                                      }
+ 127   5                                                              break;
+ 128   5                                                              case KEY2:
+ 129   5                                                                      for(i = 0 ; i < 8 ; i++)
+ 130   5                                                                      {
+ 131   6                                                                              LedWrite(0x97 - i, realCode[2]);
+ 132   6                                                                      }
+ 133   5                                                              break;
+ 134   5                                                              case KEY3:
+ 135   5                                                                      for(i = 0 ; i < 8 ; i++)
+ 136   5                                                                      {
+ 137   6                                                                              LedWrite(0x97 - i, realCode[3]);
+ 138   6                                                                      }
+ 139   5                                                              break;
+ 140   5                                                              case KEY4:
+ 141   5                                                                      for(i = 0 ; i < 8 ; i++)
+ 142   5                                                                      {
+ 143   6                                                                              LedWrite(0x97 - i, realCode[4]);
+ 144   6                                                                      }                                       
+ 145   5                                                              break;
+ 146   5                                                              case KEY5:
+ 147   5                                                                      for(i = 0 ; i < 8 ; i++)
+ 148   5                                                                      {
+ 149   6                                                                              LedWrite(0x97 - i, realCode[5]);
+ 150   6                                                                      }                                       
+ 151   5                                                              break;
+ 152   5                                                              case KEY6:
+ 153   5                                                                      for(i = 0 ; i < 8 ; i++)
+ 154   5                                                                      {
+ 155   6                                                                              LedWrite(0x97 - i, realCode[6]);
+ 156   6                                                                      }                                       
  157   5                                                              break;
- 158   5                                                      }       
- 159   4                                              break;
- 160   4                                              case inputRoll2Left:
- 161   4                                                      if(keyState!=0xff&&keyFlag==0)
- 162   4                                                      {
- 163   5                                                              HD7279SendByte(RTL_UNCYL);
- 164   5                                                              switch(keyState)
- 165   5                                                              {
- 166   6                                                                      case KEY0:
- 167   6                                                                              LedWrite(LED1, realCode[0]);
- 168   6                                                                      break;
- 169   6                                                                      case KEY1:
- 170   6                                                                              LedWrite(LED1, realCode[1]);
- 171   6                                                                      break;
- 172   6                                                                      case KEY2:
- 173   6                                                                              LedWrite(LED1, realCode[2]);
- 174   6                                                                      break;
- 175   6                                                                      case KEY3:
- 176   6                                                                              LedWrite(LED1, realCode[3]);
- 177   6                                                                      break;
- 178   6                                                                      case KEY4:
-C51 COMPILER V9.56.0.0   MAIN                                                              09/11/2017 20:09:08 PAGE 4   
+ 158   5                                                              case KEY7:
+ 159   5                                                                      for(i = 0 ; i < 8 ; i++)
+ 160   5                                                                      {
+ 161   6                                                                              LedWrite(0x97 - i, realCode[7]);
+ 162   6                                                                      }                                       
+ 163   5                                                              break;
+ 164   5                                                              case KEY8:
+ 165   5                                                                      for(i = 0 ; i < 8 ; i++)
+ 166   5                                                                      {
+ 167   6                                                                              LedWrite(0x97 - i, realCode[8]);
+ 168   6                                                                      }                                       
+ 169   5                                                              break;
+ 170   5                                                              case KEY9:
+ 171   5                                                                      for(i = 0 ; i < 8 ; i++)
+ 172   5                                                                      {
+ 173   6                                                                              LedWrite(0x97 - i, realCode[9]);
+ 174   6                                                                      }                                       
+ 175   5                                                              break;
+ 176   5                                                              default:
+ 177   5                                                              break;
+ 178   5                                                      }       
+C51 COMPILER V9.56.0.0   MAIN                                                              09/11/2017 20:55:47 PAGE 4   
 
- 179   6                                                                              LedWrite(LED1, realCode[4]);
- 180   6                                                                      break;
- 181   6                                                                      case KEY5:
- 182   6                                                                              LedWrite(LED1, realCode[5]);
- 183   6                                                                      break;
- 184   6                                                                      case KEY6:
- 185   6                                                                              LedWrite(LED1, realCode[6]);
- 186   6                                                                      break;
- 187   6                                                                      case KEY7:
- 188   6                                                                              LedWrite(LED1, realCode[7]);
+ 179   4                                              break;
+ 180   4                                                      //每次按键时不循环左移并显示按键对应的数字
+ 181   4                                              case inputRoll2Left:
+ 182   4                                                      if(keyState!=0xff&&keyFlag==0)
+ 183   4                                                      {
+ 184   5                                                              HD7279SendByte(RTL_UNCYL);
+ 185   5                                                              switch(keyState)
+ 186   5                                                              {
+ 187   6                                                                      case KEY0:
+ 188   6                                                                              LedWrite(LED1, realCode[0]);
  189   6                                                                      break;
- 190   6                                                                      case KEY8:
- 191   6                                                                              LedWrite(LED1, realCode[8]);
+ 190   6                                                                      case KEY1:
+ 191   6                                                                              LedWrite(LED1, realCode[1]);
  192   6                                                                      break;
- 193   6                                                                      case KEY9:
- 194   6                                                                              LedWrite(LED1, realCode[9]);
+ 193   6                                                                      case KEY2:
+ 194   6                                                                              LedWrite(LED1, realCode[2]);
  195   6                                                                      break;
- 196   6                                                                      default:
- 197   6                                                                      break;
- 198   6                                                              }
- 199   5                                                              keyFlag = 1;
- 200   5                                                      }
- 201   4                                                      if(keyState == 0xff&&keyFlag == 1)
- 202   4                                                      {
- 203   5                                                              keyFlag = 0;
- 204   5                                                      }
- 205   4                                                              
- 206   4                                              break;
- 207   4                                              case idle:
- 208   4                                              break;
- 209   4                                              default:
- 210   4                                              break;
- 211   4                                      }
- 212   3                              break;
- 213   3                              case basicIO:
- 214   3                                      ioInput = chip245Adress;
- 215   3                                      chip374Adress = ~ioInput;
- 216   3                                      for(i = 0 ; i < 8 ; i++)
- 217   3                                      {
- 218   4                                              if((ioInput>>i)&0x01)
- 219   4                                              {
- 220   5                                                      LedWrite(0x97 - 7 + i, realCode[1]);
- 221   5                                              }
- 222   4                                              else
- 223   4                                              {
- 224   5                                                      LedWrite(0x97 - 7 + i, realCode[0]);                                    
- 225   5                                              }
- 226   4                                      }
- 227   3                                      
- 228   3                              break;
- 229   3                              case decode:
- 230   3                                      timeCounter++;
- 231   3                                      timeCounter%=20;
- 232   3                                      if(timeCounter/10)
- 233   3                                      {
- 234   4                                              decodeAdress1 = ioOutput;
- 235   4                                      }
- 236   3                                      else
- 237   3                                      {
- 238   4                                              decodeAdress2 = ioOutput;
- 239   4                                      }
+ 196   6                                                                      case KEY3:
+ 197   6                                                                              LedWrite(LED1, realCode[3]);
+ 198   6                                                                      break;
+ 199   6                                                                      case KEY4:
+ 200   6                                                                              LedWrite(LED1, realCode[4]);
+ 201   6                                                                      break;
+ 202   6                                                                      case KEY5:
+ 203   6                                                                              LedWrite(LED1, realCode[5]);
+ 204   6                                                                      break;
+ 205   6                                                                      case KEY6:
+ 206   6                                                                              LedWrite(LED1, realCode[6]);
+ 207   6                                                                      break;
+ 208   6                                                                      case KEY7:
+ 209   6                                                                              LedWrite(LED1, realCode[7]);
+ 210   6                                                                      break;
+ 211   6                                                                      case KEY8:
+ 212   6                                                                              LedWrite(LED1, realCode[8]);
+ 213   6                                                                      break;
+ 214   6                                                                      case KEY9:
+ 215   6                                                                              LedWrite(LED1, realCode[9]);
+ 216   6                                                                      break;
+ 217   6                                                                      default:
+ 218   6                                                                      break;
+ 219   6                                                              }
+ 220   5                                                              keyFlag = 1;
+ 221   5                                                      }
+ 222   4                                                      if(keyState == 0xff&&keyFlag == 1)
+ 223   4                                                      {
+ 224   5                                                              keyFlag = 0;
+ 225   5                                                      }
+ 226   4                                                              
+ 227   4                                              break;
+ 228   4                                              //空闲状态
+ 229   4                                              case idle:
+ 230   4                                              break;
+ 231   4                                              default:
+ 232   4                                              break;
+ 233   4                                      }
+ 234   3                              break;
+ 235   3                              //简单IO实验
+ 236   3                              case basicIO:
+ 237   3                                      
+ 238   3                                      //从74LS245地址读取简单IO输入
+ 239   3                                      ioInput = chip245Adress;
  240   3                              
-C51 COMPILER V9.56.0.0   MAIN                                                              09/11/2017 20:09:08 PAGE 5   
+C51 COMPILER V9.56.0.0   MAIN                                                              09/11/2017 20:55:47 PAGE 5   
 
- 241   3                              break;
- 242   3                              case statusIdle:
- 243   3                              break;
- 244   3                              default:
- 245   3                              break;
- 246   3                      }
- 247   2                      
- 248   2      
- 249   2              }
- 250   1      }
+ 241   3                                      //将简单IO输入输出到74LS374
+ 242   3                                      chip374Adress = ~ioInput;
+ 243   3                              
+ 244   3                                      //在数码管上显示简单IO输入状态
+ 245   3                                      for(i = 0 ; i < 8 ; i++)
+ 246   3                                      {
+ 247   4                                              if((ioInput>>i)&0x01)
+ 248   4                                              {
+ 249   5                                                      LedWrite(0x97 - 7 + i, realCode[1]);
+ 250   5                                              }
+ 251   4                                              else
+ 252   4                                              {
+ 253   5                                                      LedWrite(0x97 - 7 + i, realCode[0]);
+ 254   5                                              }
+ 255   4                                      }
+ 256   3                                      
+ 257   3                              break;
+ 258   3                              //译码器实验
+ 259   3                              case decode:
+ 260   3                                      timeCounter++;
+ 261   3                                      timeCounter%=20;
+ 262   3                                      if(timeCounter/10)
+ 263   3                                      {
+ 264   4                                              decodeAdress1 = ioOutput;
+ 265   4                                      }
+ 266   3                                      else
+ 267   3                                      {
+ 268   4                                              decodeAdress2 = ioOutput;
+ 269   4                                      }
+ 270   3                              
+ 271   3                              break;
+ 272   3                              case statusIdle:
+ 273   3                              break;
+ 274   3                              default:
+ 275   3                              break;
+ 276   3                      }
+ 277   2                      
+ 278   2      
+ 279   2              }
+ 280   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
