@@ -40,6 +40,16 @@ sbit clk = P1^7;
 #define KEY14 (8)
 #define KEY15 (0)
 
+#define LED1 (0x97 - 7)
+#define LED2 (0x97 - 6)
+#define LED3 (0x97 - 5)
+#define LED4 (0x97 - 4)
+#define LED5 (0x97 - 3)
+#define LED6 (0x97 - 2)
+#define LED7 (0x97 - 1)
+#define LED8 (0x97)
+
+extern unsigned char code realCode[];
 
 void HD7279SendByte(unsigned char sendData);
 unsigned char HD7279ReceiveByte(void);

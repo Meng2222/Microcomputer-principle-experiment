@@ -1,4 +1,4 @@
-C51 COMPILER V9.56.0.0   HD7279                                                            09/05/2017 23:56:22 PAGE 1   
+C51 COMPILER V9.56.0.0   HD7279                                                            09/11/2017 18:35:08 PAGE 1   
 
 
 C51 COMPILER V9.56.0.0, COMPILATION OF MODULE HD7279
@@ -11,78 +11,82 @@ line level    source
    1          #include "HD7279.h"
    2          #include "delay.h"
    3          
-   4          void HD7279SendByte(unsigned char sendData)
-   5          {
-   6   1      #define SEND_DATA_LENGTH (8)
-   7   1              unsigned char sendCounter = 0;
-   8   1              cs = 0;
-   9   1              Delay10Us(12);
-  10   1              for(sendCounter = 0 ; sendCounter < SEND_DATA_LENGTH ; sendCounter++)
-  11   1              {
-  12   2                      if(sendData & 0x80)
-  13   2                      {
-  14   3                              dat = 1;
-  15   3                      }
-  16   2                      else
+   4          unsigned char code realCode[] = \
+   5                  {0x7e , 0x30 , 0x6d , 0x79 , 0x33 , 0x5b , 0x5f , 0x70 , 0x7f , 0x7b , 0x01 , 0x80 , 0x00 , 0x6f};
+   6          //      0               1               2               3               4               5       6               7               8       9               -               .               blank   error
+   7          
+   8          void HD7279SendByte(unsigned char sendData)
+   9          {
+  10   1      #define SEND_DATA_LENGTH (8)
+  11   1              unsigned char sendCounter = 0;
+  12   1              cs = 0;
+  13   1              Delay10Us(12);
+  14   1              for(sendCounter = 0 ; sendCounter < SEND_DATA_LENGTH ; sendCounter++)
+  15   1              {
+  16   2                      if(sendData & 0x80)
   17   2                      {
-  18   3                              dat = 0;
+  18   3                              dat = 1;
   19   3                      }
-  20   2                      clk = 1;
-  21   2                      Delay10Us(2);
-  22   2                      clk = 0;
-  23   2                      Delay10Us(2);
-  24   2                      sendData<<=1;
-  25   2              }
-  26   1              dat = 0;
-  27   1      }
-  28          
-  29          unsigned char HD7279ReceiveByte(void)
-  30          {
-  31   1      #define RECEIVE_DATA_LENGTH (8)
-  32   1              unsigned char receiveCounter  = 0;
-  33   1              unsigned char receiveData = 0;
-  34   1              dat = 1;
-  35   1              Delay10Us(12);
-  36   1              for(receiveCounter = 0 ; receiveCounter < RECEIVE_DATA_LENGTH ; receiveCounter++)
-  37   1              {
-  38   2                      clk = 1;
-  39   2                      Delay10Us(2);
-  40   2                      receiveData*=2;
-  41   2                      if(dat)
-  42   2                      {
-  43   3                              receiveData|=0x01;
-  44   3                      }
-  45   2                      else
+  20   2                      else
+  21   2                      {
+  22   3                              dat = 0;
+  23   3                      }
+  24   2                      clk = 1;
+  25   2                      Delay10Us(2);
+  26   2                      clk = 0;
+  27   2                      Delay10Us(2);
+  28   2                      sendData<<=1;
+  29   2              }
+  30   1              dat = 0;
+  31   1      }
+  32          
+  33          unsigned char HD7279ReceiveByte(void)
+  34          {
+  35   1      #define RECEIVE_DATA_LENGTH (8)
+  36   1              unsigned char receiveCounter  = 0;
+  37   1              unsigned char receiveData = 0;
+  38   1              dat = 1;
+  39   1              Delay10Us(12);
+  40   1              for(receiveCounter = 0 ; receiveCounter < RECEIVE_DATA_LENGTH ; receiveCounter++)
+  41   1              {
+  42   2                      clk = 1;
+  43   2                      Delay10Us(2);
+  44   2                      receiveData*=2;
+  45   2                      if(dat)
   46   2                      {
-  47   3                      
+  47   3                              receiveData|=0x01;
   48   3                      }
-  49   2                      clk = 0;
-  50   2                      Delay10Us(2);
-  51   2              }
-  52   1              dat = 0;
-  53   1              return receiveData;
-  54   1      }
-C51 COMPILER V9.56.0.0   HD7279                                                            09/05/2017 23:56:22 PAGE 2   
+  49   2                      else
+  50   2                      {
+  51   3                      
+  52   3                      }
+  53   2                      clk = 0;
+  54   2                      Delay10Us(2);
+C51 COMPILER V9.56.0.0   HD7279                                                            09/11/2017 18:35:08 PAGE 2   
 
-  55          
-  56          void LedWrite(unsigned char cmd , unsigned char dataSend)
-  57          {
-  58   1              HD7279SendByte(cmd);
-  59   1              
-  60   1              HD7279SendByte(dataSend);       
-  61   1      }
-  62          
-  63          unsigned char KeyRead(void)
-  64          {
-  65   1              HD7279SendByte(CMD_READ);
-  66   1              
-  67   1              return (HD7279ReceiveByte());
-  68   1      }
+  55   2              }
+  56   1              dat = 0;
+  57   1              return receiveData;
+  58   1      }
+  59          
+  60          void LedWrite(unsigned char cmd , unsigned char dataSend)
+  61          {
+  62   1              HD7279SendByte(cmd);
+  63   1              
+  64   1              HD7279SendByte(dataSend);       
+  65   1      }
+  66          
+  67          unsigned char KeyRead(void)
+  68          {
+  69   1              HD7279SendByte(CMD_READ);
+  70   1              
+  71   1              return (HD7279ReceiveByte());
+  72   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
    CODE SIZE        =    142    ----
-   CONSTANT SIZE    =   ----    ----
+   CONSTANT SIZE    =     14    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----       5

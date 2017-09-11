@@ -59,10 +59,15 @@ dkms.conf
 *.Dreamer
 *.uvopt
 *.m51
-键盘与LED/Objects/keyLED
+键盘与LED/Listings/
 *.uvopt
 键盘与LED/key&LED.uvgui.Dreamer
 *.m51
-键盘与LED/Objects/keyLED
+键盘与LED/Objects/
+
 *.htm
 *.m51
+*.htm
+*.m51
+*.Dreamer
+键盘与LED/key&LED.uvopt

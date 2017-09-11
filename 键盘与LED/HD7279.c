@@ -1,6 +1,10 @@
 #include "HD7279.h"
 #include "delay.h"
 
+unsigned char code realCode[] = \
+	{0x7e , 0x30 , 0x6d , 0x79 , 0x33 , 0x5b , 0x5f , 0x70 , 0x7f , 0x7b , 0x01 , 0x80 , 0x00 , 0x6f};
+//	0		1		2		3		4		5	6		7		8	9		-		.		blank	error
+
 void HD7279SendByte(unsigned char sendData)
 {
 #define SEND_DATA_LENGTH (8)

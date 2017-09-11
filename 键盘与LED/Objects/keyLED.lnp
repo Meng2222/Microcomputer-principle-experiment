@@ -1,6 +1,7 @@
 ".\Objects\STARTUP.obj",
 ".\Objects\main.obj",
 ".\Objects\HD7279.obj",
-".\Objects\delay.obj" 
+".\Objects\delay.obj",
+".\Objects\basicIO.obj" 
 TO ".\Objects\keyLED" 
 PRINT(".\Listings\keyLED.m51") RAMSIZE(256) 

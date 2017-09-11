@@ -1,150 +1,222 @@
 #include "HD7279.h"
 #include "delay.h"
 #include "main.h"
+#include "basicIO.h"
 
 typedef enum
 {
 	rollingLeft,
 	rollingRight,
 	showKeyNumTogether,
+	inputRoll2Left,
 	idle
 }ledStatus_t;
 
-unsigned char code realCode[] = \
-	{0x7e , 0x30 , 0x6d , 0x79 , 0x33 , 0x5b , 0x5f , 0x70 , 0x7f , 0x7b , 0x01 , 0x80 , 0x00 , 0x6f};
-//	0		1		2		3		4		5	6		7		8	9		-		.		blank	error
-
+typedef enum
+{
+	keyLed,
+	basicIO,
+	statusIdle
+}status_t;
 
 void main(void)
 {
 #define ROLL_PERIOD (15)
-	ledStatus_t status = rollingLeft;
+	ledStatus_t ledStatus = inputRoll2Left;
+	status_t status = basicIO;
 	unsigned char i,j = 0;
 	unsigned char keyState = 0;
 	unsigned char rollPeriod = ROLL_PERIOD;
+	unsigned char keyFlag = 0;
+	unsigned char ioInput = 0;
 	P1 = 0x00;
 	
 	DelayMs(25);
 	
 //	for(j = 0 ; j < 10 ; j++)
 //	{
-	for(i = 0 ; i < 8 ; i++)
-	{
-		LedWrite(0x97 - i, realCode[8 - i]);
-	}
+//	for(i = 0 ; i < 8 ; i++)
+//	{
+//		LedWrite(0x97 - i, realCode[8 - i]);
+//	}
 //	DelayMs(250);
 //	}
 	while(1)
 	{
 		DelayMs(20);
-
-		keyState = KeyRead();
-
+		
 		switch(status)
 		{
-			case rollingLeft:
-				if(keyState==0xff)
+			case keyLed:
+				keyState = KeyRead();
+
+				switch(ledStatus)
 				{
-					rollPeriod--;
-					if(rollPeriod == 0)
-					{
-						rollPeriod = ROLL_PERIOD;
-						HD7279SendByte(RTL_CYCLE);
-					}
-				}
-				else if(keyState == KEY10)
-				{
-					rollPeriod = ROLL_PERIOD;
-					HD7279SendByte(CMD_RESET);
-					status = showKeyNumTogether;
-				}
-			break;
-			case rollingRight:
-				if(keyState == 0xff)
-				{
-					rollPeriod--;
-					if(rollPeriod == 0)
-					{
-						rollPeriod = ROLL_PERIOD;
-						HD7279SendByte(RTR_CYCLE);
-					}
-				}
-				else if(keyState == KEY10)
-				{
-					rollPeriod = ROLL_PERIOD;
-					HD7279SendByte(CMD_RESET);
-					status = showKeyNumTogether;				
-				}
-			break;
-			case showKeyNumTogether:
-				switch(keyState)
-				{
-					case KEY0:
-						for(i = 0 ; i < 8 ; i++)
+					case rollingLeft:
+						if(keyState==0xff)
 						{
-							LedWrite(0x97 - i, realCode[0]);
+							rollPeriod--;
+							if(rollPeriod == 0)
+							{
+								rollPeriod = ROLL_PERIOD;
+								HD7279SendByte(RTL_CYCLE);
+							}
+						}
+						else if(keyState == KEY10)
+						{
+							rollPeriod = ROLL_PERIOD;
+							HD7279SendByte(CMD_RESET);
+							ledStatus = showKeyNumTogether;
 						}
 					break;
-					case KEY1:
-						for(i = 0 ; i < 8 ; i++)
+					case rollingRight:
+						if(keyState == 0xff)
 						{
-							LedWrite(0x97 - i, realCode[1]);
+							rollPeriod--;
+							if(rollPeriod == 0)
+							{
+								rollPeriod = ROLL_PERIOD;
+								HD7279SendByte(RTR_CYCLE);
+							}
+						}
+						else if(keyState == KEY10)
+						{
+							rollPeriod = ROLL_PERIOD;
+							HD7279SendByte(CMD_RESET);
+							ledStatus = showKeyNumTogether;				
 						}
 					break;
-					case KEY2:
-						for(i = 0 ; i < 8 ; i++)
+					case showKeyNumTogether:
+						switch(keyState)
 						{
-							LedWrite(0x97 - i, realCode[2]);
+							case KEY0:
+								for(i = 0 ; i < 8 ; i++)
+								{
+									LedWrite(0x97 - i, realCode[0]);
+								}
+							break;
+							case KEY1:
+								for(i = 0 ; i < 8 ; i++)
+								{
+									LedWrite(0x97 - i, realCode[1]);
+								}
+							break;
+							case KEY2:
+								for(i = 0 ; i < 8 ; i++)
+								{
+									LedWrite(0x97 - i, realCode[2]);
+								}
+							break;
+							case KEY3:
+								for(i = 0 ; i < 8 ; i++)
+								{
+									LedWrite(0x97 - i, realCode[3]);
+								}
+							break;
+							case KEY4:
+								for(i = 0 ; i < 8 ; i++)
+								{
+									LedWrite(0x97 - i, realCode[4]);
+								}					
+							break;
+							case KEY5:
+								for(i = 0 ; i < 8 ; i++)
+								{
+									LedWrite(0x97 - i, realCode[5]);
+								}					
+							break;
+							case KEY6:
+								for(i = 0 ; i < 8 ; i++)
+								{
+									LedWrite(0x97 - i, realCode[6]);
+								}					
+							break;
+							case KEY7:
+								for(i = 0 ; i < 8 ; i++)
+								{
+									LedWrite(0x97 - i, realCode[7]);
+								}					
+							break;
+							case KEY8:
+								for(i = 0 ; i < 8 ; i++)
+								{
+									LedWrite(0x97 - i, realCode[8]);
+								}					
+							break;
+							case KEY9:
+								for(i = 0 ; i < 8 ; i++)
+								{
+									LedWrite(0x97 - i, realCode[9]);
+								}					
+							break;
+							default:
+							break;
+						}	
+					break;
+					case inputRoll2Left:
+						if(keyState!=0xff&&keyFlag==0)
+						{
+							HD7279SendByte(RTL_UNCYL);
+							switch(keyState)
+							{
+								case KEY0:
+									LedWrite(LED1, realCode[0]);
+								break;
+								case KEY1:
+									LedWrite(LED1, realCode[1]);
+								break;
+								case KEY2:
+									LedWrite(LED1, realCode[2]);
+								break;
+								case KEY3:
+									LedWrite(LED1, realCode[3]);
+								break;
+								case KEY4:
+									LedWrite(LED1, realCode[4]);
+								break;
+								case KEY5:
+									LedWrite(LED1, realCode[5]);
+								break;
+								case KEY6:
+									LedWrite(LED1, realCode[6]);
+								break;
+								case KEY7:
+									LedWrite(LED1, realCode[7]);
+								break;
+								case KEY8:
+									LedWrite(LED1, realCode[8]);
+								break;
+								case KEY9:
+									LedWrite(LED1, realCode[9]);
+								break;
+								default:
+								break;
+							}
+							keyFlag = 1;
 						}
-					break;
-					case KEY3:
-						for(i = 0 ; i < 8 ; i++)
+						if(keyState == 0xff&&keyFlag == 1)
 						{
-							LedWrite(0x97 - i, realCode[3]);
+							keyFlag = 0;
 						}
+							
 					break;
-					case KEY4:
-						for(i = 0 ; i < 8 ; i++)
-						{
-							LedWrite(0x97 - i, realCode[4]);
-						}					
-					break;
-					case KEY5:
-						for(i = 0 ; i < 8 ; i++)
-						{
-							LedWrite(0x97 - i, realCode[5]);
-						}					
-					break;
-					case KEY6:
-						for(i = 0 ; i < 8 ; i++)
-						{
-							LedWrite(0x97 - i, realCode[6]);
-						}					
-					break;
-					case KEY7:
-						for(i = 0 ; i < 8 ; i++)
-						{
-							LedWrite(0x97 - i, realCode[7]);
-						}					break;
-					case KEY8:
-						for(i = 0 ; i < 8 ; i++)
-						{
-							LedWrite(0x97 - i, realCode[8]);
-						}					
-					break;
-					case KEY9:
-						for(i = 0 ; i < 8 ; i++)
-						{
-							LedWrite(0x97 - i, realCode[9]);
-						}					
+					case idle:
 					break;
 					default:
 					break;
-				}	
+				}
 			break;
-			case idle:
+			case basicIO:
+				ioInput = chip245Adress;
+				chip374Adress = ioInput;
+				
+			break;
+			case statusIdle:
+			break;
+			default:
 			break;
 		}
+		
 
 	}
 }
