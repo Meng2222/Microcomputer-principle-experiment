@@ -208,7 +208,18 @@ void main(void)
 			break;
 			case basicIO:
 				ioInput = chip245Adress;
-				chip374Adress = ioInput;
+				chip374Adress = ~ioInput;
+				for(i = 0 ; i < 8 ; i++)
+				{
+					if((ioInput>>i)&0x01)
+					{
+						LedWrite(0x97 - 7 + i, realCode[1]);
+					}
+					else
+					{
+						LedWrite(0x97 - 7 + i, realCode[0]);					
+					}
+				}
 				
 			break;
 			case statusIdle:
