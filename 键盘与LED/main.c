@@ -40,7 +40,7 @@ void main(void)
 #define ROLL_PERIOD (15)
 	ledStatus_t ledStatus = inputRoll2Left;
 	status_t status = p1IO;
-	p1IOStatus_t p1IOStatus = showInput;
+	p1IOStatus_t p1IOStatus = flow;
 	unsigned char i,j = 0;
 	//按键状态，没有按下时为0xff，按下时为按下按键的编号
 	unsigned char keyState = 0;
@@ -284,15 +284,19 @@ void main(void)
 			break;
 			case statusIdle:
 			break;
+			//P1IO口实验
 			case p1IO:
 				switch(p1IOStatus)
 				{
+					//四个一组循环闪烁
 					case blinkIn4:
 						BlinkIn4(500);
 					break;
+					//流水灯
 					case flow:
 						Flow(500);
 					break;
+					//将P10~P13输入输出到P14~P17，用输入控制LED的亮灭
 					case showInput:
 						ShowInput();
 					break;
@@ -305,7 +309,5 @@ void main(void)
 			default:
 			break;
 		}
-		
-
 	}
 }
