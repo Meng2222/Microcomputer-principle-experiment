@@ -1,5 +1,6 @@
 #include "HD7279.h"
 #include "delay.h"
+#include "stdio.h"
 
 //HD7279显示内容对应数码
 unsigned char code realCode[] = \
@@ -74,4 +75,32 @@ unsigned char KeyRead(void)
 	HD7279SendByte(CMD_READ);
 	
 	return (HD7279ReceiveByte());
+}
+
+void LEDShowInt(unsigned short showData)
+{
+	unsigned char LedData[8] = {0x00};
+	unsigned char i = 0;
+	signed char tempBuff[8] = {0};
+	unsigned char dataLength = 0;
+	
+	sprintf((char *)tempBuff,"%d",(int)showData);
+	
+	for(i = 0; i< 8; i++)
+	{
+		if(tempBuff[i]!=0x00)
+		{
+			dataLength++;
+		}
+	}
+	for(i = dataLength;i > 0;i--)
+	{
+		LedData[7 - (dataLength - i)]=tempBuff[i-1] - 0x30;
+		LedData[7 - (dataLength - i)] = realCode[LedData[7 - (dataLength - i)]];
+	}
+	for(i = 0;i<8;i++)
+	{
+		LedWrite(0x97 - i , LedData[i]);
+	}
+	
 }

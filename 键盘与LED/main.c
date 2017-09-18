@@ -1,9 +1,20 @@
 #include "HD7279.h"
 #include "delay.h"
 #include "main.h"
+
+#ifndef DATA_MEMORY_TEST
+
 #include "basicIO.h"
 #include "decode.h"
 #include "p1IO.h"
+
+#endif
+
+#ifdef DATA_MEMORY_TEST
+
+#include "dataMemory.h"
+
+#endif
 
 //数码管显示状态枚举变量
 typedef enum
@@ -22,6 +33,7 @@ typedef enum
 	basicIO,
 	decode,
 	p1IO,
+	dataMemory,
 	statusIdle
 }status_t;
 
@@ -36,6 +48,7 @@ typedef enum
 
 void main(void)
 {
+#ifndef DATA_MEMORY_TEST
 //数码管滚动显示的周期
 #define ROLL_PERIOD (15)
 	ledStatus_t ledStatus = inputRoll2Left;
@@ -53,7 +66,7 @@ void main(void)
 	unsigned char ioOutput = 0;
 	//译码实验闪烁计时变量
 	unsigned short timeCounter = 0;
-	
+
 //	//将HD7279对应引脚全部拉低
 //	P1 = 0x00;
 	
@@ -282,8 +295,6 @@ void main(void)
 				}
 			
 			break;
-			case statusIdle:
-			break;
 			//P1IO口实验
 			case p1IO:
 				switch(p1IOStatus)
@@ -306,8 +317,63 @@ void main(void)
 					break;
 				}
 			break;
+			case dataMemory:
+				
+			break;		
+			case statusIdle:
+			break;
 			default:
 			break;
 		}
+
 	}
+#endif
+#ifdef DATA_MEMORY_TEST
+	unsigned char i = 0;
+	P1 = 0x00;
+	DelayMs(20);
+	while(1)
+	{
+		AUXR = 0x8e;
+		for(i = 0 ; i < DIRECT_ACCESS_SIZE;i++)
+		{
+			directAccess[i] = i;
+			LEDShowInt(directAccess[i]);
+			DelayMs(300);
+		}
+		for(i = 0; i< BIT_ACCESS_SIZE ; i++)
+		{
+			bitAccess[i] = 255 - i;
+			LEDShowInt(bitAccess[i]);
+			DelayMs(300);		
+		}
+		for(i = 0; i< INDIRECT_ACCESS_SIZE ; i++)
+		{
+			indirectAccess[i] = 128 + i;
+			LEDShowInt(indirectAccess[i]);
+			DelayMs(300);		
+		}
+		for(i = 0; i< PAGE_ACCESS_SIZE ; i++)
+		{
+			pageAccess[i] = i;
+			LEDShowInt(pageAccess[i]);
+			DelayMs(300);		
+		}
+		
+		for(i = 0; i< 128 ; i++)
+		{
+			outerMemInMCU[i] = i;
+			LEDShowInt(outerMemInMCU[i]);
+			DelayMs(300);		
+		}
+
+		AUXR = 0x02;
+		for(i = 0; i< 128 ; i++)
+		{
+			outerExtendMem[i] = 128 - i;
+			LEDShowInt(outerExtendMem[i]);
+			DelayMs(300);		
+		}		
+	}		
+#endif
 }
