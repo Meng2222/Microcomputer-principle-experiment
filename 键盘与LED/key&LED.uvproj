@@ -383,6 +383,16 @@
               <FileType>1</FileType>
               <FilePath>.\delay.c</FilePath>
             </File>
+            <File>
+              <FileName>basicIO.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\basicIO.c</FilePath>
+            </File>
+            <File>
+              <FileName>decode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\decode.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

@@ -3,6 +3,7 @@
 #include "main.h"
 #include "basicIO.h"
 #include "decode.h"
+#include "p1IO.h"
 
 //数码管显示状态枚举变量
 typedef enum
@@ -20,15 +21,26 @@ typedef enum
 	keyLed,
 	basicIO,
 	decode,
+	p1IO,
 	statusIdle
 }status_t;
+
+//P1IO输出状态枚举变量
+typedef enum
+{
+	blinkIn4,
+	flow,
+	showInput,
+	p1Idle
+}p1IOStatus_t;
 
 void main(void)
 {
 //数码管滚动显示的周期
 #define ROLL_PERIOD (15)
 	ledStatus_t ledStatus = inputRoll2Left;
-	status_t status = basicIO;
+	status_t status = p1IO;
+	p1IOStatus_t p1IOStatus = showInput;
 	unsigned char i,j = 0;
 	//按键状态，没有按下时为0xff，按下时为按下按键的编号
 	unsigned char keyState = 0;
@@ -42,8 +54,8 @@ void main(void)
 	//译码实验闪烁计时变量
 	unsigned short timeCounter = 0;
 	
-	//将HD7279对应引脚全部拉低
-	P1 = 0x00;
+//	//将HD7279对应引脚全部拉低
+//	P1 = 0x00;
 	
 	DelayMs(25);
 	
@@ -227,6 +239,7 @@ void main(void)
 					break;
 					//空闲状态
 					case idle:
+						
 					break;
 					default:
 					break;
@@ -270,6 +283,24 @@ void main(void)
 			
 			break;
 			case statusIdle:
+			break;
+			case p1IO:
+				switch(p1IOStatus)
+				{
+					case blinkIn4:
+						BlinkIn4(500);
+					break;
+					case flow:
+						Flow(500);
+					break;
+					case showInput:
+						ShowInput();
+					break;
+					case p1Idle:
+					break;
+					default:
+					break;
+				}
 			break;
 			default:
 			break;
