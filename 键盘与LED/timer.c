@@ -48,11 +48,11 @@ void TimeModeInit(TimerTypeDef_t TIMx , timeMode_t timeMode)
 	
 	tempCrl|=((timeMode.timeWorkMode<<2)<<(TIMx * 4));
 	
-	tempCrl|=((timeMode.timeTriggerMode<<3)<<(TIMx * 4));
+//	tempCrl|=((timeMode.timeTriggerMode<<3)<<(TIMx * 4));
 	
-	tempCrl|=((timeMode.isGateCrl<<4)<<(TIMx * 4));
+	tempCrl|=((timeMode.isGateCrl<<3)<<(TIMx * 4));
 	
-	TMOD&=tempCrl;
+	TMOD=tempCrl|(TMOD&(0xf0>>(TIMx * 4)));
 }
 
 void TimeReloadNumInit(TimerTypeDef_t TIMx,timerMode_t timerMode,unsigned short timerPeriod, unsigned short mechinePeriod)
