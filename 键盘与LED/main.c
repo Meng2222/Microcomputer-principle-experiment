@@ -360,7 +360,7 @@ void main(void)
 			DelayMs(300);		
 		}
 		
-		for(i = 0; i< 128 ; i++)
+		for(i = 0; i< OUTER_MEM_IN_MCU_SIZE ; i++)
 		{
 			outerMemInMCU[i] = i;
 			LEDShowInt(outerMemInMCU[i]);
@@ -368,7 +368,7 @@ void main(void)
 		}
 
 		AUXR = 0x02;
-		for(i = 0; i< 128 ; i++)
+		for(i = 0; i< OUTER_EXTEND_MEM_SIZE ; i++)
 		{
 			outerExtendMem[i] = 128 - i;
 			LEDShowInt(outerExtendMem[i]);

@@ -176,7 +176,7 @@
           </Flash1>
           <bUseTDR>0</bUseTDR>
           <Flash2></Flash2>
-          <Flash3></Flash3>
+          <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -392,6 +392,16 @@
               <FileName>decode.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\decode.c</FilePath>
+            </File>
+            <File>
+              <FileName>p1IO.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\p1IO.c</FilePath>
+            </File>
+            <File>
+              <FileName>dataMemory.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\dataMemory.c</FilePath>
             </File>
           </Files>
         </Group>

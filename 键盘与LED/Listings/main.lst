@@ -1,4 +1,4 @@
-C51 COMPILER V9.56.0.0   MAIN                                                              09/18/2017 21:33:16 PAGE 1   
+C51 COMPILER V9.56.0.0   MAIN                                                              09/25/2017 18:09:40 PAGE 1   
 
 
 C51 COMPILER V9.56.0.0, COMPILATION OF MODULE MAIN
@@ -62,7 +62,7 @@ line level    source
               //数码管滚动显示的周期
               #define ROLL_PERIOD (15)
                       ledStatus_t ledStatus = inputRoll2Left;
-C51 COMPILER V9.56.0.0   MAIN                                                              09/18/2017 21:33:16 PAGE 2   
+C51 COMPILER V9.56.0.0   MAIN                                                              09/25/2017 18:09:40 PAGE 2   
 
                       status_t status = p1IO;
                       p1IOStatus_t p1IOStatus = flow;
@@ -126,7 +126,7 @@ line level    source
                                                                       ledStatus = showKeyNumTogether;
                                                               }
                                                       break;
-C51 COMPILER V9.56.0.0   MAIN                                                              09/18/2017 21:33:16 PAGE 3   
+C51 COMPILER V9.56.0.0   MAIN                                                              09/25/2017 18:09:40 PAGE 3   
 
                                                       //循环向右滚动
                                                       case rollingRight:
@@ -190,7 +190,7 @@ line level    source
                                                                       break;
                                                                       case KEY6:
                                                                               for(i = 0 ; i < 8 ; i++)
-C51 COMPILER V9.56.0.0   MAIN                                                              09/18/2017 21:33:16 PAGE 4   
+C51 COMPILER V9.56.0.0   MAIN                                                              09/25/2017 18:09:40 PAGE 4   
 
                                                                               {
                                                                                       LedWrite(0x97 - i, realCode[6]);
@@ -254,7 +254,7 @@ line level    source
                                                                               break;
                                                                               case KEY9:
                                                                                       LedWrite(LED1, realCode[9]);
-C51 COMPILER V9.56.0.0   MAIN                                                              09/18/2017 21:33:16 PAGE 5   
+C51 COMPILER V9.56.0.0   MAIN                                                              09/25/2017 18:09:40 PAGE 5   
 
                                                                               break;
                                                                               default:
@@ -318,7 +318,7 @@ line level    source
                                               switch(p1IOStatus)
                                               {
                                                       //四个一组循环闪烁
-C51 COMPILER V9.56.0.0   MAIN                                                              09/18/2017 21:33:16 PAGE 6   
+C51 COMPILER V9.56.0.0   MAIN                                                              09/25/2017 18:09:40 PAGE 6   
 
                                                       case blinkIn4:
                                                               BlinkIn4(500);
@@ -380,9 +380,9 @@ line level    source
  360   3                              DelayMs(300);           
  361   3                      }
  362   2                      
- 363   2                      for(i = 0; i< 128 ; i++)
+ 363   2                      for(i = 0; i< OUTER_MEM_IN_MCU_SIZE ; i++)
  364   2                      {
-C51 COMPILER V9.56.0.0   MAIN                                                              09/18/2017 21:33:16 PAGE 7   
+C51 COMPILER V9.56.0.0   MAIN                                                              09/25/2017 18:09:40 PAGE 7   
 
  365   3                              outerMemInMCU[i] = i;
  366   3                              LEDShowInt(outerMemInMCU[i]);
@@ -390,7 +390,7 @@ line level    source
  368   3                      }
  369   2      
  370   2                      AUXR = 0x02;
- 371   2                      for(i = 0; i< 128 ; i++)
+ 371   2                      for(i = 0; i< OUTER_EXTEND_MEM_SIZE ; i++)
  372   2                      {
  373   3                              outerExtendMem[i] = 128 - i;
  374   3                              LEDShowInt(outerExtendMem[i]);
@@ -402,7 +402,7 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    289    ----
+   CODE SIZE        =    291    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
