@@ -7,6 +7,7 @@
 #include "basicIO.h"
 #include "decode.h"
 #include "p1IO.h"
+#include "timer.h"
 
 #endif
 
@@ -34,6 +35,7 @@ typedef enum
 	decode,
 	p1IO,
 	dataMemory,
+	timerExp,
 	statusIdle
 }status_t;
 
@@ -46,14 +48,23 @@ typedef enum
 	p1Idle
 }p1IOStatus_t;
 
+typedef enum
+{
+	timerExp1,
+	timerExp2,
+	timerExp3	
+}timerStatus_t;
+
+
 void main(void)
 {
 #ifndef DATA_MEMORY_TEST
 //数码管滚动显示的周期
 #define ROLL_PERIOD (15)
-	ledStatus_t ledStatus = inputRoll2Left;
-	status_t status = p1IO;
-	p1IOStatus_t p1IOStatus = flow;
+	ledStatus_t idata ledStatus = inputRoll2Left;
+	status_t idata status = timerExp;
+	p1IOStatus_t idata p1IOStatus = flow;
+	timerStatus_t idata timerStatus = timerExp1;
 	unsigned char i,j = 0;
 	//按键状态，没有按下时为0xff，按下时为按下按键的编号
 	unsigned char keyState = 0;
@@ -66,11 +77,20 @@ void main(void)
 	unsigned char ioOutput = 0;
 	//译码实验闪烁计时变量
 	unsigned short timeCounter = 0;
+	
+	timeMode_t timeMode ={0};
+	
+	timeMode.isGateCrl = noGateCrl;
+	timeMode.timeWorkMode = timer;
+	timeMode.timeTriggerMode = innerTrigger;
+	timeMode.timerMode = halfWordAutoReload;
+	
+	TimeInit(TIM0 , timeMode ,200, 3);
 
 //	//将HD7279对应引脚全部拉低
 //	P1 = 0x00;
 	
-	DelayMs(25);
+//	DelayMs(25);
 	
 //	for(j = 0 ; j < 10 ; j++)
 //	{
@@ -82,12 +102,13 @@ void main(void)
 //	}
 	while(1)
 	{
-		DelayMs(20);
+//		DelayMs(20);
 		
 		switch(status)
 		{
 			//按键和LED
 			case keyLed:
+			{
 				
 				//读取按键状态
 				keyState = KeyRead();
@@ -258,9 +279,10 @@ void main(void)
 					break;
 				}
 			break;
+			}
 			//简单IO实验
 			case basicIO:
-				
+			{	
 				//从74LS245地址读取简单IO输入
 				ioInput = chip245Adress;
 			
@@ -281,8 +303,10 @@ void main(void)
 				}
 				
 			break;
+			}
 			//译码器实验
 			case decode:
+			{
 				timeCounter++;
 				timeCounter%=20;
 				if(timeCounter/10)
@@ -295,8 +319,10 @@ void main(void)
 				}
 			
 			break;
+			}
 			//P1IO口实验
 			case p1IO:
+			{
 				switch(p1IOStatus)
 				{
 					//四个一组循环闪烁
@@ -317,9 +343,28 @@ void main(void)
 					break;
 				}
 			break;
+			}
 			case dataMemory:
 				
-			break;		
+			break;
+			case timerExp:
+			{
+				switch(timerStatus)
+				{
+					case timerExp1:
+						if(TimerGetOverFlowITFlag(TIM0))
+						{
+							P10=!P10;
+							TimerClearOverFlowFlag(TIM0);
+						}
+					break;
+					case timerExp2:
+					break;
+					case timerExp3:
+					break;
+				}
+			break;
+			}
 			case statusIdle:
 			break;
 			default:

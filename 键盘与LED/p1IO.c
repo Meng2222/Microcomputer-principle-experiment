@@ -5,7 +5,7 @@
 //P1口输出控制LED四个一组循环闪烁，输入为闪烁周期，单位毫秒
 void BlinkIn4(unsigned short period)
 {
-	static unsigned short blinkTimeCounter  = 0;
+	static unsigned short idata blinkTimeCounter  = 0;
 	
 	blinkTimeCounter+=20;
 	blinkTimeCounter%=2*period;
@@ -23,8 +23,8 @@ void BlinkIn4(unsigned short period)
 //P1口输出控制LED流水灯，输入为流水等的周期，单位：毫秒
 void Flow(unsigned short flowPeriod)
 {
-	static unsigned short flowCounter = 0;
-	static unsigned char flowState = 0x01;
+	static unsigned short idata flowCounter = 0;
+	static unsigned char idata flowState = 0x01;
 	
 	flowCounter+=20;
 	flowCounter%=flowPeriod;
