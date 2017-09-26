@@ -1,4 +1,4 @@
-C51 COMPILER V9.56.0.0   MAIN                                                              09/25/2017 21:01:00 PAGE 1   
+C51 COMPILER V9.56.0.0   MAIN                                                              09/25/2017 21:12:14 PAGE 1   
 
 
 C51 COMPILER V9.56.0.0, COMPILATION OF MODULE MAIN
@@ -62,7 +62,7 @@ line level    source
   52          {
   53                  timerExp1,
   54                  timerExp2,
-C51 COMPILER V9.56.0.0   MAIN                                                              09/25/2017 21:01:00 PAGE 2   
+C51 COMPILER V9.56.0.0   MAIN                                                              09/25/2017 21:12:14 PAGE 2   
 
   55                  timerExp3       
   56          }timerStatus_t;
@@ -92,12 +92,12 @@ line level    source
   80   1              
   81   1              timeMode_t timeMode ={0};
   82   1              
-  83   1      //      timeMode.isGateCrl = noGateCrl;
-  84   1      //      timeMode.timeWorkMode = timer;
-  85   1      //      timeMode.timeTriggerMode = innerTrigger;
-  86   1      //      timeMode.timerMode = halfWordAutoReload;
-  87   1      //      
-  88   1      //      TimeInit(TIM0 , timeMode ,200, 3);
+  83   1              timeMode.isGateCrl = noGateCrl;
+  84   1              timeMode.timeWorkMode = timer;
+  85   1              timeMode.timeTriggerMode = innerTrigger;
+  86   1              timeMode.timerMode = halfWordAutoReload;
+  87   1              
+  88   1              TimeInit(TIM0 , timeMode ,200, 3);
   89   1      
   90   1              timeMode.isGateCrl = noGateCrl;
   91   1              timeMode.timeWorkMode = counter;
@@ -126,7 +126,7 @@ line level    source
  114   1              {
  115   2      //              DelayMs(20);
  116   2                      
-C51 COMPILER V9.56.0.0   MAIN                                                              09/25/2017 21:01:00 PAGE 3   
+C51 COMPILER V9.56.0.0   MAIN                                                              09/25/2017 21:12:14 PAGE 3   
 
  117   2                      switch(status)
  118   2                      {
@@ -190,7 +190,7 @@ line level    source
  176   7                                                                      }
  177   6                                                              break;
  178   6                                                              case KEY1:
-C51 COMPILER V9.56.0.0   MAIN                                                              09/25/2017 21:01:00 PAGE 4   
+C51 COMPILER V9.56.0.0   MAIN                                                              09/25/2017 21:12:14 PAGE 4   
 
  179   6                                                                      for(i = 0 ; i < 8 ; i++)
  180   6                                                                      {
@@ -254,7 +254,7 @@ line level    source
  238   5                                                      if(keyState!=0xff&&keyFlag==0)
  239   5                                                      {
  240   6                                                              HD7279SendByte(RTL_UNCYL);
-C51 COMPILER V9.56.0.0   MAIN                                                              09/25/2017 21:01:00 PAGE 5   
+C51 COMPILER V9.56.0.0   MAIN                                                              09/25/2017 21:12:14 PAGE 5   
 
  241   6                                                              switch(keyState)
  242   6                                                              {
@@ -318,7 +318,7 @@ line level    source
  300   4                                      chip374Adress = ~ioInput;
  301   4                              
  302   4                                      //在数码管上显示简单IO输入状态
-C51 COMPILER V9.56.0.0   MAIN                                                              09/25/2017 21:01:00 PAGE 6   
+C51 COMPILER V9.56.0.0   MAIN                                                              09/25/2017 21:12:14 PAGE 6   
 
  303   4                                      for(i = 0 ; i < 8 ; i++)
  304   4                                      {
@@ -382,7 +382,7 @@ line level    source
  362   4                                      switch(timerStatus)
  363   4                                      {
  364   5                                              case timerExp1:
-C51 COMPILER V9.56.0.0   MAIN                                                              09/25/2017 21:01:00 PAGE 7   
+C51 COMPILER V9.56.0.0   MAIN                                                              09/25/2017 21:12:14 PAGE 7   
 
  365   5                                                      if(TimerGetOverFlowITFlag(TIM0))
  366   5                                                      {
@@ -446,7 +446,7 @@ line level    source
                               
                               for(i = 0; i< OUTER_MEM_IN_MCU_SIZE ; i++)
                               {
-C51 COMPILER V9.56.0.0   MAIN                                                              09/25/2017 21:01:00 PAGE 8   
+C51 COMPILER V9.56.0.0   MAIN                                                              09/25/2017 21:12:14 PAGE 8   
 
                                       outerMemInMCU[i] = i;
                                       LEDShowInt(outerMemInMCU[i]);
@@ -466,7 +466,7 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    940    ----
+   CODE SIZE        =    982    ----
    CONSTANT SIZE    =      4    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----

@@ -80,12 +80,12 @@ void main(void)
 	
 	timeMode_t timeMode ={0};
 	
-//	timeMode.isGateCrl = noGateCrl;
-//	timeMode.timeWorkMode = timer;
-//	timeMode.timeTriggerMode = innerTrigger;
-//	timeMode.timerMode = halfWordAutoReload;
-//	
-//	TimeInit(TIM0 , timeMode ,200, 3);
+	timeMode.isGateCrl = noGateCrl;
+	timeMode.timeWorkMode = timer;
+	timeMode.timeTriggerMode = innerTrigger;
+	timeMode.timerMode = halfWordAutoReload;
+	
+	TimeInit(TIM0 , timeMode ,200, 3);
 
 	timeMode.isGateCrl = noGateCrl;
 	timeMode.timeWorkMode = counter;
