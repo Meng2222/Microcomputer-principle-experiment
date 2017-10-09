@@ -72,12 +72,12 @@ void TimeReloadNumInit(TimerTypeDef_t TIMx,timerMode_t timerMode,unsigned short 
 	
 	if(TIMx == TIM0)
 	{
-		TL0 = reloadNum;
+		TL0 = reloadNum&0x00ff;
 		TH0 = reloadNum>>8;
 	}
 	else if(TIMx == TIM1)
 	{
-		TL1 = reloadNum;
+		TL1 = reloadNum&0x00ff;
 		TH1 = reloadNum>>8;
 	}
 	

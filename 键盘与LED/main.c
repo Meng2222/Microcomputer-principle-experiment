@@ -64,7 +64,7 @@ void main(void)
 	ledStatus_t idata ledStatus = inputRoll2Left;
 	status_t idata status = timerExp;
 	p1IOStatus_t idata p1IOStatus = flow;
-	timerStatus_t idata timerStatus = timerExp2;
+	timerStatus_t idata timerStatus = timerExp1;
 	unsigned char i,j = 0;
 	//按键状态，没有按下时为0xff，按下时为按下按键的编号
 	unsigned char keyState = 0;
