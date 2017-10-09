@@ -451,6 +451,14 @@ void main(void)
 						}
 					break;
 					case itExp3:
+						if(LedItStatus)
+						{
+							Flow(200);
+						}
+						else
+						{
+							BlinkIn4(300);
+						}
 					break;
 				}
 			break;
