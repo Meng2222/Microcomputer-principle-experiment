@@ -37,6 +37,7 @@ typedef enum
 	p1IO,
 	dataMemory,
 	timerExp,
+	interruptExp,
 	statusIdle
 }status_t;
 
@@ -56,6 +57,14 @@ typedef enum
 	timerExp3	
 }timerStatus_t;
 
+typedef enum
+{
+	itExp1,
+	itExp2,
+	itExp3
+}itStatus_t;
+
+unsigned char LedItStatus = 0;
 
 void main(void)
 {
@@ -63,9 +72,10 @@ void main(void)
 //数码管滚动显示的周期
 #define ROLL_PERIOD (15)
 	ledStatus_t idata ledStatus = inputRoll2Left;
-	status_t idata status = timerExp;
+	status_t idata status = interruptExp;
 	p1IOStatus_t idata p1IOStatus = flow;
 	timerStatus_t idata timerStatus = timerExp3;
+	itStatus_t idata itStatus = itExp1;
 	unsigned char i,j = 0;
 	//按键状态，没有按下时为0xff，按下时为按下按键的编号
 	unsigned char keyState = 0;
@@ -109,6 +119,8 @@ void main(void)
 	TimeInit(TIM1 , timeMode ,65535, 1);
 	TimerCmd(TIM1 , disable);
 	
+	IE = 0x81;
+	IT0 = 1;
 
 //	//将HD7279对应引脚全部拉低
 //	P1 = 0x00;
@@ -125,7 +137,7 @@ void main(void)
 //	}
 	while(1)
 	{
-//		DelayMs(20);
+		DelayMs(20);
 		
 		switch(status)
 		{
@@ -414,6 +426,25 @@ void main(void)
 				}
 			break;
 			}
+			case interruptExp:
+				switch(itStatus)
+				{
+					case itExp1:
+						if(LedItStatus)
+						{
+							Flow(200);
+						}
+						else
+						{
+							BlinkIn4(300);
+						}
+					break;
+					case itExp2:
+					break;
+					case itExp3:
+					break;
+				}
+			break;
 			case statusIdle:
 			break;
 			default:

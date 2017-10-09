@@ -1,7 +1,7 @@
 #ifndef __TIMER_H
 #define __TIMER_H
 
-typedef enum {disable = 0, enable = !disable}FunctionalState_t;
+typedef enum {disable = 0, enable}FunctionalState_t;
 typedef enum
 {
 	TIM0 = 0,
