@@ -1,7 +1,7 @@
 #ifndef __TIMER_H
 #define __TIMER_H
 
-typedef enum {disable = 0, enable = 1}FunctionalState_t;
+typedef enum {disable = 0, enable = !disable}FunctionalState_t;
 typedef enum
 {
 	TIM0 = 0,
@@ -44,7 +44,7 @@ typedef struct
 
 
 
-void TimerCmd(TimerTypeDef_t TIMx , timeMode_t timeMode,FunctionalState_t newState);
+void TimerCmd(TimerTypeDef_t TIMx , FunctionalState_t newState);
 unsigned char TimerGetOverFlowITFlag(TimerTypeDef_t TIMx);
 void TimerClearOverFlowFlag(TimerTypeDef_t TIMx);
 void TimeModeInit(TimerTypeDef_t TIMx , timeMode_t timeMode);
