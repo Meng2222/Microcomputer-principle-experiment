@@ -1,4 +1,4 @@
-
+ï»¿
 # Prerequisites
 *.d
 
@@ -52,22 +52,12 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
-¼üÅÌÓëLED/Listings/
-¼üÅÌÓëLED/Objects/
+*/Listings/
+*/Objects/*
+
 
 *.m51
-*.Dreamer
 *.uvopt
-*.m51
-é”®ç›˜ä¸LED/Listings/
-*.uvopt
-é”®ç›˜ä¸LED/key&LED.uvgui.Dreamer
-*.m51
-é”®ç›˜ä¸LED/Objects/
+*.uvgui.*
 
-*.htm
-*.m51
-*.htm
-*.m51
-*.Dreamer
 é”®ç›˜ä¸LED/key&LED.uvopt

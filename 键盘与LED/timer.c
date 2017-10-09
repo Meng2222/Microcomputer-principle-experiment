@@ -1,17 +1,24 @@
 #include "timer.h"
 #include "STC15F2K60S2.h"
 
-void TimerCmd(TimerTypeDef_t TIMx , FunctionalState_t newState)
+void TimerCmd(TimerTypeDef_t TIMx ,timeMode_t timeMode, FunctionalState_t newState)
 {
-	if(newState == enable)
-	{
-		TCON|=(0x10<<(TIMx * 2));
-	}
-	else
-	{
-		TCON&=(~(0x10<<(TIMx * 2)));
-	}
-	
+		if((newState + timeMode.isGateCrl)== enable)
+		{
+			TCON|=(0x10<<(TIMx * 2));
+		}
+		else if((newState + timeMode.isGateCrl)== enable + 1)
+		{
+			TCON&=(~(0x10<<(TIMx * 2)));
+		}
+		else if((newState + timeMode.isGateCrl)== disable)
+		{
+			TCON&=(~(0x10<<(TIMx * 2)));		
+		}
+		else if((newState + timeMode.isGateCrl)== disable+1)
+		{
+			TCON|=(0x10<<(TIMx * 2));		
+		}
 }
 
 unsigned char TimerGetOverFlowITFlag(TimerTypeDef_t TIMx)
@@ -72,12 +79,12 @@ void TimeReloadNumInit(TimerTypeDef_t TIMx,timerMode_t timerMode,unsigned short 
 	
 	if(TIMx == TIM0)
 	{
-		TL0 = reloadNum;
+		TL0 = reloadNum&0x00ff;
 		TH0 = reloadNum>>8;
 	}
 	else if(TIMx == TIM1)
 	{
-		TL1 = reloadNum;
+		TL1 = reloadNum&0x00ff;
 		TH1 = reloadNum>>8;
 	}
 	
@@ -90,5 +97,5 @@ void TimeInit(TimerTypeDef_t TIMx , timeMode_t timeMode ,unsigned short timerPer
 	
 	TimeReloadNumInit(TIMx,timeMode.timerMode,timerPeriod,mechinePeriod);
 	
-	TimerCmd(TIMx , enable);
+	TimerCmd(TIMx ,timeMode, enable);
 }

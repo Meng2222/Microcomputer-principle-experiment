@@ -64,7 +64,7 @@ void main(void)
 	ledStatus_t idata ledStatus = inputRoll2Left;
 	status_t idata status = timerExp;
 	p1IOStatus_t idata p1IOStatus = flow;
-	timerStatus_t idata timerStatus = timerExp2;
+	timerStatus_t idata timerStatus = timerExp1;
 	unsigned char i,j = 0;
 	//按键状态，没有按下时为0xff，按下时为按下按键的编号
 	unsigned char keyState = 0;
@@ -86,16 +86,16 @@ void main(void)
 	timeMode.timerMode = halfWordAutoReload;
 	
 	TimeInit(TIM0 , timeMode ,200, 3);
-
+	
 	timeMode.isGateCrl = noGateCrl;
 	timeMode.timeWorkMode = counter;
 	timeMode.timeTriggerMode = outerTrigger;
 	timeMode.timerMode = byteAutoReload;	
 	TimeInit(TIM1 , timeMode ,0, 3);
-	TimerCmd(TIM1 , disable);
+	TimerCmd(TIM1 ,timeMode, disable);
 	TH1 = 0xfb;
 	TL1 = 0xfb;
-	TimerCmd(TIM1 ,enable);
+	TimerCmd(TIM1 ,timeMode,enable);
 
 //	//将HD7279对应引脚全部拉低
 //	P1 = 0x00;
