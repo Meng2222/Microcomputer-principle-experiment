@@ -97,6 +97,10 @@ sbit ETx = IE^1;
 
 void TimerOverFlowItInit(TimerTypeDef_t TIMx , FunctionalState_t newState)
 {
+	if(newState == enable)
+	{
+		EA = 1;
+	}
 	ETx = IE^(1 + TIMx * 2);
 	ETx = newState;
 }

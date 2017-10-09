@@ -75,7 +75,7 @@ void main(void)
 	status_t idata status = interruptExp;
 	p1IOStatus_t idata p1IOStatus = flow;
 	timerStatus_t idata timerStatus = timerExp3;
-	itStatus_t idata itStatus = itExp1;
+	itStatus_t idata itStatus = itExp2;
 	unsigned char i,j = 0;
 	//按键状态，没有按下时为0xff，按下时为按下按键的编号
 	unsigned char keyState = 0;
@@ -96,11 +96,12 @@ void main(void)
 	timeMode_t timeMode ={0};
 	
 	timeMode.isGateCrl = noGateCrl;
-	timeMode.timeWorkMode = timer;
+	timeMode.timeWorkMode = counter;
 	timeMode.timeTriggerMode = innerTrigger;
 	timeMode.timerMode = halfWordAutoReload;
 	
-	TimeInit(TIM0 , timeMode ,200, 3);
+	TimeInit(TIM0 , timeMode ,3-1, 1);
+	TimerOverFlowItInit(TIM0 , enable);
 
 	timeMode.isGateCrl = noGateCrl;
 	timeMode.timeWorkMode = counter;
@@ -119,7 +120,7 @@ void main(void)
 	TimeInit(TIM1 , timeMode ,65535, 1);
 	TimerCmd(TIM1 , disable);
 	
-	IE = 0x81;
+//	IE = 0x81;
 	IT0 = 1;
 
 //	//将HD7279对应引脚全部拉低
@@ -440,6 +441,14 @@ void main(void)
 						}
 					break;
 					case itExp2:
+						if(LedItStatus)
+						{
+							Flow(200);
+						}
+						else
+						{
+							BlinkIn4(300);
+						}
 					break;
 					case itExp3:
 					break;
