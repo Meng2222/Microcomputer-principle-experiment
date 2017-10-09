@@ -6,6 +6,7 @@
 ".\Objects\decode.obj",
 ".\Objects\p1IO.obj",
 ".\Objects\dataMemory.obj",
-".\Objects\timer.obj" 
+".\Objects\timer.obj",
+".\Objects\89C51_it.obj" 
 TO ".\Objects\keyLED" 
 PRINT(".\Listings\keyLED.m51") RAMSIZE(256) 
