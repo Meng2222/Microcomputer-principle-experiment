@@ -92,3 +92,11 @@ void TimeInit(TimerTypeDef_t TIMx , timeMode_t timeMode ,unsigned short timerPer
 	
 	TimerCmd(TIMx , enable);
 }
+
+sbit ETx = IE^1;
+
+void TimerOverFlowItInit(TimerTypeDef_t TIMx , FunctionalState_t newState)
+{
+	ETx = IE^(1 + TIMx * 2);
+	ETx = newState;
+}

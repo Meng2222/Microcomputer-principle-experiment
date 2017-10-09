@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22                                                        10/09/2017  20:04:38  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22                                                        10/09/2017  20:36:31  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
@@ -59,7 +59,7 @@ LINK MAP OF MODULE:  .\Objects\keyLED (?C_STARTUP)
             XDATA   F900H     0001H     ABSOLUTE     
                     F901H     00FFH                  *** GAP ***
             XDATA   FA00H     0001H     ABSOLUTE     
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/09/2017  20:04:38  PAGE 2
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/09/2017  20:36:31  PAGE 2
 
 
                     FA01H     00FFH                  *** GAP ***
@@ -87,12 +87,13 @@ LINK MAP OF MODULE:  .\Objects\keyLED (?C_STARTUP)
             CODE    0D5AH     0021H     UNIT         ?CO?HD7279
             CODE    0D7BH     0016H     UNIT         ?PR?_TIMERGETOVERFLOWITFLAG?TIMER
             CODE    0D91H     0011H     UNIT         ?PR?INTERINT0?89C51_IT
-            CODE    0DA2H     000FH     UNIT         ?C_INITSEG
-            CODE    0DB1H     000EH     UNIT         ?PR?SHOWINPUT?P1IO
-            CODE    0DBFH     000CH     UNIT         ?PR?_TIMERCLEAROVERFLOWFLAG?TIMER
-            CODE    0DCBH     000AH     UNIT         ?PR?_LEDWRITE?HD7279
-            CODE    0DD5H     0009H     UNIT         ?PR?KEYREAD?HD7279
-            CODE    0DDEH     0004H     UNIT         ?CO?MAIN
+            CODE    0DA2H     0010H     UNIT         ?PR?_TIMEROVERFLOWITINIT?TIMER
+            CODE    0DB2H     000FH     UNIT         ?C_INITSEG
+            CODE    0DC1H     000EH     UNIT         ?PR?SHOWINPUT?P1IO
+            CODE    0DCFH     000CH     UNIT         ?PR?_TIMERCLEAROVERFLOWFLAG?TIMER
+            CODE    0DDBH     000AH     UNIT         ?PR?_LEDWRITE?HD7279
+            CODE    0DE5H     0009H     UNIT         ?PR?KEYREAD?HD7279
+            CODE    0DEEH     0004H     UNIT         ?CO?MAIN
 
 
 
@@ -118,10 +119,10 @@ SEGMENT                                      BIT_GROUP          DATA_GROUP      
   +--> ?PR?SHOWINPUT?P1IO
   +--> ?PR?_TIMERGETOVERFLOWITFLAG?TIMER
   +--> ?PR?_TIMERCLEAROVERFLOWFLAG?TIMER
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/09/2017  20:36:31  PAGE 3
+
+
   +--> ?PR?_LEDSHOWINT?HD7279
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/09/2017  20:04:38  PAGE 3
-
-
   +--> ?PR?_FLOW?P1IO
 
 ?PR?_TIMEINIT?TIMER                       -----    -----      0032H    0009H      -----    -----      -----    -----
@@ -178,10 +179,10 @@ SYMBOL TABLE OF MODULE:  .\Objects\keyLED (?C_STARTUP)
   N:0000H         SYMBOL        IBPSTACK
   N:0100H         SYMBOL        IBPSTACKTOP
   N:0080H         SYMBOL        IDATALEN
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/09/2017  20:36:31  PAGE 4
+
+
   C:0A66H         SYMBOL        IDATALOOP
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/09/2017  20:04:38  PAGE 4
-
-
   N:0000H         SYMBOL        PBPSTACK
   N:0100H         SYMBOL        PBPSTACKTOP
   N:0000H         SYMBOL        PDATALEN
@@ -222,7 +223,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\keyLED (?C_STARTUP)
   D:0098H         PUBLIC        SCON
   D:0088H         PUBLIC        TCON
   B:00B0H.3       PUBLIC        P33
-  C:0DDEH         SYMBOL        _?ix1000
+  C:0DEEH         SYMBOL        _?ix1000
   D:008DH         PUBLIC        TH1
   B:0088H.0       PUBLIC        IT0
   D:008BH         PUBLIC        TL1
@@ -238,10 +239,10 @@ SYMBOL TABLE OF MODULE:  .\Objects\keyLED (?C_STARTUP)
   D:0022H         SYMBOL        i
   D:0023H         SYMBOL        j
   D:0024H         SYMBOL        keyState
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/09/2017  20:36:31  PAGE 5
+
+
   D:0025H         SYMBOL        rollPeriod
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/09/2017  20:04:38  PAGE 5
-
-
   D:0026H         SYMBOL        keyFlag
   D:0027H         SYMBOL        ioInput
   D:0028H         SYMBOL        ioOutput
@@ -298,10 +299,10 @@ SYMBOL TABLE OF MODULE:  .\Objects\keyLED (?C_STARTUP)
   C:010CH         LINE#         146
   C:010CH         LINE#         149
   C:0111H         LINE#         151
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/09/2017  20:36:31  PAGE 6
+
+
   C:0124H         LINE#         152
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/09/2017  20:04:38  PAGE 6
-
-
   C:0124H         LINE#         154
   C:0124H         LINE#         156
   C:0129H         LINE#         157
@@ -358,10 +359,10 @@ SYMBOL TABLE OF MODULE:  .\Objects\keyLED (?C_STARTUP)
   C:01E7H         LINE#         213
   C:01EBH         LINE#         214
   C:01EBH         LINE#         215
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/09/2017  20:36:31  PAGE 7
+
+
   C:01EBH         LINE#         216
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/09/2017  20:04:38  PAGE 7
-
-
   C:01F8H         LINE#         217
   C:01F8H         LINE#         218
   C:0207H         LINE#         219
@@ -418,10 +419,10 @@ SYMBOL TABLE OF MODULE:  .\Objects\keyLED (?C_STARTUP)
   C:0305H         LINE#         271
   C:0305H         LINE#         272
   C:0308H         LINE#         273
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/09/2017  20:36:31  PAGE 8
+
+
   C:030AH         LINE#         274
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/09/2017  20:04:38  PAGE 8
-
-
   C:030AH         LINE#         275
   C:030DH         LINE#         276
   C:030FH         LINE#         277
@@ -478,10 +479,10 @@ SYMBOL TABLE OF MODULE:  .\Objects\keyLED (?C_STARTUP)
   C:0393H         LINE#         338
   C:0397H         LINE#         340
   C:0397H         LINE#         341
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/09/2017  20:36:31  PAGE 9
+
+
   C:0397H         LINE#         343
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/09/2017  20:04:38  PAGE 9
-
-
   C:0397H         LINE#         344
   C:0397H         LINE#         345
   C:039FH         LINE#         346
@@ -538,10 +539,10 @@ SYMBOL TABLE OF MODULE:  .\Objects\keyLED (?C_STARTUP)
   C:0424H         LINE#         404
   C:0427H         LINE#         405
   C:0427H         LINE#         406
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/09/2017  20:36:31  PAGE 10
+
+
   C:0427H         LINE#         407
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/09/2017  20:04:38  PAGE 10
-
-
   C:042AH         LINE#         408
   C:042AH         LINE#         409
   C:0431H         LINE#         410
@@ -593,15 +594,15 @@ SYMBOL TABLE OF MODULE:  .\Objects\keyLED (?C_STARTUP)
   D:00B8H         PUBLIC        IP
   C:0D5DH         PUBLIC        realCode
   D:00D8H         PUBLIC        CCON
-  C:0DCBH         PUBLIC        _LedWrite
+  C:0DDBH         PUBLIC        _LedWrite
   C:09BCH         PUBLIC        _LEDShowInt
-  C:0DD5H         PUBLIC        KeyRead
+  C:0DE5H         PUBLIC        KeyRead
   D:0098H         PUBLIC        SCON
   D:0088H         PUBLIC        TCON
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/09/2017  20:36:31  PAGE 11
+
+
   B:0090H.4       PUBLIC        dat
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/09/2017  20:04:38  PAGE 11
-
-
   B:0090H.7       PUBLIC        clk
   C:0D6BH         SYMBOL        _?ix1000
   C:0D73H         SYMBOL        _?ix1001
@@ -658,10 +659,10 @@ SYMBOL TABLE OF MODULE:  .\Objects\keyLED (?C_STARTUP)
   C:0BE4H         LINE#         52
   C:0BE4H         LINE#         54
   C:0BE4H         LINE#         56
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/09/2017  20:36:31  PAGE 12
+
+
   C:0BE4H         LINE#         57
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/09/2017  20:04:38  PAGE 12
-
-
   C:0BE6H         LINE#         58
   C:0BEDH         LINE#         59
   C:0BF6H         LINE#         60
@@ -671,17 +672,17 @@ SYMBOL TABLE OF MODULE:  .\Objects\keyLED (?C_STARTUP)
   -------         PROC          _LEDWRITE
   D:0007H         SYMBOL        cmd
   D:0046H         SYMBOL        dataSend
-  C:0DCBH         LINE#         65
-  C:0DCDH         LINE#         66
-  C:0DCDH         LINE#         67
-  C:0DD0H         LINE#         69
+  C:0DDBH         LINE#         65
+  C:0DDDH         LINE#         66
+  C:0DDDH         LINE#         67
+  C:0DE0H         LINE#         69
   -------         ENDPROC       _LEDWRITE
   -------         PROC          KEYREAD
-  C:0DD5H         LINE#         73
-  C:0DD5H         LINE#         74
-  C:0DD5H         LINE#         75
-  C:0DDAH         LINE#         77
-  C:0DDDH         LINE#         78
+  C:0DE5H         LINE#         73
+  C:0DE5H         LINE#         74
+  C:0DE5H         LINE#         75
+  C:0DEAH         LINE#         77
+  C:0DEDH         LINE#         78
   -------         ENDPROC       KEYREAD
   -------         PROC          _LEDSHOWINT
   D:0032H         SYMBOL        showData
@@ -718,10 +719,10 @@ SYMBOL TABLE OF MODULE:  .\Objects\keyLED (?C_STARTUP)
   -------         ENDPROC       _LEDSHOWINT
   -------         ENDMOD        HD7279
 
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/09/2017  20:36:31  PAGE 13
+
+
   -------         MODULE        DELAY
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/09/2017  20:04:38  PAGE 13
-
-
   C:0000H         SYMBOL        _ICE_DUMMY_
   C:0CDAH         PUBLIC        _Delay10Us
   C:0C37H         PUBLIC        _DelayMs
@@ -778,10 +779,10 @@ SYMBOL TABLE OF MODULE:  .\Objects\keyLED (?C_STARTUP)
   X:F900H         PUBLIC        decodeAdress2
   -------         ENDMOD        DECODE
 
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/09/2017  20:36:31  PAGE 14
+
+
   -------         MODULE        P1IO
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/09/2017  20:04:38  PAGE 14
-
-
   C:0000H         SYMBOL        _ICE_DUMMY_
   D:0080H         PUBLIC        P0
   D:0090H         PUBLIC        P1
@@ -797,7 +798,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\keyLED (?C_STARTUP)
   D:00D8H         PUBLIC        CCON
   D:0098H         PUBLIC        SCON
   D:0088H         PUBLIC        TCON
-  C:0DB1H         PUBLIC        ShowInput
+  C:0DC1H         PUBLIC        ShowInput
   C:0B80H         PUBLIC        _BlinkIn4
   D:00D0H         PUBLIC        PSW
   -------         PROC          _BLINKIN4
@@ -838,24 +839,24 @@ SYMBOL TABLE OF MODULE:  .\Objects\keyLED (?C_STARTUP)
   C:0CA3H         LINE#         42
   C:0CA3H         LINE#         43
   C:0CA7H         LINE#         44
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/09/2017  20:36:31  PAGE 15
+
+
   C:0CA7H         LINE#         45
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/09/2017  20:04:38  PAGE 15
-
-
   C:0CA7H         LINE#         47
   -------         ENDPROC       _FLOW
   -------         PROC          SHOWINPUT
   -------         DO            
   D:0007H         SYMBOL        p1Input
   -------         ENDDO         
-  C:0DB1H         LINE#         50
-  C:0DB1H         LINE#         51
-  C:0DB1H         LINE#         52
-  C:0DB1H         LINE#         55
-  C:0DB4H         LINE#         57
-  C:0DB8H         LINE#         59
-  C:0DBBH         LINE#         60
-  C:0DBEH         LINE#         62
+  C:0DC1H         LINE#         50
+  C:0DC1H         LINE#         51
+  C:0DC1H         LINE#         52
+  C:0DC1H         LINE#         55
+  C:0DC4H         LINE#         57
+  C:0DC8H         LINE#         59
+  C:0DCBH         LINE#         60
+  C:0DCEH         LINE#         62
   -------         ENDPROC       SHOWINPUT
   -------         ENDMOD        P1IO
 
@@ -888,20 +889,22 @@ SYMBOL TABLE OF MODULE:  .\Objects\keyLED (?C_STARTUP)
   D:00E8H         PUBLIC        P6
   D:00F8H         PUBLIC        P7
   D:00A8H         PUBLIC        IE
+  B:00A8H.1       PUBLIC        ETx
+  C:0DA2H         PUBLIC        _TimerOverFlowItInit
   D:00B8H         PUBLIC        IP
   C:0D0BH         PUBLIC        _TimerCmd
   D:00D8H         PUBLIC        CCON
-  C:0DBFH         PUBLIC        _TimerClearOverFlowFlag
+  C:0DCFH         PUBLIC        _TimerClearOverFlowFlag
   C:0CA8H         PUBLIC        _TimeInit
   C:0AEFH         PUBLIC        _TimeModeInit
   D:0098H         PUBLIC        SCON
   D:0089H         PUBLIC        TMOD
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/09/2017  20:36:31  PAGE 16
+
+
   D:0088H         PUBLIC        TCON
   C:0BFBH         PUBLIC        _TimeReloadNumInit
   B:0088H.5       PUBLIC        TF0
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/09/2017  20:04:38  PAGE 16
-
-
   B:0088H.7       PUBLIC        TF1
   D:008CH         PUBLIC        TH0
   D:008DH         PUBLIC        TH1
@@ -944,24 +947,24 @@ SYMBOL TABLE OF MODULE:  .\Objects\keyLED (?C_STARTUP)
   -------         ENDPROC       _TIMERGETOVERFLOWITFLAG
   -------         PROC          _TIMERCLEAROVERFLOWFLAG
   D:0007H         SYMBOL        TIMx
-  C:0DBFH         LINE#         31
-  C:0DBFH         LINE#         32
-  C:0DBFH         LINE#         33
-  C:0DC2H         LINE#         34
-  C:0DC2H         LINE#         35
-  C:0DC4H         LINE#         36
-  C:0DC5H         LINE#         37
-  C:0DC8H         LINE#         38
-  C:0DC8H         LINE#         39
-  C:0DCAH         LINE#         40
-  C:0DCAH         LINE#         41
+  C:0DCFH         LINE#         31
+  C:0DCFH         LINE#         32
+  C:0DCFH         LINE#         33
+  C:0DD2H         LINE#         34
+  C:0DD2H         LINE#         35
+  C:0DD4H         LINE#         36
+  C:0DD5H         LINE#         37
+  C:0DD8H         LINE#         38
+  C:0DD8H         LINE#         39
+  C:0DDAH         LINE#         40
+  C:0DDAH         LINE#         41
   -------         ENDPROC       _TIMERCLEAROVERFLOWFLAG
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/09/2017  20:36:31  PAGE 17
+
+
   -------         PROC          _TIMEMODEINIT
   D:0007H         SYMBOL        TIMx
   D:003CH         SYMBOL        timeMode
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/09/2017  20:04:38  PAGE 17
-
-
   -------         DO            
   D:0006H         SYMBOL        tempCrl
   -------         ENDDO         
@@ -1016,12 +1019,21 @@ SYMBOL TABLE OF MODULE:  .\Objects\keyLED (?C_STARTUP)
   C:0CAAH         LINE#         87
   C:0CAAH         LINE#         89
   C:0CC2H         LINE#         91
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/09/2017  20:36:31  PAGE 18
+
+
   C:0CD3H         LINE#         93
   -------         ENDPROC       _TIMEINIT
+  -------         PROC          _TIMEROVERFLOWITINIT
+  D:0007H         SYMBOL        TIMx
+  D:0005H         SYMBOL        newState
+  C:0DA2H         LINE#         98
+  C:0DA2H         LINE#         99
+  C:0DA2H         LINE#         100
+  C:0DACH         LINE#         101
+  C:0DB1H         LINE#         102
+  -------         ENDPROC       _TIMEROVERFLOWITINIT
   -------         ENDMOD        TIMER
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/09/2017  20:04:38  PAGE 18
-
-
 
   -------         MODULE        89C51_IT
   C:0000H         SYMBOL        _ICE_DUMMY_
@@ -1067,6 +1079,9 @@ SYMBOL TABLE OF MODULE:  .\Objects\keyLED (?C_STARTUP)
 
   -------         MODULE        ?C?CCASE
   C:092EH         PUBLIC        ?C?CCASE
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/09/2017  20:36:31  PAGE 19
+
+
   -------         ENDMOD        ?C?CCASE
 
   -------         MODULE        PRINTF
@@ -1079,9 +1094,6 @@ SYMBOL TABLE OF MODULE:  .\Objects\keyLED (?C_STARTUP)
   C:04E3H         PUBLIC        _SPRINTF
   C:04E3H         PUBLIC        _SPRINTF517
   -------         ENDMOD        PRINTF
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/09/2017  20:04:38  PAGE 19
-
-
 
   -------         MODULE        ?C?CLDPTR
   C:0954H         PUBLIC        ?C?CLDPTR
@@ -1106,5 +1118,8 @@ SYMBOL TABLE OF MODULE:  .\Objects\keyLED (?C_STARTUP)
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?C_INITSEG
 
-Program Size: data=77.1 xdata=6 code=3554
-LINK/LOCATE RUN COMPLETE.  1 WARNING(S),  0 ERROR(S)
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_TIMEROVERFLOWITINIT?TIMER
+
+Program Size: data=77.1 xdata=6 code=3570
+LINK/LOCATE RUN COMPLETE.  2 WARNING(S),  0 ERROR(S)
