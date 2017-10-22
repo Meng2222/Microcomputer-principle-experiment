@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22                                                        10/22/2017  14:38:39  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22                                                        10/22/2017  19:29:05  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
@@ -59,7 +59,7 @@ LINK MAP OF MODULE:  .\Objects\keyLED (?C_STARTUP)
             * * * * * * *  X D A T A   M E M O R Y  * * * * * * *
             XDATA   0000H     0002H     UNIT         ?XD?_DELAYMS?DELAY
             XDATA   0002H     0002H     UNIT         ?XD?_DELAY10US?DELAY
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/22/2017  14:38:39  PAGE 2
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/22/2017  19:29:05  PAGE 2
 
 
                     0004H     F7FCH                  *** GAP ***
@@ -119,7 +119,7 @@ UNRESOLVED EXTERNAL SYMBOLS:
    LEDITSTATUS
    MAIN
 
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/22/2017  14:38:39  PAGE 3
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/22/2017  19:29:05  PAGE 3
 
 
 
@@ -179,7 +179,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\keyLED (?C_STARTUP)
   D:0098H         PUBLIC        SCON
   D:0088H         PUBLIC        TCON
   D:00D0H         PUBLIC        PSW
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/22/2017  14:38:39  PAGE 4
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/22/2017  19:29:05  PAGE 4
 
 
   -------         ENDMOD        MAIN
@@ -239,7 +239,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\keyLED (?C_STARTUP)
   C:074DH         LINE#         34
   C:074FH         LINE#         35
   -------         ENDPROC       _HD7279SENDBYTE
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/22/2017  14:38:39  PAGE 5
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/22/2017  19:29:05  PAGE 5
 
 
   -------         PROC          HD7279RECEIVEBYTE
@@ -299,7 +299,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\keyLED (?C_STARTUP)
   C:0547H         LINE#         85
   C:055AH         LINE#         86
   C:055DH         LINE#         87
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/22/2017  14:38:39  PAGE 6
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/22/2017  19:29:05  PAGE 6
 
 
   C:056EH         LINE#         88
@@ -359,7 +359,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\keyLED (?C_STARTUP)
   C:08AAH         LINE#         21
   C:08AAH         LINE#         23
   C:08B1H         LINE#         24
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/22/2017  14:38:39  PAGE 7
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/22/2017  19:29:05  PAGE 7
 
 
   C:08B1H         LINE#         25
@@ -419,7 +419,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\keyLED (?C_STARTUP)
   C:078BH         LINE#         18
   C:078BH         LINE#         19
   C:078EH         LINE#         20
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/22/2017  14:38:39  PAGE 8
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/22/2017  19:29:05  PAGE 8
 
 
   C:078EH         LINE#         21
@@ -479,7 +479,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\keyLED (?C_STARTUP)
   D:0088H         PUBLIC        TCON
   D:00D0H         PUBLIC        PSW
   -------         ENDMOD        DATAMEMORY
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/22/2017  14:38:39  PAGE 9
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/22/2017  19:29:05  PAGE 9
 
 
 
@@ -539,7 +539,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\keyLED (?C_STARTUP)
   C:094BH         LINE#         22
   C:094DH         LINE#         24
   C:0950H         LINE#         25
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/22/2017  14:38:39  PAGE 10
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/22/2017  19:29:05  PAGE 10
 
 
   C:0950H         LINE#         26
@@ -599,7 +599,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\keyLED (?C_STARTUP)
   C:07D9H         LINE#         75
   C:07DBH         LINE#         77
   C:07DBH         LINE#         78
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/22/2017  14:38:39  PAGE 11
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/22/2017  19:29:05  PAGE 11
 
 
   C:07DEH         LINE#         79
@@ -659,7 +659,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\keyLED (?C_STARTUP)
   -------         ENDPROC       INTERINT0
   -------         PROC          TIME0
   C:06C8H         LINE#         18
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/22/2017  14:38:39  PAGE 12
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/22/2017  19:29:05  PAGE 12
 
 
   C:06E5H         LINE#         20
@@ -719,7 +719,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\keyLED (?C_STARTUP)
   C:04CEH         PUBLIC        ?C?CLDOPTR
   -------         ENDMOD        ?C?CLDOPTR
 
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/22/2017  14:38:39  PAGE 13
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/22/2017  19:29:05  PAGE 13
 
 
   -------         MODULE        ?C?CSTPTR
@@ -779,7 +779,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\keyLED (?C_STARTUP)
 
 *** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
     SYMBOL:  LEDITSTATUS
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/22/2017  14:38:39  PAGE 14
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/22/2017  19:29:05  PAGE 14
 
 
     MODULE:  .\Objects\89C51_it.obj (89C51_IT)

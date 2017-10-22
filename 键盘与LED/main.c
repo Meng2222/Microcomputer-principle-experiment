@@ -239,6 +239,8 @@ void main(void)
 {
 	//IO输入记录变量
 	unsigned char ioInput = 0;
+	//循环计数用变量
+	unsigned char i = 0;
 	
 	while(1)
 	{
@@ -469,6 +471,9 @@ typedef enum
 	itExp2,
 	itExp3
 }itStatus_t;
+
+//LED状态知识标志位
+unsigned char LedItStatus = 0;
 
 void main(void)
 {
