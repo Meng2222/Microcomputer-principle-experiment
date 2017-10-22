@@ -8,6 +8,6 @@
 ".\Objects\dataMemory.obj",
 ".\Objects\timer.obj",
 ".\Objects\89C51_it.obj",
-".\Objects\temp.obj" 
+".\Objects\usart.obj" 
 TO ".\Objects\keyLED" 
 PRINT(".\Listings\keyLED.m51") RAMSIZE(256) 

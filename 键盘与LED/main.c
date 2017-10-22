@@ -18,38 +18,337 @@
 
 #endif
 
-//数码管显示状态枚举变量
+//键盘与LED实验
+#ifdef KEY_LED_EXP
+//键盘与LED实验状态枚举变量
 typedef enum
 {
+	//循环左移
 	rollingLeft,
+	//循环右移
 	rollingRight,
+	//所有数码管显示按键输入的数字（0~9）
 	showKeyNumTogether,
+	//数码管显示按键输入数字并在每次输入后左移一位
 	inputRoll2Left,
+	//空闲状态
 	idle
 }ledStatus_t;
 
-//程序运行状态枚举变量
-typedef enum
+void main(void)
 {
-	keyLed,
-	basicIO,
-	decode,
-	p1IO,
-	dataMemory,
-	timerExp,
-	interruptExp,
-	statusIdle
-}status_t;
+//循环移位的周期数宏定义
+#define ROLL_PERIOD (15)
+	//状态指示变量
+	ledStatus_t idata ledStatus = inputRoll2Left;
+	//循环用计数变量
+	unsigned char i,j = 0;
+	//按键状态，没有按下时为0xff，按下时为按下按键的编号
+	unsigned char keyState = 0;
+	//循环移位周期变量
+	unsigned char rollPeriod = ROLL_PERIOD;
+	//按键是否按下标志位
+	unsigned char keyFlag = 0;
+	while(1)
+	{
+		//每隔20ms循环一次
+		DelayMs(20);
 
-//P1IO输出状态枚举变量
+		//读取按键状态
+		keyState = KeyRead();
+
+		switch(ledStatus)
+		{
+			//数码管显示内容循环左移
+			case rollingLeft:
+				//没有按键按下时循环向左滚动
+				if(keyState==0xff)
+				{
+					rollPeriod--;
+					if(rollPeriod == 0)
+					{
+						rollPeriod = ROLL_PERIOD;
+						//每间隔一个周期发送一个左移命令
+						HD7279SendByte(RTL_CYCLE);
+					}
+				}
+				//按下KEY10时进入所有数码管显示同一数字状态
+				else if(keyState == KEY10)
+				{
+					rollPeriod = ROLL_PERIOD;
+					HD7279SendByte(CMD_RESET);
+					ledStatus = showKeyNumTogether;
+				}
+			break;
+			//数码管显示内容循环右移
+			case rollingRight:
+				//没有按键按下时数码管显示内容循环右移
+				if(keyState == 0xff)
+				{
+					rollPeriod--;
+					if(rollPeriod == 0)
+					{
+						rollPeriod = ROLL_PERIOD;
+						HD7279SendByte(RTR_CYCLE);
+					}
+				}
+				//按下KEY10时进入所有数码管显示同一数字状态
+				else if(keyState == KEY10)
+				{
+					rollPeriod = ROLL_PERIOD;
+					HD7279SendByte(CMD_RESET);
+					ledStatus = showKeyNumTogether;				
+				}
+			break;
+			//所有数码管一通显示按下按键对应数字
+			case showKeyNumTogether:
+				//根据按键状态显示数字（按键编号与数字对应）
+				switch(keyState)
+				{
+					case KEY0:
+						for(i = 0 ; i < 8 ; i++)
+						{
+							LedWrite(0x97 - i, realCode[0]);
+						}
+					break;
+					case KEY1:
+						for(i = 0 ; i < 8 ; i++)
+						{
+							LedWrite(0x97 - i, realCode[1]);
+						}
+					break;
+					case KEY2:
+						for(i = 0 ; i < 8 ; i++)
+						{
+							LedWrite(0x97 - i, realCode[2]);
+						}
+					break;
+					case KEY3:
+						for(i = 0 ; i < 8 ; i++)
+						{
+							LedWrite(0x97 - i, realCode[3]);
+						}
+					break;
+					case KEY4:
+						for(i = 0 ; i < 8 ; i++)
+						{
+							LedWrite(0x97 - i, realCode[4]);
+						}					
+					break;
+					case KEY5:
+						for(i = 0 ; i < 8 ; i++)
+						{
+							LedWrite(0x97 - i, realCode[5]);
+						}					
+					break;
+					case KEY6:
+						for(i = 0 ; i < 8 ; i++)
+						{
+							LedWrite(0x97 - i, realCode[6]);
+						}					
+					break;
+					case KEY7:
+						for(i = 0 ; i < 8 ; i++)
+						{
+							LedWrite(0x97 - i, realCode[7]);
+						}					
+					break;
+					case KEY8:
+						for(i = 0 ; i < 8 ; i++)
+						{
+							LedWrite(0x97 - i, realCode[8]);
+						}					
+					break;
+					case KEY9:
+						for(i = 0 ; i < 8 ; i++)
+						{
+							LedWrite(0x97 - i, realCode[9]);
+						}					
+					break;
+					default:
+					break;
+				}	
+			break;
+				//每次按键时左移并在最后一位显示对应数字
+			case inputRoll2Left:
+				if(keyState!=0xff&&keyFlag==0)
+				{
+					//发送不循环左移命令
+					HD7279SendByte(RTL_UNCYL);
+					//根据按键状态在最后一位显示对应数字
+					switch(keyState)
+					{
+						case KEY0:
+							LedWrite(LED1, realCode[0]);
+						break;
+						case KEY1:
+							LedWrite(LED1, realCode[1]);
+						break;
+						case KEY2:
+							LedWrite(LED1, realCode[2]);
+						break;
+						case KEY3:
+							LedWrite(LED1, realCode[3]);
+						break;
+						case KEY4:
+							LedWrite(LED1, realCode[4]);
+						break;
+						case KEY5:
+							LedWrite(LED1, realCode[5]);
+						break;
+						case KEY6:
+							LedWrite(LED1, realCode[6]);
+						break;
+						case KEY7:
+							LedWrite(LED1, realCode[7]);
+						break;
+						case KEY8:
+							LedWrite(LED1, realCode[8]);
+						break;
+						case KEY9:
+							LedWrite(LED1, realCode[9]);
+						break;
+						default:
+						break;
+					}
+					//对按键状态进行置位
+					keyFlag = 1;
+				}
+				//当没有按键按下时对按键状态进行复位
+				if(keyState == 0xff&&keyFlag == 1)
+				{
+					keyFlag = 0;
+				}
+					
+			break;
+			//空闲状态
+			case idle:
+				
+			break;
+			default:
+			break;
+		}
+	}
+}
+#endif
+
+//简单IO实验
+#ifdef BASIC_IO_EXP
+
+void main(void)
+{
+	//IO输入记录变量
+	unsigned char ioInput = 0;
+	
+	while(1)
+	{
+		//每20MS循环一次
+		DelayMs(20);
+		
+		//从74LS245地址读取简单IO输入
+		ioInput = chip245Adress;
+	
+		//将简单IO输入输出到74LS374
+		chip374Adress = ~ioInput;
+	
+		//在数码管上显示简单IO输入状态 
+		for(i = 0 ; i < 8 ; i++)
+		{
+			if((ioInput>>i)&0x01)
+			{
+				LedWrite(0x97 - 7 + i, realCode[1]);
+			}
+			else
+			{
+				LedWrite(0x97 - 7 + i, realCode[0]);
+			}
+		}
+	}
+}
+#endif
+
+//译码器实验
+#ifdef DECODE_EXP
+
+void main(void)
+{
+	//译码实验输出变量
+	unsigned char ioOutput = 0;
+	//计数用变量
+	unsigned short timeCounter = 0;
+	while(1)
+	{
+		//每20ms循环一次
+		DelayMs(20);
+		
+		//记录循环次数
+		timeCounter++;
+		timeCounter%=20;
+		
+		//每隔一定周期将输出输出到不同的地址
+		if(timeCounter/10)
+		{
+			decodeAdress1 = ioOutput;
+		}
+		else
+		{
+			decodeAdress2 = ioOutput;
+		}	
+	}
+}
+#endif
+
+//通用IOP1实验
+#ifdef P1_IO_EXP
+//P1IO实验状态指示枚举变量
 typedef enum
 {
+	//四个LED灯
 	blinkIn4,
+	//流水灯 
 	flow,
+	//LED灯指示开关状态
 	showInput,
+	//空闲状态
 	p1Idle
 }p1IOStatus_t;
 
+void main(void)
+{
+	//状态指示变量
+	p1IOStatus_t idata p1IOStatus = flow;
+	while(1)
+	{
+		//每20ms循环一次
+		DelayMs(20);
+		
+		switch(p1IOStatus)
+		{
+			//四个LED一组闪烁
+			case blinkIn4:
+				BlinkIn4(500);
+			break;
+			//流水灯
+			case flow:
+				Flow(500);
+			break;
+			//将P10~P13输入输出到P14~P17，用输入控制LED的亮灭
+			case showInput:
+				ShowInput();
+			break;
+			case p1Idle:
+			break;
+			default:
+			break;
+		}	
+	}
+}
+#endif
+
+//定时器实验
+#ifdef TIMER_EXP
+
+//状态指示枚举变量类型
 typedef enum
 {
 	timerExp1,
@@ -57,6 +356,113 @@ typedef enum
 	timerExp3	
 }timerStatus_t;
 
+void main(void)
+{
+	//状态指示变量
+	timerStatus_t idata timerStatus = timerExp3;
+	
+	//实验三是否触发指示变量
+	unsigned char triggerFlag = 0;
+	
+	//实验三脉冲宽度变量
+	unsigned short pulseWidth = 0;
+	
+	//定时器初始化结构体 
+	timeMode_t timeMode ={0};
+	
+	//对结构体进行赋值
+	timeMode.isGateCrl = noGateCrl;
+	timeMode.timeWorkMode = timer;
+	timeMode.timeTriggerMode = innerTrigger;
+	timeMode.timerMode = halfWordAutoReload;
+	
+	//初始化定时器
+	TimeInit(TIM0 , timeMode ,200, 3);
+
+	//对结构体进行赋值
+	timeMode.isGateCrl = noGateCrl;
+	timeMode.timeWorkMode = counter;
+	timeMode.timeTriggerMode = outerTrigger;
+	timeMode.timerMode = byteAutoReload;
+	//初始化定时器
+	TimeInit(TIM1 , timeMode ,0, 3);
+	TimerCmd(TIM1 , disable);
+	TH1 = 0xfb;
+	TL1 = 0xfb;
+	TimerCmd(TIM1 ,enable);
+	
+	if(timerStatus==timerExp3)
+	{
+		//对结构体进行赋值	
+		timeMode.isGateCrl = GateCrl;
+		timeMode.timeWorkMode = timer;
+		timeMode.timeTriggerMode = innerTrigger;
+		timeMode.timerMode = halfWordNotReload;	
+		//初始化定时器	
+		TimeInit(TIM1 , timeMode ,65535, 1);
+		TimerCmd(TIM1 , disable);
+	}		
+	while(1)
+	{
+		switch(timerStatus)
+		{
+			//在P1.0引脚上生成一个周期为400uS的方波
+			case timerExp1:
+				if(TimerGetOverFlowITFlag(TIM0))
+				{
+					P10=!P10;
+					TimerClearOverFlowFlag(TIM0);
+				}
+			break;
+			//通过定时器技术控制LED的亮灭
+			case timerExp2:
+				{
+					if(TimerGetOverFlowITFlag(TIM1))
+					{
+						P10=!P10;
+						TimerClearOverFlowFlag(TIM1);
+					}							
+				}
+			break;
+			//测量脉冲宽度
+			case timerExp3:
+			{
+				//输入为高
+				if(P33==1)
+				{
+					//失能定时器 
+					TimerCmd(TIM1 , disable);
+					//如果之前被触发计算脉冲宽度
+					if(triggerFlag==1)
+					{
+						//从定时器寄存器中读出脉冲宽度
+						pulseWidth = ((TH1<<8)|TL1);
+						//在数码管上显示脉冲宽度
+						LEDShowInt(pulseWidth);
+						//复位标志位及寄存器
+						triggerFlag = 0;
+						TH1=0;
+						TL1=0;
+					}
+				}
+				//输入为低
+				else if(P33==0)
+				{
+					//开始计时并对标志位进行置位
+					TimerCmd(TIM1 , enable);
+					triggerFlag = 1;
+				}
+			}
+			break;
+		}	
+	}
+}
+#endif
+
+//中断实验
+#ifdef INTERRUPT_EXP
+
+//中断实验状态指示枚举变量类型
 typedef enum
 {
 	itExp1,
@@ -64,419 +470,84 @@ typedef enum
 	itExp3
 }itStatus_t;
 
-unsigned char LedItStatus = 0;
-
 void main(void)
 {
-#ifndef DATA_MEMORY_TEST
-//数码管滚动显示的周期
-#define ROLL_PERIOD (15)
-	ledStatus_t idata ledStatus = inputRoll2Left;
-	status_t idata status = interruptExp;
-	p1IOStatus_t idata p1IOStatus = flow;
-	timerStatus_t idata timerStatus = timerExp3;
+	//中断状态指示枚举变量
 	itStatus_t idata itStatus = itExp2;
-	unsigned char i,j = 0;
-	//按键状态，没有按下时为0xff，按下时为按下按键的编号
-	unsigned char keyState = 0;
-	unsigned char rollPeriod = ROLL_PERIOD;
-	//按键是否按下标志位
-	unsigned char keyFlag = 0;
-	//简单IO输入值
-	unsigned char ioInput = 0;
-	//译码实验输出用变量
-	unsigned char ioOutput = 0;
-	//译码实验闪烁计时变量
-	unsigned short timeCounter = 0;
-							
-	unsigned char triggerFlag = 0;
 	
-	unsigned short pulseWidth = 0;
-	
+	//定时器初始化结构体
 	timeMode_t timeMode ={0};
 	
+	//初始化定时器
 	timeMode.isGateCrl = noGateCrl;
 	timeMode.timeWorkMode = counter;
 	timeMode.timeTriggerMode = innerTrigger;
 	timeMode.timerMode = halfWordAutoReload;
 	
 	TimeInit(TIM0 , timeMode ,3-1, 1);
+	//使能定时器中断
 	TimerOverFlowItInit(TIM0 , enable);
-
-	timeMode.isGateCrl = noGateCrl;
-	timeMode.timeWorkMode = counter;
-	timeMode.timeTriggerMode = outerTrigger;
-	timeMode.timerMode = byteAutoReload;	
-	TimeInit(TIM1 , timeMode ,0, 3);
-	TimerCmd(TIM1 , disable);
-	TH1 = 0xfb;
-	TL1 = 0xfb;
-	TimerCmd(TIM1 ,enable);
 	
-	timeMode.isGateCrl = GateCrl;
-	timeMode.timeWorkMode = timer;
-	timeMode.timeTriggerMode = innerTrigger;
-	timeMode.timerMode = halfWordNotReload;	
-	TimeInit(TIM1 , timeMode ,65535, 1);
-	TimerCmd(TIM1 , disable);
-	
-//	IE = 0x81;
+	//使能外部中断0
 	IT0 = 1;
-
-//	//将HD7279对应引脚全部拉低
-//	P1 = 0x00;
-	
-//	DelayMs(25);
-	
-//	for(j = 0 ; j < 10 ; j++)
-//	{
-//	for(i = 0 ; i < 8 ; i++)
-//	{
-//		LedWrite(0x97 - i, realCode[8 - i]);
-//	}
-//	DelayMs(250);
-//	}
 	while(1)
 	{
+		//每20ms循环一次
 		DelayMs(20);
-		
-		switch(status)
+		//根据不同中断中的标志切换LED的状态
+		switch(itStatus)
 		{
-			//按键和LED
-			case keyLed:
-			{
-				
-				//读取按键状态
-				keyState = KeyRead();
-
-				switch(ledStatus)
+			case itExp1:
+				if(LedItStatus)
 				{
-					//向左滚动
-					case rollingLeft:
-						//没有按键按下时循环向左滚动
-						if(keyState==0xff)
-						{
-							rollPeriod--;
-							if(rollPeriod == 0)
-							{
-								rollPeriod = ROLL_PERIOD;
-								HD7279SendByte(RTL_CYCLE);
-							}
-						}
-						//按下KEY10后进入一同显示数字状态
-						else if(keyState == KEY10)
-						{
-							rollPeriod = ROLL_PERIOD;
-							HD7279SendByte(CMD_RESET);
-							ledStatus = showKeyNumTogether;
-						}
-					break;
-					//循环向右滚动
-					case rollingRight:
-						//没有按键按下时循环向右滚动
-						if(keyState == 0xff)
-						{
-							rollPeriod--;
-							if(rollPeriod == 0)
-							{
-								rollPeriod = ROLL_PERIOD;
-								HD7279SendByte(RTR_CYCLE);
-							}
-						}
-						//按下KEY10时进入一同显示按下数字状态
-						else if(keyState == KEY10)
-						{
-							rollPeriod = ROLL_PERIOD;
-							HD7279SendByte(CMD_RESET);
-							ledStatus = showKeyNumTogether;				
-						}
-					break;
-					//所有数码管一同显示按下按键对应数字
-					case showKeyNumTogether:
-						switch(keyState)
-						{
-							case KEY0:
-								for(i = 0 ; i < 8 ; i++)
-								{
-									LedWrite(0x97 - i, realCode[0]);
-								}
-							break;
-							case KEY1:
-								for(i = 0 ; i < 8 ; i++)
-								{
-									LedWrite(0x97 - i, realCode[1]);
-								}
-							break;
-							case KEY2:
-								for(i = 0 ; i < 8 ; i++)
-								{
-									LedWrite(0x97 - i, realCode[2]);
-								}
-							break;
-							case KEY3:
-								for(i = 0 ; i < 8 ; i++)
-								{
-									LedWrite(0x97 - i, realCode[3]);
-								}
-							break;
-							case KEY4:
-								for(i = 0 ; i < 8 ; i++)
-								{
-									LedWrite(0x97 - i, realCode[4]);
-								}					
-							break;
-							case KEY5:
-								for(i = 0 ; i < 8 ; i++)
-								{
-									LedWrite(0x97 - i, realCode[5]);
-								}					
-							break;
-							case KEY6:
-								for(i = 0 ; i < 8 ; i++)
-								{
-									LedWrite(0x97 - i, realCode[6]);
-								}					
-							break;
-							case KEY7:
-								for(i = 0 ; i < 8 ; i++)
-								{
-									LedWrite(0x97 - i, realCode[7]);
-								}					
-							break;
-							case KEY8:
-								for(i = 0 ; i < 8 ; i++)
-								{
-									LedWrite(0x97 - i, realCode[8]);
-								}					
-							break;
-							case KEY9:
-								for(i = 0 ; i < 8 ; i++)
-								{
-									LedWrite(0x97 - i, realCode[9]);
-								}					
-							break;
-							default:
-							break;
-						}	
-					break;
-						//每次按键时不循环左移并显示按键对应的数字
-					case inputRoll2Left:
-						if(keyState!=0xff&&keyFlag==0)
-						{
-							HD7279SendByte(RTL_UNCYL);
-							switch(keyState)
-							{
-								case KEY0:
-									LedWrite(LED1, realCode[0]);
-								break;
-								case KEY1:
-									LedWrite(LED1, realCode[1]);
-								break;
-								case KEY2:
-									LedWrite(LED1, realCode[2]);
-								break;
-								case KEY3:
-									LedWrite(LED1, realCode[3]);
-								break;
-								case KEY4:
-									LedWrite(LED1, realCode[4]);
-								break;
-								case KEY5:
-									LedWrite(LED1, realCode[5]);
-								break;
-								case KEY6:
-									LedWrite(LED1, realCode[6]);
-								break;
-								case KEY7:
-									LedWrite(LED1, realCode[7]);
-								break;
-								case KEY8:
-									LedWrite(LED1, realCode[8]);
-								break;
-								case KEY9:
-									LedWrite(LED1, realCode[9]);
-								break;
-								default:
-								break;
-							}
-							keyFlag = 1;
-						}
-						if(keyState == 0xff&&keyFlag == 1)
-						{
-							keyFlag = 0;
-						}
-							
-					break;
-					//空闲状态
-					case idle:
-						
-					break;
-					default:
-					break;
-				}
-			break;
-			}
-			//简单IO实验
-			case basicIO:
-			{	
-				//从74LS245地址读取简单IO输入
-				ioInput = chip245Adress;
-			
-				//将简单IO输入输出到74LS374
-				chip374Adress = ~ioInput;
-			
-				//在数码管上显示简单IO输入状态
-				for(i = 0 ; i < 8 ; i++)
-				{
-					if((ioInput>>i)&0x01)
-					{
-						LedWrite(0x97 - 7 + i, realCode[1]);
-					}
-					else
-					{
-						LedWrite(0x97 - 7 + i, realCode[0]);
-					}
-				}
-				
-			break;
-			}
-			//译码器实验
-			case decode:
-			{
-				timeCounter++;
-				timeCounter%=20;
-				if(timeCounter/10)
-				{
-					decodeAdress1 = ioOutput;
+					Flow(200);
 				}
 				else
 				{
-					decodeAdress2 = ioOutput;
+					BlinkIn4(300);
 				}
-			
 			break;
-			}
-			//P1IO口实验
-			case p1IO:
-			{
-				switch(p1IOStatus)
+			case itExp2:
+				if(LedItStatus)
 				{
-					//四个一组循环闪烁
-					case blinkIn4:
-						BlinkIn4(500);
-					break;
-					//流水灯
-					case flow:
-						Flow(500);
-					break;
-					//将P10~P13输入输出到P14~P17，用输入控制LED的亮灭
-					case showInput:
-						ShowInput();
-					break;
-					case p1Idle:
-					break;
-					default:
-					break;
+					Flow(200);
 				}
-			break;
-			}
-			case dataMemory:
-				
-			break;
-			case timerExp:
-			{
-				switch(timerStatus)
+				else
 				{
-					case timerExp1:
-						if(TimerGetOverFlowITFlag(TIM0))
-						{
-							P10=!P10;
-							TimerClearOverFlowFlag(TIM0);
-						}
-					break;
-					case timerExp2:
-						{
-							if(TimerGetOverFlowITFlag(TIM1))
-							{
-								P10=!P10;
-								TimerClearOverFlowFlag(TIM1);
-							}							
-						}
-					break;
-					case timerExp3:
-					{
-						if(P33==1)
-						{
-							TimerCmd(TIM1 , disable);
-							if(triggerFlag==1)
-							{
-								pulseWidth = ((TH1<<8)|TL1);
-								LEDShowInt(pulseWidth);
-								triggerFlag = 0;
-								TH1=0;
-								TL1=0;
-							}
-						}
-						else if(P33==0)
-						{
-							TimerCmd(TIM1 , enable);
-							triggerFlag = 1;
-						}
-					}
-					break;
+					BlinkIn4(300);
 				}
 			break;
-			}
-			case interruptExp:
-				switch(itStatus)
+			case itExp3:
+				if(LedItStatus)
 				{
-					case itExp1:
-						if(LedItStatus)
-						{
-							Flow(200);
-						}
-						else
-						{
-							BlinkIn4(300);
-						}
-					break;
-					case itExp2:
-						if(LedItStatus)
-						{
-							Flow(200);
-						}
-						else
-						{
-							BlinkIn4(300);
-						}
-					break;
-					case itExp3:
-						if(LedItStatus)
-						{
-							Flow(200);
-						}
-						else
-						{
-							BlinkIn4(300);
-						}
-					break;
+					Flow(200);
+				}
+				else
+				{
+					BlinkIn4(300);
 				}
 			break;
-			case statusIdle:
-			break;
-			default:
-			break;
-		}
-
+		}		
 	}
+}
+
 #endif
+
+//数据储存器实验
 #ifdef DATA_MEMORY_TEST
+void main(void)
+{
+	//循环用计数变量
 	unsigned char i = 0;
+	//对P1IO的输出状态进行初始化
 	P1 = 0x00;
+	//延时20ms
 	DelayMs(20);
 	while(1)
 	{
+		//配置辅助寄存器
 		AUXR = 0x8e;
+		//对数据进行赋值和显示
 		for(i = 0 ; i < DIRECT_ACCESS_SIZE;i++)
 		{
 			directAccess[i] = i;
@@ -508,7 +579,7 @@ void main(void)
 			LEDShowInt(outerMemInMCU[i]);
 			DelayMs(300);		
 		}
-
+		//配置辅助寄存器禁止片内扩展RAM区
 		AUXR = 0x02;
 		for(i = 0; i< OUTER_EXTEND_MEM_SIZE ; i++)
 		{
@@ -516,6 +587,6 @@ void main(void)
 			LEDShowInt(outerExtendMem[i]);
 			DelayMs(300);		
 		}		
-	}		
-#endif
+	}
 }
+#endif

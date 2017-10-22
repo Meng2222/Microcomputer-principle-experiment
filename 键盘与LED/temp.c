@@ -403,4 +403,117 @@ void main(void)
 
 #ifdef INTERRUPT_EXP
 
+typedef enum
+{
+	itExp1,
+	itExp2,
+	itExp3
+}itStatus_t;
+
+void main(void)
+{
+	itStatus_t idata itStatus = itExp2;
+	
+	timeMode_t timeMode ={0};
+	
+	timeMode.isGateCrl = noGateCrl;
+	timeMode.timeWorkMode = counter;
+	timeMode.timeTriggerMode = innerTrigger;
+	timeMode.timerMode = halfWordAutoReload;
+	
+	TimeInit(TIM0 , timeMode ,3-1, 1);
+	TimerOverFlowItInit(TIM0 , enable);
+		
+	IT0 = 1;
+	while(1)
+	{
+		DelayMs(20);
+		switch(itStatus)
+		{
+			case itExp1:
+				if(LedItStatus)
+				{
+					Flow(200);
+				}
+				else
+				{
+					BlinkIn4(300);
+				}
+			break;
+			case itExp2:
+				if(LedItStatus)
+				{
+					Flow(200);
+				}
+				else
+				{
+					BlinkIn4(300);
+				}
+			break;
+			case itExp3:
+				if(LedItStatus)
+				{
+					Flow(200);
+				}
+				else
+				{
+					BlinkIn4(300);
+				}
+			break;
+		}		
+	}
+}
+
+#endif
+
+#ifdef DATA_MEMORY_TEST
+void main(void)
+{
+	unsigned char i = 0;
+	P1 = 0x00;
+	DelayMs(20);
+	while(1)
+	{
+		AUXR = 0x8e;
+		for(i = 0 ; i < DIRECT_ACCESS_SIZE;i++)
+		{
+			directAccess[i] = i;
+			LEDShowInt(directAccess[i]);
+			DelayMs(300);
+		}
+		for(i = 0; i< BIT_ACCESS_SIZE ; i++)
+		{
+			bitAccess[i] = 255 - i;
+			LEDShowInt(bitAccess[i]);
+			DelayMs(300);		
+		}
+		for(i = 0; i< INDIRECT_ACCESS_SIZE ; i++)
+		{
+			indirectAccess[i] = 128 + i;
+			LEDShowInt(indirectAccess[i]);
+			DelayMs(300);		
+		}
+		for(i = 0; i< PAGE_ACCESS_SIZE ; i++)
+		{
+			pageAccess[i] = i;
+			LEDShowInt(pageAccess[i]);
+			DelayMs(300);		
+		}
+		
+		for(i = 0; i< OUTER_MEM_IN_MCU_SIZE ; i++)
+		{
+			outerMemInMCU[i] = i;
+			LEDShowInt(outerMemInMCU[i]);
+			DelayMs(300);		
+		}
+
+		AUXR = 0x02;
+		for(i = 0; i< OUTER_EXTEND_MEM_SIZE ; i++)
+		{
+			outerExtendMem[i] = 128 - i;
+			LEDShowInt(outerExtendMem[i]);
+			DelayMs(300);		
+		}		
+	}
+}
 #endif

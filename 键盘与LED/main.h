@@ -9,6 +9,18 @@
 
 //#define DATA_MEMORY_TEST
 
+//#define KEY_LED_EXP
+
+//#define BASIC_IO_EXP
+
+//#define DECODE_EXP
+
+//#define P1_IO_EXP
+
+//#define TIMER_EXP
+
+//#define INTERRUPT_EXP
+
 
 extern unsigned char code realCode[];
 #endif

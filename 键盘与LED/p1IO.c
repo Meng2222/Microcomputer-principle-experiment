@@ -2,7 +2,7 @@
 #include "delay.h"
 #include "main.h"
 
-//P1¿ÚÊä³ö¿ØÖÆLEDËÄ¸öÒ»×éÑ­»·ÉÁË¸£¬ÊäÈëÎªÉÁË¸ÖÜÆÚ£¬µ¥Î»ºÁÃë
+//P1å£è¾“å‡ºæ§åˆ¶LEDå››ä¸ªä¸€ç»„å¾ªç¯é—ªçƒï¼Œè¾“å…¥ä¸ºé—ªçƒå‘¨æœŸï¼Œå•ä½æ¯«ç§’
 void BlinkIn4(unsigned short period)
 {
 	static unsigned short idata blinkTimeCounter  = 0;
@@ -20,7 +20,7 @@ void BlinkIn4(unsigned short period)
 	}
 }
 
-//P1¿ÚÊä³ö¿ØÖÆLEDÁ÷Ë®µÆ£¬ÊäÈëÎªÁ÷Ë®µÈµÄÖÜÆÚ£¬µ¥Î»£ººÁÃë
+//P1å£è¾“å‡ºæ§åˆ¶LEDæµæ°´ç¯ï¼Œè¾“å…¥ä¸ºæµæ°´ç­‰çš„å‘¨æœŸï¼Œå•ä½ï¼šæ¯«ç§’
 void Flow(unsigned short flowPeriod)
 {
 	static unsigned short idata flowCounter = 0;
@@ -29,7 +29,7 @@ void Flow(unsigned short flowPeriod)
 	flowCounter+=20;
 	flowCounter%=flowPeriod;
 	
-	//µçÂ·Á¬½ÓÎªÊä³öµÍÊ±LEDÁÁ
+	//ç”µè·¯è¿æ¥ä¸ºè¾“å‡ºä½æ—¶LEDäº®
 	P1 = ~flowState;
 	
 	if(flowCounter == 0)
@@ -46,12 +46,12 @@ void Flow(unsigned short flowPeriod)
 	
 }
 
-//½«P1¿Ú0~3Î»µÄÊäÈëÊä³öµ½P1¿Ú4~7Î»£¬ÓÃ¿ª¹Ø¿ØÖÆLEDÁÁÃğ
+//å°†P1å£0~3ä½çš„è¾“å…¥è¾“å‡ºåˆ°P1å£4~7ä½ï¼Œç”¨å¼€å…³æ§åˆ¶LEDäº®ç­
 void ShowInput(void)
 {
 	unsigned char p1Input = 0;
 	
-	//P1Îª×¼Ë«Ïò£¬ÔÚ¶ÁÈ¡Ç°ÒªĞ´Èë1£¬±ÜÃâ¶ÁÈ¡³ö´í
+	//P1ä¸ºå‡†åŒå‘ï¼Œåœ¨è¯»å–å‰è¦å†™å…¥1ï¼Œé¿å…è¯»å–å‡ºé”™
 	P1 |= P1_INPUT;
 	
 	p1Input = P1&P1_INPUT;

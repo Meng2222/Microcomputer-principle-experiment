@@ -14,6 +14,7 @@ void HD7279SendByte(unsigned char sendData)
 	unsigned char sendCounter = 0;
 	cs = 0;
 	Delay10Us(12);
+	//生成时钟信号并将八位数字依次发送
 	for(sendCounter = 0 ; sendCounter < SEND_DATA_LENGTH ; sendCounter++)
 	{
 		if(sendData & 0x80)
@@ -41,6 +42,7 @@ unsigned char HD7279ReceiveByte(void)
 	unsigned char receiveData = 0;
 	dat = 1;
 	Delay10Us(12);
+	//生成时钟信号并将八位数字一次接收
 	for(receiveCounter = 0 ; receiveCounter < RECEIVE_DATA_LENGTH ; receiveCounter++)
 	{
 		clk = 1;
@@ -77,6 +79,7 @@ unsigned char KeyRead(void)
 	return (HD7279ReceiveByte());
 }
 
+//数码管显示整数函数
 void LEDShowInt(unsigned short showData)
 {
 	unsigned char LedData[8] = {0x00};
@@ -84,8 +87,10 @@ void LEDShowInt(unsigned short showData)
 	signed char tempBuff[8] = {0};
 	unsigned char dataLength = 0;
 	
+	//将输入的整数转换为字符串
 	sprintf((char *)tempBuff,"%d",(int)showData);
 	
+	//记录数字长度
 	for(i = 0; i< 8; i++)
 	{
 		if(tempBuff[i]!=0x00)
@@ -93,11 +98,15 @@ void LEDShowInt(unsigned short showData)
 			dataLength++;
 		}
 	}
+	
+	//将字符串转换为对应编码
 	for(i = dataLength;i > 0;i--)
 	{
 		LedData[7 - (dataLength - i)]=tempBuff[i-1] - 0x30;
 		LedData[7 - (dataLength - i)] = realCode[LedData[7 - (dataLength - i)]];
 	}
+	
+	//显示对应编码
 	for(i = 0;i<8;i++)
 	{
 		LedWrite(0x97 - i , LedData[i]);
