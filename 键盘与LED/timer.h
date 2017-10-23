@@ -1,7 +1,8 @@
 #ifndef __TIMER_H
 #define __TIMER_H
 
-typedef enum {disable = 0, enable}FunctionalState_t;
+#include "main.h"
+
 typedef enum
 {
 	TIM0 = 0,

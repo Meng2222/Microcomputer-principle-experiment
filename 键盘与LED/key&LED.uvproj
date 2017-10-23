@@ -414,9 +414,9 @@
               <FilePath>.\89C51_it.c</FilePath>
             </File>
             <File>
-              <FileName>temp.c</FileName>
+              <FileName>usart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\temp.c</FilePath>
+              <FilePath>.\usart.c</FilePath>
             </File>
           </Files>
         </Group>

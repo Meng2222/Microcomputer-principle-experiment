@@ -21,6 +21,8 @@
 
 //#define INTERRUPT_EXP
 
+typedef enum {RESET = 0, SET = !RESET} FlagStatus, ITStatus;
+typedef enum {disable = 0, enable}FunctionalState_t;
 
 extern unsigned char code realCode[];
 #endif

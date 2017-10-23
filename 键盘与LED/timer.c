@@ -1,5 +1,4 @@
 #include "timer.h"
-#include "STC15F2K60S2.h"
 
 //定时器使能和失能函数，输入变量为定时器编号和使能失能命令
 void TimerCmd(TimerTypeDef_t TIMx , FunctionalState_t newState)

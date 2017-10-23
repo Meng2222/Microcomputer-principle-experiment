@@ -1,4 +1,4 @@
-C51 COMPILER V9.56.0.0   MAIN                                                              10/22/2017 19:29:04 PAGE 1   
+C51 COMPILER V9.56.0.0   MAIN                                                              10/23/2017 19:00:17 PAGE 1   
 
 
 C51 COMPILER V9.56.0.0, COMPILATION OF MODULE MAIN
@@ -62,7 +62,7 @@ line level    source
                       while(1)
                       {
                               //每隔20ms循环一次
-C51 COMPILER V9.56.0.0   MAIN                                                              10/22/2017 19:29:04 PAGE 2   
+C51 COMPILER V9.56.0.0   MAIN                                                              10/23/2017 19:00:17 PAGE 2   
 
                               DelayMs(20);
               
@@ -126,7 +126,7 @@ line level    source
                                                       case KEY1:
                                                               for(i = 0 ; i < 8 ; i++)
                                                               {
-C51 COMPILER V9.56.0.0   MAIN                                                              10/22/2017 19:29:04 PAGE 3   
+C51 COMPILER V9.56.0.0   MAIN                                                              10/23/2017 19:00:17 PAGE 3   
 
                                                                       LedWrite(0x97 - i, realCode[1]);
                                                               }
@@ -190,7 +190,7 @@ line level    source
                                                       //发送不循环左移命令
                                                       HD7279SendByte(RTL_UNCYL);
                                                       //根据按键状态在最后一位显示对应数字
-C51 COMPILER V9.56.0.0   MAIN                                                              10/22/2017 19:29:04 PAGE 4   
+C51 COMPILER V9.56.0.0   MAIN                                                              10/23/2017 19:00:17 PAGE 4   
 
                                                       switch(keyState)
                                                       {
@@ -254,7 +254,7 @@ line level    source
               void main(void)
               {
                       //IO输入记录变量
-C51 COMPILER V9.56.0.0   MAIN                                                              10/22/2017 19:29:04 PAGE 5   
+C51 COMPILER V9.56.0.0   MAIN                                                              10/23/2017 19:00:17 PAGE 5   
 
                       unsigned char ioInput = 0;
                       //循环计数用变量
@@ -318,7 +318,7 @@ line level    source
               }
               #endif
  302          
-C51 COMPILER V9.56.0.0   MAIN                                                              10/22/2017 19:29:04 PAGE 6   
+C51 COMPILER V9.56.0.0   MAIN                                                              10/23/2017 19:00:17 PAGE 6   
 
  303          //通用IOP1实验
  304          #ifdef P1_IO_EXP
@@ -382,7 +382,7 @@ line level    source
               {
                       //状态指示变量
                       timerStatus_t idata timerStatus = timerExp3;
-C51 COMPILER V9.56.0.0   MAIN                                                              10/22/2017 19:29:04 PAGE 7   
+C51 COMPILER V9.56.0.0   MAIN                                                              10/23/2017 19:00:17 PAGE 7   
 
                       
                       //实验三是否触发指示变量
@@ -446,7 +446,7 @@ line level    source
                                                               P10=!P10;
                                                               TimerClearOverFlowFlag(TIM1);
                                                       }                                                       
-C51 COMPILER V9.56.0.0   MAIN                                                              10/22/2017 19:29:04 PAGE 8   
+C51 COMPILER V9.56.0.0   MAIN                                                              10/23/2017 19:00:17 PAGE 8   
 
                                               }
                                       break;
@@ -510,7 +510,7 @@ line level    source
                       //初始化定时器
                       timeMode.isGateCrl = noGateCrl;
                       timeMode.timeWorkMode = counter;
-C51 COMPILER V9.56.0.0   MAIN                                                              10/22/2017 19:29:04 PAGE 9   
+C51 COMPILER V9.56.0.0   MAIN                                                              10/23/2017 19:00:17 PAGE 9   
 
                       timeMode.timeTriggerMode = innerTrigger;
                       timeMode.timerMode = halfWordAutoReload;
@@ -574,7 +574,7 @@ line level    source
                       P1 = 0x00;
                       //延时20ms
                       DelayMs(20);
-C51 COMPILER V9.56.0.0   MAIN                                                              10/22/2017 19:29:04 PAGE 10  
+C51 COMPILER V9.56.0.0   MAIN                                                              10/23/2017 19:00:17 PAGE 10  
 
                       while(1)
                       {
