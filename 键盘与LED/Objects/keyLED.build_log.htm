@@ -26,22 +26,8 @@ Project File Date:  10/22/2017
 
 <h2>Output:</h2>
 Build target 'Target 1'
-compiling usart.c...
-usart.c(10): warning C275: expression with possibly no effect
-usart.c(11): warning C275: expression with possibly no effect
-usart.c(15): warning C275: expression with possibly no effect
-usart.c(19): warning C280: 'UARTx': unreferenced local variable
-usart.c(19): warning C280: 'baudRate': unreferenced local variable
-usart.c(54): warning C275: expression with possibly no effect
-usart.c(58): warning C275: expression with possibly no effect
-usart.c(62): warning C280: 'UARTx': unreferenced local variable
-usart.c(62): warning C280: 'sendData': unreferenced local variable
-usart.c(67): warning C280: 'UARTx': unreferenced local variable
-usart.c(67): warning C280: 'UARTMode': unreferenced local variable
-usart.c(67): warning C280: 'baudRate': unreferenced local variable
-usart.c(72): warning C280: 'UARTx': unreferenced local variable
-usart.c(72): warning C280: 'UARTPriority': unreferenced local variable
-usart.c(48): warning C291: not every exit path returns a value
+compiling main.c...
+compiling 89C51_it.c...
 linking...
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?KEYREAD?HD7279
@@ -61,6 +47,8 @@ linking...
     SEGMENT: ?PR?_TIMEINIT?TIMER
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_TIMEROVERFLOWITINIT?TIMER
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_EXTERNALITINIT?89C51_IT
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_UARTMODEINIT?USART
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
@@ -83,15 +71,15 @@ linking...
 *** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
     SYMBOL:  LEDITSTATUS
     MODULE:  .\Objects\89C51_it.obj (89C51_IT)
-    ADDRESS: 098FH
+    ADDRESS: 09BFH
 *** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
     SYMBOL:  LEDITSTATUS
     MODULE:  .\Objects\89C51_it.obj (89C51_IT)
-    ADDRESS: 0993H
+    ADDRESS: 09C3H
 *** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
     SYMBOL:  LEDITSTATUS
     MODULE:  .\Objects\89C51_it.obj (89C51_IT)
-    ADDRESS: 0998H
+    ADDRESS: 09C8H
 *** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
     SYMBOL:  LEDITSTATUS
     MODULE:  .\Objects\89C51_it.obj (89C51_IT)
@@ -111,9 +99,9 @@ linking...
     SYMBOL:  MAIN
     MODULE:  D:\PROGRAM FILES (X86)\KEIL\C51\LIB\C51S.LIB (?C_INIT)
     ADDRESS: 05F7H
-Program Size: data=100.1 xdata=8 code=2561
+Program Size: data=100.1 xdata=8 code=2609
 creating hex file from ".\Objects\keyLED"...
-".\Objects\keyLED" - 0 Error(s), 41 Warning(s).
+".\Objects\keyLED" - 0 Error(s), 27 Warning(s).
 Build Time Elapsed:  00:00:02
 </pre>
 </body>
