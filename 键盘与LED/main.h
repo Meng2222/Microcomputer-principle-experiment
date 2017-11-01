@@ -7,6 +7,10 @@
 #include <math.h>
 #include <stdio.h>
 
+#define SYSCLK (4508000L)
+
+#define TIMERUS ((int)(SYSCLK/1000000))
+
 //#define DATA_MEMORY_TEST
 
 //#define KEY_LED_EXP

@@ -379,7 +379,7 @@ void main(void)
 	timeMode.timerMode = halfWordAutoReload;
 	
 	//初始化定时器
-	TimeInit(TIM0 , timeMode ,200, 3);
+	TimeInit(TIM0 , timeMode ,200, TIMERUS);
 
 	//对结构体进行赋值
 	timeMode.isGateCrl = noGateCrl;
@@ -387,7 +387,7 @@ void main(void)
 	timeMode.timeTriggerMode = outerTrigger;
 	timeMode.timerMode = byteAutoReload;
 	//初始化定时器
-	TimeInit(TIM1 , timeMode ,0, 3);
+	TimeInit(TIM1 , timeMode ,0, TIMERUS);
 	TimerCmd(TIM1 , disable);
 	TH1 = 0xfb;
 	TL1 = 0xfb;

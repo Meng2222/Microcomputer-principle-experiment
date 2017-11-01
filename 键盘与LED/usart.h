@@ -30,9 +30,9 @@ typedef struct
 #define	UART_Rx_IT_FLAG (0x01)
 #define UART_Tx_IT_FLAG (0x02)
 
-void UARTModeInit(UARTTypeDef_t UARTx, unsigned char UARTMode, unsigned char isBaudrateDouble);
+void UARTModeInit(UARTTypeDef_t UARTx, unsigned char UARTMode);
 
-void UARTBaudrateInit(UARTTypeDef_t UARTx, unsigned int baudRate);
+void UARTBaudrateInit(UARTTypeDef_t UARTx,unsigned char UARTMode, unsigned char isBaudrateDouble, unsigned int baudRate);
 
 void UARTRxCmd(UARTTypeDef_t UARTx, FunctionalState_t newState);
 
