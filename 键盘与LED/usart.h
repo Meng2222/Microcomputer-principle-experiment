@@ -14,6 +14,7 @@ typedef struct
 	unsigned char UARTMode;
 	unsigned char UARTIsMulti;
 	unsigned char isUARTBaudrateDouble;
+	unsigned char itPriority;
 }UARTMode_t;
 
 #define UART_BAUDRATE_DOUBLE (0x01)
@@ -41,6 +42,8 @@ FlagStatus UARTGetFlagStatus(UARTTypeDef_t UARTx, unsigned char UARTFlag);
 void UARTClearFlagStatus(UARTTypeDef_t UARTx, unsigned char UARTFlag);
 
 void UARTSendByte(UARTTypeDef_t UARTx, unsigned char sendData);
+
+unsigned char UARTRecieveByte(UARTTypeDef_t UARTx);
 
 void UARTInit(UARTTypeDef_t UARTx, UARTMode_t UARTMode, unsigned int baudRate);
 

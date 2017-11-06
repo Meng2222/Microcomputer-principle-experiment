@@ -1,4 +1,5 @@
 #include "timer.h"
+#include "HD7279.h"
 
 //定时器使能和失能函数，输入变量为定时器编号和使能失能命令
 void TimerCmd(TimerTypeDef_t TIMx , FunctionalState_t newState)
@@ -79,6 +80,7 @@ void TimeReloadNumInit(TimerTypeDef_t TIMx,timerMode_t timerMode,unsigned short 
 	
 	//根据实际配置的周期以及机器周期计算实际的重装载值
 	reloadNum = bitNum - timerPeriod/mechinePeriod;
+
 	
 	//根据所选择的定时器配置相应的寄存器
 	if(TIMx == TIM0)

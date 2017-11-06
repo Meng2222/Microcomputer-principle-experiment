@@ -1,4 +1,4 @@
-C51 COMPILER V9.56.0.0   MAIN                                                              11/01/2017 20:45:36 PAGE 1   
+C51 COMPILER V9.56.0.0   MAIN                                                              11/06/2017 21:15:04 PAGE 1   
 
 
 C51 COMPILER V9.56.0.0, COMPILATION OF MODULE MAIN
@@ -19,17 +19,18 @@ line level    source
    9          #include "decode.h"
   10          #include "p1IO.h"
   11          #include "timer.h"
-  12          
-  13          #endif
-  14          
-  15          #ifdef DATA_MEMORY_TEST
+  12          #include "usart.h"
+  13          
+  14          #endif
+  15          
+  16          #ifdef DATA_MEMORY_TEST
               
               #include "dataMemory.h"
               
               #endif
-  20          
-  21          //键盘与LED实验
-  22          #ifdef KEY_LED_EXP
+  21          
+  22          //键盘与LED实验
+  23          #ifdef KEY_LED_EXP
               //键盘与LED实验状态枚举变量
               typedef enum
               {
@@ -61,9 +62,9 @@ line level    source
                       unsigned char keyFlag = 0;
                       while(1)
                       {
-                              //每隔20ms循环一次
-C51 COMPILER V9.56.0.0   MAIN                                                              11/01/2017 20:45:36 PAGE 2   
+C51 COMPILER V9.56.0.0   MAIN                                                              11/06/2017 21:15:04 PAGE 2   
 
+                              //每隔20ms循环一次
                               DelayMs(20);
               
                               //读取按键状态
@@ -125,9 +126,9 @@ line level    source
                                                       break;
                                                       case KEY1:
                                                               for(i = 0 ; i < 8 ; i++)
-                                                              {
-C51 COMPILER V9.56.0.0   MAIN                                                              11/01/2017 20:45:36 PAGE 3   
+C51 COMPILER V9.56.0.0   MAIN                                                              11/06/2017 21:15:04 PAGE 3   
 
+                                                              {
                                                                       LedWrite(0x97 - i, realCode[1]);
                                                               }
                                                       break;
@@ -189,9 +190,9 @@ line level    source
                                               {
                                                       //发送不循环左移命令
                                                       HD7279SendByte(RTL_UNCYL);
-                                                      //根据按键状态在最后一位显示对应数字
-C51 COMPILER V9.56.0.0   MAIN                                                              11/01/2017 20:45:36 PAGE 4   
+C51 COMPILER V9.56.0.0   MAIN                                                              11/06/2017 21:15:04 PAGE 4   
 
+                                                      //根据按键状态在最后一位显示对应数字
                                                       switch(keyState)
                                                       {
                                                               case KEY0:
@@ -247,15 +248,15 @@ line level    source
                       }
               }
               #endif
- 234          
- 235          //简单IO实验
- 236          #ifdef BASIC_IO_EXP
+ 235          
+ 236          //简单IO实验
+ 237          #ifdef BASIC_IO_EXP
               
               void main(void)
               {
-                      //IO输入记录变量
-C51 COMPILER V9.56.0.0   MAIN                                                              11/01/2017 20:45:36 PAGE 5   
+C51 COMPILER V9.56.0.0   MAIN                                                              11/06/2017 21:15:04 PAGE 5   
 
+                      //IO输入记录变量
                       unsigned char ioInput = 0;
                       //循环计数用变量
                       unsigned char i = 0;
@@ -286,9 +287,9 @@ line level    source
                       }
               }
               #endif
- 271          
- 272          //译码器实验
- 273          #ifdef DECODE_EXP
+ 272          
+ 273          //译码器实验
+ 274          #ifdef DECODE_EXP
               
               void main(void)
               {
@@ -317,11 +318,11 @@ line level    source
                       }
               }
               #endif
- 302          
-C51 COMPILER V9.56.0.0   MAIN                                                              11/01/2017 20:45:36 PAGE 6   
+C51 COMPILER V9.56.0.0   MAIN                                                              11/06/2017 21:15:04 PAGE 6   
 
- 303          //通用IOP1实验
- 304          #ifdef P1_IO_EXP
+ 303          
+ 304          //通用IOP1实验
+ 305          #ifdef P1_IO_EXP
               //P1IO实验状态指示枚举变量
               typedef enum
               {
@@ -366,9 +367,9 @@ line level    source
                       }
               }
               #endif
- 349          
- 350          //定时器实验
- 351          #ifdef TIMER_EXP
+ 350          
+ 351          //定时器实验
+ 352          #ifdef TIMER_EXP
               
               //状态指示枚举变量类型
               typedef enum
@@ -381,9 +382,9 @@ line level    source
               void main(void)
               {
                       //状态指示变量
-                      timerStatus_t idata timerStatus = timerExp3;
-C51 COMPILER V9.56.0.0   MAIN                                                              11/01/2017 20:45:36 PAGE 7   
+C51 COMPILER V9.56.0.0   MAIN                                                              11/06/2017 21:15:04 PAGE 7   
 
+                      timerStatus_t idata timerStatus = timerExp3;
                       
                       //实验三是否触发指示变量
                       unsigned char triggerFlag = 0;
@@ -445,9 +446,9 @@ line level    source
                                                       {
                                                               P10=!P10;
                                                               TimerClearOverFlowFlag(TIM1);
-                                                      }                                                       
-C51 COMPILER V9.56.0.0   MAIN                                                              11/01/2017 20:45:36 PAGE 8   
+C51 COMPILER V9.56.0.0   MAIN                                                              11/06/2017 21:15:04 PAGE 8   
 
+                                                      }                                                       
                                               }
                                       break;
                                       //测量脉冲宽度
@@ -484,9 +485,9 @@ line level    source
                       }
               }
               #endif
- 463          
- 464          //中断实验
- 465          #ifdef INTERRUPT_EXP
+ 464          
+ 465          //中断实验
+ 466          #ifdef INTERRUPT_EXP
               
               //中断实验状态指示枚举变量类型
               typedef enum
@@ -498,29 +499,33 @@ line level    source
               
               //LED状态知识标志位
               unsigned char LedItStatus = 0;
+              unsigned char itTimes = 0;
               
               void main(void)
               {
                       //中断状态指示枚举变量
-                      itStatus_t idata itStatus = itExp2;
+                      itStatus_t idata itStatus = itExp3;
                       
                       //定时器初始化结构体
                       timeMode_t timeMode ={0};
                       
                       //初始化定时器
-                      timeMode.isGateCrl = noGateCrl;
-                      timeMode.timeWorkMode = counter;
-C51 COMPILER V9.56.0.0   MAIN                                                              11/01/2017 20:45:36 PAGE 9   
+C51 COMPILER V9.56.0.0   MAIN                                                              11/06/2017 21:15:04 PAGE 9   
 
+                      timeMode.isGateCrl = noGateCrl;
+                      timeMode.timeWorkMode = timer;
                       timeMode.timeTriggerMode = innerTrigger;
                       timeMode.timerMode = halfWordAutoReload;
                       
-                      TimeInit(TIM0 , timeMode ,3-1, 1);
+                      TimeInit(TIM0 , timeMode ,5000, 3);
+                      
                       //使能定时器中断
                       TimerOverFlowItInit(TIM0 , enable);
                       
                       //使能外部中断0
                       IT0 = 1;
+                      
+              
                       while(1)
                       {
                               //每20ms循环一次
@@ -563,19 +568,19 @@ line level    source
               }
               
               #endif
- 540          
- 541          //数据储存器实验
- 542          #ifdef DATA_MEMORY_TEST
+ 545          
+ 546          //数据储存器实验
+ 547          #ifdef DATA_MEMORY_TEST
               void main(void)
               {
                       //循环用计数变量
+C51 COMPILER V9.56.0.0   MAIN                                                              11/06/2017 21:15:04 PAGE 10  
+
                       unsigned char i = 0;
                       //对P1IO的输出状态进行初始化
                       P1 = 0x00;
                       //延时20ms
                       DelayMs(20);
-C51 COMPILER V9.56.0.0   MAIN                                                              11/01/2017 20:45:36 PAGE 10  
-
                       while(1)
                       {
                               //配置辅助寄存器
@@ -623,14 +628,46 @@ line level    source
                       }
               }
               #endif
+ 603          
+ 604          #ifdef UART_EXP
+ 605          unsigned char UART1Recieve = 0;
+ 606          
+ 607          void main(void)
+ 608          {
+ 609   1      //      //对P1IO的输出状态进行初始化
+ 610   1              
+ 611   1              UARTMode_t UARTInitStruct = {0};
+ 612   1              
+C51 COMPILER V9.56.0.0   MAIN                                                              11/06/2017 21:15:04 PAGE 11  
+
+ 613   1              P1 = 0x00;
+ 614   1              
+ 615   1              UARTInitStruct.UARTMode = UART_MODE_1;
+ 616   1              UARTInitStruct.UARTIsMulti = 0;
+ 617   1              UARTInitStruct.isUARTBaudrateDouble = UART_BAUDRATE_NORMAL;
+ 618   1              UARTInitStruct.itPriority = 0;
+ 619   1              
+ 620   1              UARTInit(UART1,UARTInitStruct,9600);
+ 621   1              
+ 622   1              while(1)
+ 623   1              {
+ 624   2                      DelayMs(20);
+ 625   2                      
+ 626   2                      UARTSendByte(UART1,84);
+ 627   2                      
+ 628   2                      LEDShowInt(UART1Recieve);
+ 629   2                      
+ 630   2              }
+ 631   1      }
+ 632          #endif
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   ----    ----
-   CONSTANT SIZE    =   ----    ----
+   CODE SIZE        =     81    ----
+   CONSTANT SIZE    =      4    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =   ----    ----
+   DATA SIZE        =      1       4
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.

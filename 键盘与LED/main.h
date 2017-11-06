@@ -10,6 +10,8 @@
 #define SYSCLK (4508000L)
 
 #define TIMERUS ((int)(SYSCLK/1000000))
+	
+#define RETURN_ERROR (0xff)
 
 //#define DATA_MEMORY_TEST
 
@@ -25,7 +27,9 @@
 
 //#define INTERRUPT_EXP
 
-typedef enum {RESET = 0, SET = !RESET} FlagStatus, ITStatus;
+#define UART_EXP
+
+typedef enum {RESET = 0, SET = 1} FlagStatus, ITStatus;
 typedef enum {disable = 0, enable}FunctionalState_t;
 
 extern unsigned char code realCode[];

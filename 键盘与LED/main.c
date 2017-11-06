@@ -9,6 +9,7 @@
 #include "decode.h"
 #include "p1IO.h"
 #include "timer.h"
+#include "usart.h"
 
 #endif
 
@@ -474,27 +475,31 @@ typedef enum
 
 //LED状态知识标志位
 unsigned char LedItStatus = 0;
+unsigned char itTimes = 0;
 
 void main(void)
 {
 	//中断状态指示枚举变量
-	itStatus_t idata itStatus = itExp2;
+	itStatus_t idata itStatus = itExp3;
 	
 	//定时器初始化结构体
 	timeMode_t timeMode ={0};
 	
 	//初始化定时器
 	timeMode.isGateCrl = noGateCrl;
-	timeMode.timeWorkMode = counter;
+	timeMode.timeWorkMode = timer;
 	timeMode.timeTriggerMode = innerTrigger;
 	timeMode.timerMode = halfWordAutoReload;
 	
-	TimeInit(TIM0 , timeMode ,3-1, 1);
+	TimeInit(TIM0 , timeMode ,5000, 3);
+	
 	//使能定时器中断
 	TimerOverFlowItInit(TIM0 , enable);
 	
 	//使能外部中断0
 	IT0 = 1;
+	
+
 	while(1)
 	{
 		//每20ms循环一次
@@ -592,6 +597,36 @@ void main(void)
 			LEDShowInt(outerExtendMem[i]);
 			DelayMs(300);		
 		}		
+	}
+}
+#endif
+
+#ifdef UART_EXP
+unsigned char UART1Recieve = 0;
+
+void main(void)
+{
+//	//对P1IO的输出状态进行初始化
+	
+	UARTMode_t UARTInitStruct = {0};
+	
+	P1 = 0x00;
+	
+	UARTInitStruct.UARTMode = UART_MODE_1;
+	UARTInitStruct.UARTIsMulti = 0;
+	UARTInitStruct.isUARTBaudrateDouble = UART_BAUDRATE_NORMAL;
+	UARTInitStruct.itPriority = 0;
+	
+	UARTInit(UART1,UARTInitStruct,9600);
+	
+	while(1)
+	{
+		DelayMs(20);
+		
+		UARTSendByte(UART1,84);
+		
+		LEDShowInt(UART1Recieve);
+		
 	}
 }
 #endif

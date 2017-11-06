@@ -1,5 +1,6 @@
 #include "usart.h"
 #include "timer.h"
+#include "HD7279.h"
 
 /****************************串口UART2部分代码存在问题，还没有更改****************************/
 
@@ -7,11 +8,11 @@ void UARTModeInit(UARTTypeDef_t UARTx, unsigned char UARTMode)
 {
 	if(UARTx==UART1)
 	{
-		SCON&=(0x3f|(UARTMode<<6));
+		SCON=(UARTMode<<6)+(SCON&0x3f);
 	}
 	else if(UARTx==UART2)
 	{
-		S2CON&=(0x3f|(UARTMode<<6));
+		S2CON=(UARTMode<<6)+(S2CON&0x3f);
 	}
 }
 
@@ -19,7 +20,7 @@ void UARTBaudrateInit(UARTTypeDef_t UARTx,unsigned char UARTMode, unsigned char 
 {
 	if(UARTx==UART1)
 	{
-		PCON&=(0xef|(isBaudrateDouble<<7));
+		PCON=(isBaudrateDouble<<7)+(PCON&0x7f);
 	}
 	else if(UARTx==UART2)
 	{
@@ -41,7 +42,9 @@ void UARTBaudrateInit(UARTTypeDef_t UARTx,unsigned char UARTMode, unsigned char 
 				timeMode.timeTriggerMode = innerTrigger;
 				timeMode.timerMode = halfWordAutoReload;
 				
-				TimeInit(TIM1 ,timeMode ,(int)1000000/baudRate, TIMERUS);
+				TimeInit(TIM1 ,timeMode ,(int)(1000000/(baudRate*4)), 3);
+				
+				AUXR&=0xfe;
 			}
 			else if(UARTx==UART2)
 			{
@@ -63,7 +66,9 @@ void UARTBaudrateInit(UARTTypeDef_t UARTx,unsigned char UARTMode, unsigned char 
 				timeMode.timeTriggerMode = innerTrigger;
 				timeMode.timerMode = halfWordAutoReload;
 				
-				TimeInit(TIM1 ,timeMode ,(int)1000000/baudRate, TIMERUS);				
+				TimeInit(TIM1 ,timeMode ,(int)(1000000/(baudRate*4)), 3);	
+
+				AUXR&=0xfe;				
 			}
 			else if(UARTx==UART2)
 			{
@@ -93,11 +98,29 @@ FlagStatus UARTGetFlagStatus(UARTTypeDef_t UARTx, unsigned char UARTFlag)
 {
 	if(UARTx==UART1)
 	{
-		return SCON&UARTFlag;
+		if(SCON&UARTFlag)
+		{
+			return SET;
+		}
+		else
+		{
+			return RESET;
+		}
 	}
 	else if(UARTx==UART2)
 	{
-		return S2CON&UARTFlag;
+		if(S2CON&UARTFlag)
+		{
+			return SET;
+		}
+		else
+		{
+			return RESET;
+		}
+	}
+	else
+	{
+		return RETURN_ERROR;
 	}
 }
 
@@ -122,14 +145,38 @@ void UARTSendByte(UARTTypeDef_t UARTx, unsigned char sendData)
 	else if(UARTx==UART2)
 	{
 		S2BUF = sendData;
-	}
-	while(UARTGetFlagStatus(UARTx,UART_Tx_IT_FLAG)!=SET);	
 
+	}
+	while(UARTGetFlagStatus(UARTx,UART_Tx_IT_FLAG)==RESET);
+	UARTClearFlagStatus(UARTx, UART_Tx_IT_FLAG);
+}
+
+unsigned char UARTRecieveByte(UARTTypeDef_t UARTx)
+{
+	if(UARTx==UART1)
+	{
+		return SBUF;
+	}
+	else if(UARTx==UART2)
+	{
+		return S2BUF;
+	}
+	else
+	{
+		return RETURN_ERROR;
+	}
 }
 
 void UARTInit(UARTTypeDef_t UARTx, UARTMode_t UARTMode, unsigned int baudRate)
 {
-
+	UARTModeInit(UARTx, UARTMode.UARTMode);
+	
+	UARTBaudrateInit(UARTx,UARTMode.UARTMode, UARTMode.isUARTBaudrateDouble, baudRate);
+	
+	UARTITConfig(UARTx, UARTMode.itPriority);
+	
+	UARTRxCmd(UARTx, enable);
+	
 }
 
 void UARTITConfig(UARTTypeDef_t UARTx, unsigned char UARTPriority)
@@ -147,3 +194,5 @@ void UARTITConfig(UARTTypeDef_t UARTx, unsigned char UARTPriority)
 		IP2|=UARTPriority;
 	}
 }
+
+
