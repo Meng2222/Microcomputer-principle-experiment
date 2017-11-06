@@ -80,36 +80,53 @@ unsigned char KeyRead(void)
 }
 
 //数码管显示整数函数
-void LEDShowInt(unsigned short showData)
+void LEDShowInt(long int showData)
 {
 	unsigned char LedData[8] = {0x00};
 	unsigned char i = 0;
 	signed char tempBuff[8] = {0};
 	unsigned char dataLength = 0;
 	
-	//将输入的整数转换为字符串
-	sprintf((char *)tempBuff,"%d",(int)showData);
-	
-	//记录数字长度
-	for(i = 0; i< 8; i++)
+	if(showData<=99999999&&showData>=-9999999)
 	{
-		if(tempBuff[i]!=0x00)
+	
+		//将输入的整数转换为字符串
+		sprintf((char *)tempBuff,"%Ld",(long int)showData);
+		
+		//记录数字长度
+		for(i = 0; i< 8; i++)
 		{
-			dataLength++;
+			if(tempBuff[i]!=0x00)
+			{
+				dataLength++;
+			}
+		}
+		
+		//将字符串转换为对应编码
+		for(i = dataLength;i > 0;i--)
+		{
+			if(tempBuff[i-1]!='-')
+			{
+				LedData[7 - (dataLength - i)]=tempBuff[i-1] - 0x30;
+				LedData[7 - (dataLength - i)] = realCode[LedData[7 - (dataLength - i)]];
+			}
+			else
+			{
+				LedData[7 - (dataLength - i)] = realCode[10];			
+			}
+		}
+		
+		//显示对应编码
+		for(i = 0;i<8;i++)
+		{
+			LedWrite(0x97 - i , LedData[i]);
 		}
 	}
-	
-	//将字符串转换为对应编码
-	for(i = dataLength;i > 0;i--)
+	else
 	{
-		LedData[7 - (dataLength - i)]=tempBuff[i-1] - 0x30;
-		LedData[7 - (dataLength - i)] = realCode[LedData[7 - (dataLength - i)]];
+		for(i = 0;i<8;i++)
+		{
+			LedWrite(0x97 - i , 0x6f);
+		}
 	}
-	
-	//显示对应编码
-	for(i = 0;i<8;i++)
-	{
-		LedWrite(0x97 - i , LedData[i]);
-	}
-	
 }
