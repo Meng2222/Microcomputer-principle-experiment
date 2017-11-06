@@ -42,7 +42,7 @@ void UARTBaudrateInit(UARTTypeDef_t UARTx,unsigned char UARTMode, unsigned char 
 				timeMode.timeTriggerMode = innerTrigger;
 				timeMode.timerMode = halfWordAutoReload;
 				
-				TimeInit(TIM1 ,timeMode ,(int)(1000000/(baudRate*4)), 3);
+				TimeInit(TIM1 ,timeMode ,(int)(1000000/(baudRate*4)), TIMERUS);
 				
 				AUXR&=0xfe;
 			}
@@ -66,7 +66,7 @@ void UARTBaudrateInit(UARTTypeDef_t UARTx,unsigned char UARTMode, unsigned char 
 				timeMode.timeTriggerMode = innerTrigger;
 				timeMode.timerMode = halfWordAutoReload;
 				
-				TimeInit(TIM1 ,timeMode ,(int)(1000000/(baudRate*4)), 3);	
+				TimeInit(TIM1 ,timeMode ,(int)(1000000/(baudRate*4)), TIMERUS);	
 
 				AUXR&=0xfe;				
 			}

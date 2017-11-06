@@ -491,7 +491,7 @@ void main(void)
 	timeMode.timeTriggerMode = innerTrigger;
 	timeMode.timerMode = halfWordAutoReload;
 	
-	TimeInit(TIM0 , timeMode ,5000, 3);
+	TimeInit(TIM0 , timeMode ,5000, TIMERUS);
 	
 	//使能定时器中断
 	TimerOverFlowItInit(TIM0 , enable);

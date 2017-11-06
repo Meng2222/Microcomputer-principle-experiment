@@ -9,7 +9,7 @@
 
 #define SYSCLK (4508000L)
 
-#define TIMERUS ((int)(SYSCLK/1000000))
+#define TIMERUS (int)(12.0f/(float)(SYSCLK/1000000))
 	
 #define RETURN_ERROR (0xff)
 
