@@ -27,7 +27,9 @@
 
 //#define INTERRUPT_EXP
 
-#define UART_EXP
+//#define UART_EXP
+
+#define IO8255_EXP
 
 typedef enum {RESET = 0, SET = 1} FlagStatus, ITStatus;
 typedef enum {disable = 0, enable}FunctionalState_t;

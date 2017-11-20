@@ -5,6 +5,7 @@
 
 #ifndef DATA_MEMORY_TEST
 
+#include "8255.h"
 #include "basicIO.h"
 #include "decode.h"
 #include "p1IO.h"
@@ -629,4 +630,34 @@ void main(void)
 		
 	}
 }
+#endif
+
+#ifdef IO8255_EXP
+
+void main(void)
+{
+	IO8255Init_t IO8255InitStuct = {0};
+	unsigned char pinNum = 0;
+	
+	IO8255InitStuct.portAInit.IO8255Mode = IO8255_MODE0;
+	IO8255InitStuct.portAInit.IOInOrOut = IO8255_INPUT;
+
+	IO8255InitStuct.portBInit.IO8255Mode = IO8255_MODE0;
+	IO8255InitStuct.portBInit.IOInOrOut = IO8255_OUTPUT;
+	
+	IO8255InitStuct.portCUInit.IOInOrOut = IO8255_OUTPUT;
+	IO8255InitStuct.portCLInit.IOInOrOut = IO8255_OUTPUT;
+
+	IO8255Init(IO8255InitStuct);
+	
+	while(1)
+	{
+		for(pinNum=0 ; pinNum < 8 ; pinNum++)
+		{
+			IO8255SetBit(PortC , pinNum , IO8255ReadBit(PortA , pinNum));
+		}
+
+	}
+}
+
 #endif

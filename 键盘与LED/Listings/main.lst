@@ -1,4 +1,4 @@
-C51 COMPILER V9.56.0.0   MAIN                                                              11/06/2017 22:15:36 PAGE 1   
+C51 COMPILER V9.56.0.0   MAIN                                                              11/20/2017 20:40:01 PAGE 1   
 
 
 C51 COMPILER V9.56.0.0, COMPILATION OF MODULE MAIN
@@ -15,22 +15,23 @@ line level    source
    5          
    6          #ifndef DATA_MEMORY_TEST
    7          
-   8          #include "basicIO.h"
-   9          #include "decode.h"
-  10          #include "p1IO.h"
-  11          #include "timer.h"
-  12          #include "usart.h"
-  13          
-  14          #endif
-  15          
-  16          #ifdef DATA_MEMORY_TEST
+   8          #include "8255.h"
+   9          #include "basicIO.h"
+  10          #include "decode.h"
+  11          #include "p1IO.h"
+  12          #include "timer.h"
+  13          #include "usart.h"
+  14          
+  15          #endif
+  16          
+  17          #ifdef DATA_MEMORY_TEST
               
               #include "dataMemory.h"
               
               #endif
-  21          
-  22          //键盘与LED实验
-  23          #ifdef KEY_LED_EXP
+  22          
+  23          //键盘与LED实验
+  24          #ifdef KEY_LED_EXP
               //键盘与LED实验状态枚举变量
               typedef enum
               {
@@ -61,9 +62,9 @@ line level    source
                       //按键是否按下标志位
                       unsigned char keyFlag = 0;
                       while(1)
-                      {
-C51 COMPILER V9.56.0.0   MAIN                                                              11/06/2017 22:15:36 PAGE 2   
+C51 COMPILER V9.56.0.0   MAIN                                                              11/20/2017 20:40:01 PAGE 2   
 
+                      {
                               //每隔20ms循环一次
                               DelayMs(20);
               
@@ -125,9 +126,9 @@ line level    source
                                                               }
                                                       break;
                                                       case KEY1:
-                                                              for(i = 0 ; i < 8 ; i++)
-C51 COMPILER V9.56.0.0   MAIN                                                              11/06/2017 22:15:36 PAGE 3   
+C51 COMPILER V9.56.0.0   MAIN                                                              11/20/2017 20:40:01 PAGE 3   
 
+                                                              for(i = 0 ; i < 8 ; i++)
                                                               {
                                                                       LedWrite(0x97 - i, realCode[1]);
                                                               }
@@ -189,9 +190,9 @@ line level    source
                                               if(keyState!=0xff&&keyFlag==0)
                                               {
                                                       //发送不循环左移命令
-                                                      HD7279SendByte(RTL_UNCYL);
-C51 COMPILER V9.56.0.0   MAIN                                                              11/06/2017 22:15:36 PAGE 4   
+C51 COMPILER V9.56.0.0   MAIN                                                              11/20/2017 20:40:01 PAGE 4   
 
+                                                      HD7279SendByte(RTL_UNCYL);
                                                       //根据按键状态在最后一位显示对应数字
                                                       switch(keyState)
                                                       {
@@ -248,14 +249,14 @@ line level    source
                       }
               }
               #endif
- 235          
- 236          //简单IO实验
- 237          #ifdef BASIC_IO_EXP
+ 236          
+ 237          //简单IO实验
+ 238          #ifdef BASIC_IO_EXP
               
               void main(void)
-              {
-C51 COMPILER V9.56.0.0   MAIN                                                              11/06/2017 22:15:36 PAGE 5   
+C51 COMPILER V9.56.0.0   MAIN                                                              11/20/2017 20:40:01 PAGE 5   
 
+              {
                       //IO输入记录变量
                       unsigned char ioInput = 0;
                       //循环计数用变量
@@ -287,9 +288,9 @@ line level    source
                       }
               }
               #endif
- 272          
- 273          //译码器实验
- 274          #ifdef DECODE_EXP
+ 273          
+ 274          //译码器实验
+ 275          #ifdef DECODE_EXP
               
               void main(void)
               {
@@ -317,12 +318,12 @@ line level    source
                               }       
                       }
               }
-              #endif
-C51 COMPILER V9.56.0.0   MAIN                                                              11/06/2017 22:15:36 PAGE 6   
+C51 COMPILER V9.56.0.0   MAIN                                                              11/20/2017 20:40:01 PAGE 6   
 
- 303          
- 304          //通用IOP1实验
- 305          #ifdef P1_IO_EXP
+              #endif
+ 304          
+ 305          //通用IOP1实验
+ 306          #ifdef P1_IO_EXP
               //P1IO实验状态指示枚举变量
               typedef enum
               {
@@ -367,9 +368,9 @@ line level    source
                       }
               }
               #endif
- 350          
- 351          //定时器实验
- 352          #ifdef TIMER_EXP
+ 351          
+ 352          //定时器实验
+ 353          #ifdef TIMER_EXP
               
               //状态指示枚举变量类型
               typedef enum
@@ -381,9 +382,9 @@ line level    source
               
               void main(void)
               {
-                      //状态指示变量
-C51 COMPILER V9.56.0.0   MAIN                                                              11/06/2017 22:15:36 PAGE 7   
+C51 COMPILER V9.56.0.0   MAIN                                                              11/20/2017 20:40:01 PAGE 7   
 
+                      //状态指示变量
                       timerStatus_t idata timerStatus = timerExp3;
                       
                       //实验三是否触发指示变量
@@ -445,9 +446,9 @@ line level    source
                                                       if(TimerGetOverFlowITFlag(TIM1))
                                                       {
                                                               P10=!P10;
-                                                              TimerClearOverFlowFlag(TIM1);
-C51 COMPILER V9.56.0.0   MAIN                                                              11/06/2017 22:15:36 PAGE 8   
+C51 COMPILER V9.56.0.0   MAIN                                                              11/20/2017 20:40:01 PAGE 8   
 
+                                                              TimerClearOverFlowFlag(TIM1);
                                                       }                                                       
                                               }
                                       break;
@@ -485,9 +486,9 @@ line level    source
                       }
               }
               #endif
- 464          
- 465          //中断实验
- 466          #ifdef INTERRUPT_EXP
+ 465          
+ 466          //中断实验
+ 467          #ifdef INTERRUPT_EXP
               
               //中断实验状态指示枚举变量类型
               typedef enum
@@ -509,9 +510,9 @@ line level    source
                       //定时器初始化结构体
                       timeMode_t timeMode ={0};
                       
-                      //初始化定时器
-C51 COMPILER V9.56.0.0   MAIN                                                              11/06/2017 22:15:36 PAGE 9   
+C51 COMPILER V9.56.0.0   MAIN                                                              11/20/2017 20:40:01 PAGE 9   
 
+                      //初始化定时器
                       timeMode.isGateCrl = noGateCrl;
                       timeMode.timeWorkMode = timer;
                       timeMode.timeTriggerMode = innerTrigger;
@@ -568,14 +569,14 @@ line level    source
               }
               
               #endif
- 545          
- 546          //数据储存器实验
- 547          #ifdef DATA_MEMORY_TEST
+ 546          
+ 547          //数据储存器实验
+ 548          #ifdef DATA_MEMORY_TEST
               void main(void)
               {
-                      //循环用计数变量
-C51 COMPILER V9.56.0.0   MAIN                                                              11/06/2017 22:15:36 PAGE 10  
+C51 COMPILER V9.56.0.0   MAIN                                                              11/20/2017 20:40:01 PAGE 10  
 
+                      //循环用计数变量
                       unsigned char i = 0;
                       //对P1IO的输出状态进行初始化
                       P1 = 0x00;
@@ -628,49 +629,81 @@ line level    source
                       }
               }
               #endif
- 603          
- 604          #ifdef UART_EXP
- 605          unsigned char UART1Recieve = 0;
- 606          
- 607          void main(void)
- 608          {
- 609   1      //      //对P1IO的输出状态进行初始化
- 610   1              
- 611   1              UARTMode_t UARTInitStruct = {0};
- 612   1              
-C51 COMPILER V9.56.0.0   MAIN                                                              11/06/2017 22:15:36 PAGE 11  
+ 604          
+ 605          #ifdef UART_EXP
+              unsigned char UART1Recieve = 0;
+              
+              void main(void)
+              {
+              //      //对P1IO的输出状态进行初始化
+                      
+                      UARTMode_t UARTInitStruct = {0};
+C51 COMPILER V9.56.0.0   MAIN                                                              11/20/2017 20:40:01 PAGE 11  
 
- 613   1              P1 = 0x00;
- 614   1              
- 615   1              UARTInitStruct.UARTMode = UART_MODE_1;
- 616   1              UARTInitStruct.UARTIsMulti = 0;
- 617   1              UARTInitStruct.isUARTBaudrateDouble = UART_BAUDRATE_NORMAL;
- 618   1              UARTInitStruct.itPriority = 0;
- 619   1              
- 620   1              UARTInit(UART1,UARTInitStruct,9600);
- 621   1              
- 622   1              while(1)
- 623   1              {
- 624   2                      DelayMs(20);
- 625   2                      
- 626   2                      UARTSendByte(UART1,84);
- 627   2                      
- 628   2                      LEDShowInt(UART1Recieve);
- 629   2                      
- 630   2              }
- 631   1      }
- 632          #endif
+                      
+                      P1 = 0x00;
+                      
+                      UARTInitStruct.UARTMode = UART_MODE_1;
+                      UARTInitStruct.UARTIsMulti = 0;
+                      UARTInitStruct.isUARTBaudrateDouble = UART_BAUDRATE_NORMAL;
+                      UARTInitStruct.itPriority = 0;
+                      
+                      UARTInit(UART1,UARTInitStruct,9600);
+                      
+                      while(1)
+                      {
+                              DelayMs(20);
+                              
+                              UARTSendByte(UART1,84);
+                              
+                              LEDShowInt(UART1Recieve);
+                              
+                      }
+              }
+              #endif
+ 634          
+ 635          #ifdef IO8255_EXP
+ 636          
+ 637          void main(void)
+ 638          {
+ 639   1              IO8255Init_t IO8255InitStuct = {0};
+ 640   1              unsigned char pinNum = 0;
+ 641   1              
+ 642   1              IO8255InitStuct.portAInit.IO8255Mode = IO8255_MODE0;
+ 643   1              IO8255InitStuct.portAInit.IOInOrOut = IO8255_INPUT;
+ 644   1      
+ 645   1              IO8255InitStuct.portBInit.IO8255Mode = IO8255_MODE0;
+ 646   1              IO8255InitStuct.portBInit.IOInOrOut = IO8255_OUTPUT;
+ 647   1              
+ 648   1              IO8255InitStuct.portCUInit.IOInOrOut = IO8255_OUTPUT;
+ 649   1              IO8255InitStuct.portCLInit.IOInOrOut = IO8255_OUTPUT;
+ 650   1      
+ 651   1              IO8255Init(IO8255InitStuct);
+ 652   1              
+ 653   1              while(1)
+ 654   1              {
+ 655   2                      for(pinNum=0 ; pinNum < 8 ; pinNum++)
+ 656   2                      {
+ 657   3                              IO8255SetBit(PortC , pinNum , IO8255ReadBit(PortA , pinNum));
+ 658   3                      }
+ 659   2      
+ 660   2              }
+ 661   1      }
+ 662          
+ 663          #endif
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     83    ----
-   CONSTANT SIZE    =      4    ----
+   CODE SIZE        =     84    ----
+   CONSTANT SIZE    =      8    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =      1       4
+   DATA SIZE        =   ----       9
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
+
+C51 COMPILER V9.56.0.0   MAIN                                                              11/20/2017 20:40:01 PAGE 12  
 
 
 C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
