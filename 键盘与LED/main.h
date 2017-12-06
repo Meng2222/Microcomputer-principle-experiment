@@ -7,7 +7,7 @@
 #include <math.h>
 #include <stdio.h>
 
-#define SYSCLK (4508000L)
+#define SYSCLK (4068000L)
 
 #define TIMERUS (int)(12.0f/(float)(SYSCLK/1000000))
 	
@@ -29,7 +29,9 @@
 
 //#define UART_EXP
 
-#define IO8255_EXP
+//#define IO8255_EXP
+
+#define TIMER_8254_EXP
 
 typedef enum {RESET = 0, SET = 1} FlagStatus, ITStatus;
 typedef enum {disable = 0, enable}FunctionalState_t;

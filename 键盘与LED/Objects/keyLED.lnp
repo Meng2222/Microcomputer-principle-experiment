@@ -9,6 +9,7 @@
 ".\Objects\timer.obj",
 ".\Objects\89C51_it.obj",
 ".\Objects\usart.obj",
-".\Objects\8255.obj" 
+".\Objects\8255.obj",
+".\Objects\8254.obj" 
 TO ".\Objects\keyLED" 
 PRINT(".\Listings\keyLED.m51") RAMSIZE(256) 

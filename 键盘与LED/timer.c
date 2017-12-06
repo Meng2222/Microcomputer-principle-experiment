@@ -9,7 +9,7 @@ void TimerCmd(TimerTypeDef_t TIMx , FunctionalState_t newState)
 	{
 		TCON|=(0x10<<(TIMx * 2));
 	}
-	else
+	else 
 	{
 		TCON&=(~(0x10<<(TIMx * 2)));
 	}

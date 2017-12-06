@@ -11,6 +11,7 @@
 #include "p1IO.h"
 #include "timer.h"
 #include "usart.h"
+#include "8254.h"
 
 #endif
 
@@ -657,6 +658,25 @@ void main(void)
 			IO8255SetBit(PortC , pinNum , IO8255ReadBit(PortA , pinNum));
 		}
 
+	}
+}
+
+#endif
+
+#ifdef TIMER_8254_EXP
+
+void main(void)
+{
+	CLK_DIV = (CLK_DIV&0x3f)|0x40;
+	
+	Timer8254CounterModeInit(timer8254Timer0, 10000);
+	
+	Timer8254PrescalerModeInit(timer8254Timer1, 10);
+
+	while(1)
+	{
+		LEDShowInt(Timer8254GetCounter(timer8254Timer0));
+		DelayMs(20);
 	}
 }
 
