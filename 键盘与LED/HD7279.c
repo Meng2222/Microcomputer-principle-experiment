@@ -142,7 +142,7 @@ void LEDShowFloat(float showData)
 	{
 	
 		//将输入的整数转换为字符串
-		sprintf((char *)tempBuff,"%f",(float)showData);
+		sprintf((char *)tempBuff,"%.3f",(float)showData);
 		
 		//记录数字长度
 		for(i = 0; i< 8; i++)

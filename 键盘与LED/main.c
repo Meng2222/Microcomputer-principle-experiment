@@ -726,10 +726,13 @@ void main(void)
 	PWMCmd(enable);
 	
 	DelayMs(5000);
+
 	while(1)
 	{
 		DelayMs(20);
 		MotorVelCrl(50.0f,actSpeed);
+		LEDShowFloat(actSpeed);	
+		LedWrite(0x97,0x4F);
 	}
 }
 

@@ -1,4 +1,4 @@
-C51 COMPILER V9.56.0.0   HD7279                                                            12/13/2017 23:08:35 PAGE 1   
+C51 COMPILER V9.56.0.0   HD7279                                                            12/14/2017 00:25:51 PAGE 1   
 
 
 C51 COMPILER V9.56.0.0, COMPILATION OF MODULE HD7279
@@ -62,7 +62,7 @@ line level    source
   52   2                      {
   53   3                              receiveData|=0x01;
   54   3                      }
-C51 COMPILER V9.56.0.0   HD7279                                                            12/13/2017 23:08:35 PAGE 2   
+C51 COMPILER V9.56.0.0   HD7279                                                            12/14/2017 00:25:51 PAGE 2   
 
   55   2                      else
   56   2                      {
@@ -126,7 +126,7 @@ line level    source
  114   3                              {
  115   4                                      LedData[7 - (dataLength - i)] = realCode[10];                   
  116   4                              }
-C51 COMPILER V9.56.0.0   HD7279                                                            12/13/2017 23:08:35 PAGE 3   
+C51 COMPILER V9.56.0.0   HD7279                                                            12/14/2017 00:25:51 PAGE 3   
 
  117   3                      }
  118   2                      
@@ -156,7 +156,7 @@ line level    source
  142   1              {
  143   2              
  144   2                      //将输入的整数转换为字符串
- 145   2                      sprintf((char *)tempBuff,"%f",(float)showData);
+ 145   2                      sprintf((char *)tempBuff,"%.3f",(float)showData);
  146   2                      
  147   2                      //记录数字长度
  148   2                      for(i = 0; i< 8; i++)
@@ -190,7 +190,7 @@ line level    source
  176   2                      {
  177   3                              LedWrite(0x97 - i , LedData[i]);
  178   3                      }
-C51 COMPILER V9.56.0.0   HD7279                                                            12/13/2017 23:08:35 PAGE 4   
+C51 COMPILER V9.56.0.0   HD7279                                                            12/14/2017 00:25:51 PAGE 4   
 
  179   2              }
  180   1              else
@@ -205,7 +205,7 @@ line level    source
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
    CODE SIZE        =   1039    ----
-   CONSTANT SIZE    =     39    ----
+   CONSTANT SIZE    =     41    ----
    XDATA SIZE       =     14      39
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----      10

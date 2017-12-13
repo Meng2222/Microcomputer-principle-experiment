@@ -6,7 +6,7 @@ float xdata actSpeed = 0.0f;
 
 void MotorVelCrl(float expVel,float actVel)
 {
-	#define VEL_CRL_P (0.005f)
+	#define VEL_CRL_P (0.003f)
 	float xdata dutyCycle = 0.0f;
 	float xdata error = 0.0f;
 	//对输入速度进行限制
