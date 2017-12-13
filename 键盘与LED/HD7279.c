@@ -130,3 +130,58 @@ void LEDShowInt(long int showData)
 		}
 	}
 }
+
+void LEDShowFloat(float showData)
+{
+	unsigned char xdata LedData[8] = {0x00};
+	unsigned char xdata i = 0;
+	signed char xdata tempBuff[8] = {0};
+	unsigned char xdata dataLength = 0;
+	
+	if(showData<=999.999&&showData>=-99.999)
+	{
+	
+		//将输入的整数转换为字符串
+		sprintf((char *)tempBuff,"%f",(float)showData);
+		
+		//记录数字长度
+		for(i = 0; i< 8; i++)
+		{
+			if(tempBuff[i]!=0x00)
+			{
+				dataLength++;
+			}
+		}
+		
+		//将字符串转换为对应编码
+		for(i = dataLength;i > 0;i--)
+		{
+			if(tempBuff[i-1]!='-'&&tempBuff[i-1]!='.')
+			{
+				LedData[7 - (dataLength - i)]=tempBuff[i-1] - 0x30;
+				LedData[7 - (dataLength - i)] = realCode[LedData[7 - (dataLength - i)]];
+			}
+			else if(tempBuff[i-1]=='.')
+			{
+				LedData[7 - (dataLength - i)] = realCode[11];				
+			}
+			else if(tempBuff[i-1]=='-')
+			{
+				LedData[7 - (dataLength - i)] = realCode[10];			
+			}
+		}
+		
+		//显示对应编码
+		for(i = 0;i<8;i++)
+		{
+			LedWrite(0x97 - i , LedData[i]);
+		}
+	}
+	else
+	{
+		for(i = 0;i<8;i++)
+		{
+			LedWrite(0x97 - i , 0x6f);
+		}
+	}
+}

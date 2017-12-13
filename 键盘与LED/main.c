@@ -724,6 +724,8 @@ void main(void)
 	
 	PWM0SetCompare(0.2f);
 	PWMCmd(enable);
+	
+	DelayMs(5000);
 	while(1)
 	{
 		DelayMs(20);

@@ -56,5 +56,6 @@ unsigned char HD7279ReceiveByte(void);
 void LedWrite(unsigned char cmd , unsigned char dataSend);
 unsigned char KeyRead(void);
 void LEDShowInt(long int showData);
+void LEDShowFloat(float showData);
 
 #endif

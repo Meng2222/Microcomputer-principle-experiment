@@ -1,4 +1,4 @@
-C51 COMPILER V9.56.0.0   HD7279                                                            12/12/2017 23:10:29 PAGE 1   
+C51 COMPILER V9.56.0.0   HD7279                                                            12/13/2017 23:08:35 PAGE 1   
 
 
 C51 COMPILER V9.56.0.0, COMPILATION OF MODULE HD7279
@@ -62,7 +62,7 @@ line level    source
   52   2                      {
   53   3                              receiveData|=0x01;
   54   3                      }
-C51 COMPILER V9.56.0.0   HD7279                                                            12/12/2017 23:10:29 PAGE 2   
+C51 COMPILER V9.56.0.0   HD7279                                                            12/13/2017 23:08:35 PAGE 2   
 
   55   2                      else
   56   2                      {
@@ -126,7 +126,7 @@ line level    source
  114   3                              {
  115   4                                      LedData[7 - (dataLength - i)] = realCode[10];                   
  116   4                              }
-C51 COMPILER V9.56.0.0   HD7279                                                            12/12/2017 23:10:29 PAGE 3   
+C51 COMPILER V9.56.0.0   HD7279                                                            12/13/2017 23:08:35 PAGE 3   
 
  117   3                      }
  118   2                      
@@ -144,14 +144,71 @@ line level    source
  130   3                      }
  131   2              }
  132   1      }
+ 133          
+ 134          void LEDShowFloat(float showData)
+ 135          {
+ 136   1              unsigned char xdata LedData[8] = {0x00};
+ 137   1              unsigned char xdata i = 0;
+ 138   1              signed char xdata tempBuff[8] = {0};
+ 139   1              unsigned char xdata dataLength = 0;
+ 140   1              
+ 141   1              if(showData<=999.999&&showData>=-99.999)
+ 142   1              {
+ 143   2              
+ 144   2                      //将输入的整数转换为字符串
+ 145   2                      sprintf((char *)tempBuff,"%f",(float)showData);
+ 146   2                      
+ 147   2                      //记录数字长度
+ 148   2                      for(i = 0; i< 8; i++)
+ 149   2                      {
+ 150   3                              if(tempBuff[i]!=0x00)
+ 151   3                              {
+ 152   4                                      dataLength++;
+ 153   4                              }
+ 154   3                      }
+ 155   2                      
+ 156   2                      //将字符串转换为对应编码
+ 157   2                      for(i = dataLength;i > 0;i--)
+ 158   2                      {
+ 159   3                              if(tempBuff[i-1]!='-'&&tempBuff[i-1]!='.')
+ 160   3                              {
+ 161   4                                      LedData[7 - (dataLength - i)]=tempBuff[i-1] - 0x30;
+ 162   4                                      LedData[7 - (dataLength - i)] = realCode[LedData[7 - (dataLength - i)]];
+ 163   4                              }
+ 164   3                              else if(tempBuff[i-1]=='.')
+ 165   3                              {
+ 166   4                                      LedData[7 - (dataLength - i)] = realCode[11];                           
+ 167   4                              }
+ 168   3                              else if(tempBuff[i-1]=='-')
+ 169   3                              {
+ 170   4                                      LedData[7 - (dataLength - i)] = realCode[10];                   
+ 171   4                              }
+ 172   3                      }
+ 173   2                      
+ 174   2                      //显示对应编码
+ 175   2                      for(i = 0;i<8;i++)
+ 176   2                      {
+ 177   3                              LedWrite(0x97 - i , LedData[i]);
+ 178   3                      }
+C51 COMPILER V9.56.0.0   HD7279                                                            12/13/2017 23:08:35 PAGE 4   
+
+ 179   2              }
+ 180   1              else
+ 181   1              {
+ 182   2                      for(i = 0;i<8;i++)
+ 183   2                      {
+ 184   3                              LedWrite(0x97 - i , 0x6f);
+ 185   3                      }
+ 186   2              }
+ 187   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    562    ----
-   CONSTANT SIZE    =     20    ----
-   XDATA SIZE       =     14      21
+   CODE SIZE        =   1039    ----
+   CONSTANT SIZE    =     39    ----
+   XDATA SIZE       =     14      39
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =   ----       6
+   DATA SIZE        =   ----      10
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
