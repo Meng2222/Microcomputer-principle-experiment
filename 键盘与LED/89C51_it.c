@@ -1,7 +1,10 @@
 #include "89C51_it.h"
 #include "timer.h"
 #include "usart.h"
+#include "brushDcMotor.h"
 extern unsigned char LedItStatus;
+extern unsigned int xdata relativePos;
+extern float xdata actSpeed;
 
 void ExternalITCmd(exITTypedef_t exITx, FunctionalState_t newState)
 {
@@ -59,6 +62,19 @@ void time0()interrupt 1
 			LedItStatus = 1;
 		}
 	}
+//	relativePos = CCAP1H<<8;
+//	relativePos|= CCAP1L;
+//	CCAP1H = 0;
+//	CCAP1L = 0;
+	
+	TimerCmd(TIM1 , disable);
+	relativePos = TH1<<8;
+	relativePos|= TL1;
+	TH1 = 0;
+	TL1 = 0;
+	TimerCmd(TIM1 ,enable);	
+	
+	actSpeed = relativePos*10/COUNT_PER_CIRCLE*PI;
 }
 
 extern unsigned char UART1Recieve;
@@ -74,4 +90,19 @@ void UART1_ITHandler()interrupt 4
 	{
 //		UARTClearFlagStatus(UART1, UART_Tx_IT_FLAG);
 	}
+}
+
+void PCA_ITHandler()interrupt 7 using 1
+{
+	if(CF)
+	{
+		CF = 0;
+		
+	}
+	if(CCF0)
+	{
+		CCF0=0;
+	}
+		
+		
 }

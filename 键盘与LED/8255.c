@@ -7,7 +7,7 @@ unsigned char xdata IO8255PortCtl _at_ 0xF803;
 
 void IO8255Init(IO8255Init_t IO8255InitStuction)
 {
-	unsigned char initData = 0x80;
+	unsigned char xdata initData = 0x80;
 	
 	initData|=(IO8255InitStuction.portAInit.IO8255Mode<<5);
 	initData|=(IO8255InitStuction.portAInit.IOInOrOut<<4);

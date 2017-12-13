@@ -46,7 +46,7 @@ void Timer8254Cmd(timer8254TypeDef_t timerx, FunctionalState_t newState)
 
 void Timer8254CounterModeInit(timer8254TypeDef_t timerx, unsigned short setCounter)
 {
-	unsigned char initData = 0;
+	unsigned char xdata initData = 0;
 	
 	initData|=(timerx<<6);
 	
@@ -78,7 +78,7 @@ void Timer8254CounterModeInit(timer8254TypeDef_t timerx, unsigned short setCount
 
 void Timer8254TriggerModeInit(timer8254TypeDef_t timerx, unsigned short setCounter)
 {
-	unsigned char initData = 0;
+	unsigned char xdata initData = 0;
 	
 	initData|=(timerx<<6);
 	
@@ -116,7 +116,7 @@ void Timer8254StartTrigger(timer8254TypeDef_t timerx)
 
 void Timer8254PrescalerModeInit(timer8254TypeDef_t timerx, unsigned short prescale)
 {
-	unsigned char initData = 0;
+	unsigned char xdata initData = 0;
 	
 	initData|=(timerx<<6);
 	
@@ -150,7 +150,7 @@ void Timer8254PrescalerModeInit(timer8254TypeDef_t timerx, unsigned short presca
 
 void Timer8254SquareWaveModeInit(timer8254TypeDef_t timerx, unsigned short period)
 {
-	unsigned char initData = 0;
+	unsigned char xdata initData = 0;
 	
 	initData|=(timerx<<6);
 	
@@ -183,7 +183,7 @@ void Timer8254SquareWaveModeInit(timer8254TypeDef_t timerx, unsigned short perio
 
 void Timer8254SoftwareStrobeModeInit(timer8254TypeDef_t timerx, unsigned short setCounter)
 {
-	unsigned char initData = 0;
+	unsigned char xdata initData = 0;
 	
 	initData|=(timerx<<6);
 	
@@ -216,7 +216,7 @@ void Timer8254SoftwareStrobeModeInit(timer8254TypeDef_t timerx, unsigned short s
 
 void Timer8254HardwareStrobeModeInit(timer8254TypeDef_t timerx, unsigned short setCounter)
 {
-	unsigned char initData = 0;
+	unsigned char xdata initData = 0;
 	
 	initData|=(timerx<<6);
 	
@@ -256,7 +256,7 @@ void Timer8254StartHardStrobe(timer8254TypeDef_t timerx)
 
 unsigned short Timer8254GetCounter(timer8254TypeDef_t timerx)
 {
-	unsigned short returnValue = 0;
+	unsigned short xdata returnValue = 0;
 	
 	timer8254Ctr = timerx<<6;
 	

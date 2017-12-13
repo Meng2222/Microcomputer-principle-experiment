@@ -10,6 +10,13 @@
 ".\Objects\89C51_it.obj",
 ".\Objects\usart.obj",
 ".\Objects\8255.obj",
-".\Objects\8254.obj" 
+".\Objects\8254.obj",
+".\Objects\8251A.obj",
+".\Objects\CS5550.obj",
+".\Objects\pwm.obj",
+".\Objects\brushDcMotor.obj",
+".\Objects\stepMotor.obj",
+".\Objects\speaker.obj",
+".\Objects\gpio.obj" 
 TO ".\Objects\keyLED" 
 PRINT(".\Listings\keyLED.m51") RAMSIZE(256) 

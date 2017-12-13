@@ -49,7 +49,7 @@ sbit clk = P1^7;
 #define LED7 (0x97 - 1)
 #define LED8 (0x97)
 
-extern unsigned char code realCode[];
+extern unsigned char  xdata realCode[];
 
 void HD7279SendByte(unsigned char sendData);
 unsigned char HD7279ReceiveByte(void);

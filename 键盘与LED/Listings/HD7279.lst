@@ -1,4 +1,4 @@
-C51 COMPILER V9.56.0.0   HD7279                                                            12/07/2017 00:32:11 PAGE 1   
+C51 COMPILER V9.56.0.0   HD7279                                                            12/12/2017 23:10:29 PAGE 1   
 
 
 C51 COMPILER V9.56.0.0, COMPILATION OF MODULE HD7279
@@ -13,7 +13,7 @@ line level    source
    3          #include "stdio.h"
    4          
    5          //HD7279显示内容对应数码
-   6          unsigned char code realCode[] = \
+   6          unsigned char xdata realCode[] = \
    7                  {0x7e , 0x30 , 0x6d , 0x79 , 0x33 , 0x5b , 0x5f , 0x70 , 0x7f , 0x7b , 0x01 , 0x80 , 0x00 , 0x6f};
    8          //      0               1               2               3               4               5       6               7               8       9               -               .               blank   error
    9          
@@ -21,7 +21,7 @@ line level    source
   11          void HD7279SendByte(unsigned char sendData)
   12          {
   13   1      #define SEND_DATA_LENGTH (8)
-  14   1              unsigned char sendCounter = 0;
+  14   1              unsigned char xdata sendCounter = 0;
   15   1              cs = 0;
   16   1              Delay10Us(12);
   17   1              //生成时钟信号并将八位数字依次发送
@@ -48,8 +48,8 @@ line level    source
   38          unsigned char HD7279ReceiveByte(void)
   39          {
   40   1      #define RECEIVE_DATA_LENGTH (8)
-  41   1              unsigned char receiveCounter  = 0;
-  42   1              unsigned char receiveData = 0;
+  41   1              unsigned char xdata receiveCounter  = 0;
+  42   1              unsigned char xdata receiveData = 0;
   43   1              dat = 1;
   44   1              Delay10Us(12);
   45   1              //生成时钟信号并将八位数字一次接收
@@ -62,7 +62,7 @@ line level    source
   52   2                      {
   53   3                              receiveData|=0x01;
   54   3                      }
-C51 COMPILER V9.56.0.0   HD7279                                                            12/07/2017 00:32:11 PAGE 2   
+C51 COMPILER V9.56.0.0   HD7279                                                            12/12/2017 23:10:29 PAGE 2   
 
   55   2                      else
   56   2                      {
@@ -94,10 +94,10 @@ line level    source
   82          //数码管显示整数函数
   83          void LEDShowInt(long int showData)
   84          {
-  85   1              unsigned char LedData[8] = {0x00};
-  86   1              unsigned char i = 0;
-  87   1              signed char tempBuff[8] = {0};
-  88   1              unsigned char dataLength = 0;
+  85   1              unsigned char xdata LedData[8] = {0x00};
+  86   1              unsigned char xdata i = 0;
+  87   1              signed char xdata tempBuff[8] = {0};
+  88   1              unsigned char xdata dataLength = 0;
   89   1              
   90   1              if(showData<=99999999&&showData>=-9999999)
   91   1              {
@@ -126,7 +126,7 @@ line level    source
  114   3                              {
  115   4                                      LedData[7 - (dataLength - i)] = realCode[10];                   
  116   4                              }
-C51 COMPILER V9.56.0.0   HD7279                                                            12/07/2017 00:32:11 PAGE 3   
+C51 COMPILER V9.56.0.0   HD7279                                                            12/12/2017 23:10:29 PAGE 3   
 
  117   3                      }
  118   2                      
@@ -147,11 +147,11 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    417    ----
-   CONSTANT SIZE    =     34    ----
-   XDATA SIZE       =   ----    ----
+   CODE SIZE        =    562    ----
+   CONSTANT SIZE    =     20    ----
+   XDATA SIZE       =     14      21
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =   ----      27
+   DATA SIZE        =   ----       6
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.

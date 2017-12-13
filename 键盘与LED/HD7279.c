@@ -3,7 +3,7 @@
 #include "stdio.h"
 
 //HD7279显示内容对应数码
-unsigned char code realCode[] = \
+unsigned char xdata realCode[] = \
 	{0x7e , 0x30 , 0x6d , 0x79 , 0x33 , 0x5b , 0x5f , 0x70 , 0x7f , 0x7b , 0x01 , 0x80 , 0x00 , 0x6f};
 //	0		1		2		3		4		5	6		7		8	9		-		.		blank	error
 
@@ -11,7 +11,7 @@ unsigned char code realCode[] = \
 void HD7279SendByte(unsigned char sendData)
 {
 #define SEND_DATA_LENGTH (8)
-	unsigned char sendCounter = 0;
+	unsigned char xdata sendCounter = 0;
 	cs = 0;
 	Delay10Us(12);
 	//生成时钟信号并将八位数字依次发送
@@ -38,8 +38,8 @@ void HD7279SendByte(unsigned char sendData)
 unsigned char HD7279ReceiveByte(void)
 {
 #define RECEIVE_DATA_LENGTH (8)
-	unsigned char receiveCounter  = 0;
-	unsigned char receiveData = 0;
+	unsigned char xdata receiveCounter  = 0;
+	unsigned char xdata receiveData = 0;
 	dat = 1;
 	Delay10Us(12);
 	//生成时钟信号并将八位数字一次接收
@@ -82,10 +82,10 @@ unsigned char KeyRead(void)
 //数码管显示整数函数
 void LEDShowInt(long int showData)
 {
-	unsigned char LedData[8] = {0x00};
-	unsigned char i = 0;
-	signed char tempBuff[8] = {0};
-	unsigned char dataLength = 0;
+	unsigned char xdata LedData[8] = {0x00};
+	unsigned char xdata i = 0;
+	signed char xdata tempBuff[8] = {0};
+	unsigned char xdata dataLength = 0;
 	
 	if(showData<=99999999&&showData>=-9999999)
 	{

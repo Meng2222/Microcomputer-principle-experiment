@@ -13,6 +13,8 @@
 	
 #define RETURN_ERROR (0xff)
 
+#define PI (3.1415926f)
+
 //#define DATA_MEMORY_TEST
 
 //#define KEY_LED_EXP
@@ -31,10 +33,12 @@
 
 //#define IO8255_EXP
 
-#define TIMER_8254_EXP
+//#define TIMER_8254_EXP
+
+#define STEPMOTOR_EXP
 
 typedef enum {RESET = 0, SET = 1} FlagStatus, ITStatus;
 typedef enum {disable = 0, enable}FunctionalState_t;
 
-extern unsigned char code realCode[];
+extern unsigned char xdata realCode[];
 #endif

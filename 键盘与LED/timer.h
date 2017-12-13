@@ -49,8 +49,8 @@ void TimerCmd(TimerTypeDef_t TIMx , FunctionalState_t newState);
 unsigned char TimerGetOverFlowITFlag(TimerTypeDef_t TIMx);
 void TimerClearOverFlowFlag(TimerTypeDef_t TIMx);
 void TimeModeInit(TimerTypeDef_t TIMx , timeMode_t timeMode);
-void TimeReloadNumInit(TimerTypeDef_t TIMx,timerMode_t timerMode,unsigned short timerPeriod, unsigned short mechinePeriod);
-void TimeInit(TimerTypeDef_t TIMx , timeMode_t timeMode ,unsigned short timerPeriod, unsigned short mechinePeriod);
+void TimeReloadNumInit(TimerTypeDef_t TIMx,timerMode_t timerMode,unsigned long timerPeriod, unsigned int mechinePeriod);
+void TimeInit(TimerTypeDef_t TIMx , timeMode_t timeMode ,unsigned long timerPeriod, unsigned int mechinePeriod);
 void TimerOverFlowItInit(TimerTypeDef_t TIMx , FunctionalState_t newState);
 
 #endif

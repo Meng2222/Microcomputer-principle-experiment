@@ -428,6 +428,41 @@
               <FileType>1</FileType>
               <FilePath>.\8254.c</FilePath>
             </File>
+            <File>
+              <FileName>8251A.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\8251A.c</FilePath>
+            </File>
+            <File>
+              <FileName>CS5550.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\CS5550.c</FilePath>
+            </File>
+            <File>
+              <FileName>pwm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\pwm.c</FilePath>
+            </File>
+            <File>
+              <FileName>brushDcMotor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\brushDcMotor.c</FilePath>
+            </File>
+            <File>
+              <FileName>stepMotor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\stepMotor.c</FilePath>
+            </File>
+            <File>
+              <FileName>speaker.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\speaker.c</FilePath>
+            </File>
+            <File>
+              <FileName>gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\gpio.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

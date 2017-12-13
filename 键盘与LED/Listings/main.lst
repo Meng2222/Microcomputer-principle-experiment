@@ -1,4 +1,4 @@
-C51 COMPILER V9.56.0.0   MAIN                                                              12/07/2017 00:32:11 PAGE 1   
+C51 COMPILER V9.56.0.0   MAIN                                                              12/13/2017 19:41:06 PAGE 1   
 
 
 C51 COMPILER V9.56.0.0, COMPILATION OF MODULE MAIN
@@ -22,17 +22,20 @@ line level    source
   12          #include "timer.h"
   13          #include "usart.h"
   14          #include "8254.h"
-  15          
-  16          #endif
-  17          
-  18          #ifdef DATA_MEMORY_TEST
+  15          #include "stepMotor.h"
+  16          #include "pwm.h"
+  17          #include "brushDcMotor.h"
+  18          
+  19          #endif
+  20          
+  21          #ifdef DATA_MEMORY_TEST
               
               #include "dataMemory.h"
               
               #endif
-  23          
-  24          //键盘与LED实验
-  25          #ifdef KEY_LED_EXP
+  26          
+  27          //键盘与LED实验
+  28          #ifdef KEY_LED_EXP
               //键盘与LED实验状态枚举变量
               typedef enum
               {
@@ -59,11 +62,11 @@ line level    source
                       //按键状态，没有按下时为0xff，按下时为按下按键的编号
                       unsigned char keyState = 0;
                       //循环移位周期变量
+C51 COMPILER V9.56.0.0   MAIN                                                              12/13/2017 19:41:06 PAGE 2   
+
                       unsigned char rollPeriod = ROLL_PERIOD;
                       //按键是否按下标志位
                       unsigned char keyFlag = 0;
-C51 COMPILER V9.56.0.0   MAIN                                                              12/07/2017 00:32:11 PAGE 2   
-
                       while(1)
                       {
                               //每隔20ms循环一次
@@ -123,11 +126,11 @@ line level    source
                                                       case KEY0:
                                                               for(i = 0 ; i < 8 ; i++)
                                                               {
+C51 COMPILER V9.56.0.0   MAIN                                                              12/13/2017 19:41:06 PAGE 3   
+
                                                                       LedWrite(0x97 - i, realCode[0]);
                                                               }
                                                       break;
-C51 COMPILER V9.56.0.0   MAIN                                                              12/07/2017 00:32:11 PAGE 3   
-
                                                       case KEY1:
                                                               for(i = 0 ; i < 8 ; i++)
                                                               {
@@ -187,11 +190,11 @@ line level    source
                                               }       
                                       break;
                                               //每次按键时左移并在最后一位显示对应数字
+C51 COMPILER V9.56.0.0   MAIN                                                              12/13/2017 19:41:06 PAGE 4   
+
                                       case inputRoll2Left:
                                               if(keyState!=0xff&&keyFlag==0)
                                               {
-C51 COMPILER V9.56.0.0   MAIN                                                              12/07/2017 00:32:11 PAGE 4   
-
                                                       //发送不循环左移命令
                                                       HD7279SendByte(RTL_UNCYL);
                                                       //根据按键状态在最后一位显示对应数字
@@ -250,12 +253,12 @@ line level    source
                       }
               }
               #endif
- 237          
- 238          //简单IO实验
- 239          #ifdef BASIC_IO_EXP
-              
-C51 COMPILER V9.56.0.0   MAIN                                                              12/07/2017 00:32:11 PAGE 5   
+ 240          
+C51 COMPILER V9.56.0.0   MAIN                                                              12/13/2017 19:41:06 PAGE 5   
 
+ 241          //简单IO实验
+ 242          #ifdef BASIC_IO_EXP
+              
               void main(void)
               {
                       //IO输入记录变量
@@ -289,9 +292,9 @@ line level    source
                       }
               }
               #endif
- 274          
- 275          //译码器实验
- 276          #ifdef DECODE_EXP
+ 277          
+ 278          //译码器实验
+ 279          #ifdef DECODE_EXP
               
               void main(void)
               {
@@ -315,16 +318,16 @@ line level    source
                               }
                               else
                               {
+C51 COMPILER V9.56.0.0   MAIN                                                              12/13/2017 19:41:06 PAGE 6   
+
                                       decodeAdress2 = ioOutput;
                               }       
                       }
-C51 COMPILER V9.56.0.0   MAIN                                                              12/07/2017 00:32:11 PAGE 6   
-
               }
               #endif
- 305          
- 306          //通用IOP1实验
- 307          #ifdef P1_IO_EXP
+ 308          
+ 309          //通用IOP1实验
+ 310          #ifdef P1_IO_EXP
               //P1IO实验状态指示枚举变量
               typedef enum
               {
@@ -369,9 +372,9 @@ line level    source
                       }
               }
               #endif
- 352          
- 353          //定时器实验
- 354          #ifdef TIMER_EXP
+ 355          
+ 356          //定时器实验
+ 357          #ifdef TIMER_EXP
               
               //状态指示枚举变量类型
               typedef enum
@@ -379,11 +382,11 @@ line level    source
                       timerExp1,
                       timerExp2,
                       timerExp3       
+C51 COMPILER V9.56.0.0   MAIN                                                              12/13/2017 19:41:06 PAGE 7   
+
               }timerStatus_t;
               
               void main(void)
-C51 COMPILER V9.56.0.0   MAIN                                                              12/07/2017 00:32:11 PAGE 7   
-
               {
                       //状态指示变量
                       timerStatus_t idata timerStatus = timerExp3;
@@ -443,11 +446,11 @@ line level    source
                                       break;
                                       //通过定时器技术控制LED的亮灭
                                       case timerExp2:
+C51 COMPILER V9.56.0.0   MAIN                                                              12/13/2017 19:41:06 PAGE 8   
+
                                               {
                                                       if(TimerGetOverFlowITFlag(TIM1))
                                                       {
-C51 COMPILER V9.56.0.0   MAIN                                                              12/07/2017 00:32:11 PAGE 8   
-
                                                               P10=!P10;
                                                               TimerClearOverFlowFlag(TIM1);
                                                       }                                                       
@@ -487,9 +490,9 @@ line level    source
                       }
               }
               #endif
- 466          
- 467          //中断实验
- 468          #ifdef INTERRUPT_EXP
+ 469          
+ 470          //中断实验
+ 471          #ifdef INTERRUPT_EXP
               
               //中断实验状态指示枚举变量类型
               typedef enum
@@ -507,11 +510,11 @@ line level    source
               {
                       //中断状态指示枚举变量
                       itStatus_t idata itStatus = itExp3;
+C51 COMPILER V9.56.0.0   MAIN                                                              12/13/2017 19:41:06 PAGE 9   
+
                       
                       //定时器初始化结构体
                       timeMode_t timeMode ={0};
-C51 COMPILER V9.56.0.0   MAIN                                                              12/07/2017 00:32:11 PAGE 9   
-
                       
                       //初始化定时器
                       timeMode.isGateCrl = noGateCrl;
@@ -570,12 +573,12 @@ line level    source
               }
               
               #endif
- 547          
- 548          //数据储存器实验
- 549          #ifdef DATA_MEMORY_TEST
-              void main(void)
-C51 COMPILER V9.56.0.0   MAIN                                                              12/07/2017 00:32:11 PAGE 10  
+ 550          
+C51 COMPILER V9.56.0.0   MAIN                                                              12/13/2017 19:41:06 PAGE 10  
 
+ 551          //数据储存器实验
+ 552          #ifdef DATA_MEMORY_TEST
+              void main(void)
               {
                       //循环用计数变量
                       unsigned char i = 0;
@@ -630,16 +633,16 @@ line level    source
                       }
               }
               #endif
- 605          
- 606          #ifdef UART_EXP
+ 608          
+ 609          #ifdef UART_EXP
               unsigned char UART1Recieve = 0;
               
               void main(void)
+C51 COMPILER V9.56.0.0   MAIN                                                              12/13/2017 19:41:06 PAGE 11  
+
               {
               //      //对P1IO的输出状态进行初始化
                       
-C51 COMPILER V9.56.0.0   MAIN                                                              12/07/2017 00:32:11 PAGE 11  
-
                       UARTMode_t UARTInitStruct = {0};
                       
                       P1 = 0x00;
@@ -662,8 +665,8 @@ line level    source
                       }
               }
               #endif
- 635          
- 636          #ifdef IO8255_EXP
+ 638          
+ 639          #ifdef IO8255_EXP
               
               void main(void)
               {
@@ -692,33 +695,84 @@ line level    source
               }
               
               #endif
- 665          
- 666          #ifdef TIMER_8254_EXP
- 667          
- 668          void main(void)
- 669          {
- 670   1              CLK_DIV = (CLK_DIV&0x3f)|0x40;
- 671   1              
- 672   1              Timer8254CounterModeInit(timer8254Timer0, 10000);
- 673   1              
- 674   1              Timer8254PrescalerModeInit(timer8254Timer1, 10);
-C51 COMPILER V9.56.0.0   MAIN                                                              12/07/2017 00:32:11 PAGE 12  
+ 668          
+ 669          #ifdef TIMER_8254_EXP
+              
+              void main(void)
+              {
+                      CLK_DIV = (CLK_DIV&0x3f)|0x40;
+                      
+C51 COMPILER V9.56.0.0   MAIN                                                              12/13/2017 19:41:06 PAGE 12  
 
- 675   1      
- 676   1              while(1)
- 677   1              {
- 678   2                      LEDShowInt(Timer8254GetCounter(timer8254Timer0));
- 679   2                      DelayMs(20);
- 680   2              }
- 681   1      }
- 682          
- 683          #endif
+                      Timer8254CounterModeInit(timer8254Timer0, 10000);
+                      
+                      Timer8254PrescalerModeInit(timer8254Timer1, 10);
+              
+                      while(1)
+                      {
+                              LEDShowInt(Timer8254GetCounter(timer8254Timer0));
+                              DelayMs(20);
+                      }
+              }
+              
+              #endif
+ 687          
+ 688          #ifdef STEPMOTOR_EXP
+ 689          
+ 690          extern float xdata actSpeed;
+ 691          void main(void)
+ 692          {
+ 693   1      //      StepMotorPinInit();
+ 694   1      //      while(1)
+ 695   1      //      {
+ 696   1      //              StepMotorSpeedControl(PI);
+ 697   1      //      }
+ 698   1              //定时器初始化结构体 
+ 699   1              timeMode_t xdata timeMode ={0};
+ 700   1              
+ 701   1              //对结构体进行赋值
+ 702   1              timeMode.isGateCrl = noGateCrl;
+ 703   1              timeMode.timeWorkMode = timer;
+ 704   1              timeMode.timeTriggerMode = innerTrigger;
+ 705   1              timeMode.timerMode = halfWordAutoReload;
+ 706   1              
+ 707   1              //初始化定时器
+ 708   1              TimeInit(TIM0 , timeMode ,100000, TIMERUS);
+ 709   1              
+ 710   1              TimerOverFlowItInit(TIM0 , enable);
+ 711   1      
+ 712   1                      //对结构体进行赋值
+ 713   1              timeMode.isGateCrl = noGateCrl;
+ 714   1              timeMode.timeWorkMode = counter;
+ 715   1              timeMode.timeTriggerMode = innerTrigger;
+ 716   1              timeMode.timerMode = halfWordAutoReload;
+ 717   1              
+ 718   1              //初始化定时器
+ 719   1              TimeInit(TIM1 , timeMode ,0, TIMERUS);
+ 720   1              
+ 721   1              PWM0Init();
+ 722   1              
+ 723   1              CCP1Init();
+ 724   1              
+ 725   1              PWM0SetCompare(0.2f);
+ 726   1              PWMCmd(enable);
+ 727   1              while(1)
+ 728   1              {
+ 729   2                      DelayMs(20);
+ 730   2                      MotorVelCrl(50.0f,actSpeed);
+ 731   2              }
+ 732   1      }
+ 733          
+ 734          #endif
+ 735          
+
+C51 COMPILER V9.56.0.0   MAIN                                                              12/13/2017 19:41:06 PAGE 13  
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     46    ----
-   CONSTANT SIZE    =   ----    ----
-   XDATA SIZE       =   ----    ----
+   CODE SIZE        =    189    ----
+   CONSTANT SIZE    =      4    ----
+   XDATA SIZE       =   ----       4
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----

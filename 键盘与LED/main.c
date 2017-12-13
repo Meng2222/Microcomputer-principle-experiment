@@ -12,6 +12,9 @@
 #include "timer.h"
 #include "usart.h"
 #include "8254.h"
+#include "stepMotor.h"
+#include "pwm.h"
+#include "brushDcMotor.h"
 
 #endif
 
@@ -681,3 +684,52 @@ void main(void)
 }
 
 #endif
+
+#ifdef STEPMOTOR_EXP
+
+extern float xdata actSpeed;
+void main(void)
+{
+//	StepMotorPinInit();
+//	while(1)
+//	{
+//		StepMotorSpeedControl(PI);
+//	}
+	//定时器初始化结构体 
+	timeMode_t xdata timeMode ={0};
+	
+	//对结构体进行赋值
+	timeMode.isGateCrl = noGateCrl;
+	timeMode.timeWorkMode = timer;
+	timeMode.timeTriggerMode = innerTrigger;
+	timeMode.timerMode = halfWordAutoReload;
+	
+	//初始化定时器
+	TimeInit(TIM0 , timeMode ,100000, TIMERUS);
+	
+	TimerOverFlowItInit(TIM0 , enable);
+
+		//对结构体进行赋值
+	timeMode.isGateCrl = noGateCrl;
+	timeMode.timeWorkMode = counter;
+	timeMode.timeTriggerMode = innerTrigger;
+	timeMode.timerMode = halfWordAutoReload;
+	
+	//初始化定时器
+	TimeInit(TIM1 , timeMode ,0, TIMERUS);
+	
+	PWM0Init();
+	
+	CCP1Init();
+	
+	PWM0SetCompare(0.2f);
+	PWMCmd(enable);
+	while(1)
+	{
+		DelayMs(20);
+		MotorVelCrl(50.0f,actSpeed);
+	}
+}
+
+#endif
+

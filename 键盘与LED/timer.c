@@ -19,7 +19,7 @@ void TimerCmd(TimerTypeDef_t TIMx , FunctionalState_t newState)
 //读取定时器溢出中断标志位，输入变量为定时器编号
 unsigned char TimerGetOverFlowITFlag(TimerTypeDef_t TIMx)
 {
-	unsigned char tempItFlag = 0;
+	unsigned char xdata tempItFlag = 0;
 	//根据输入的定时器读取对应的寄存器
 	if(TIMx==TIM0)
 	{
@@ -49,7 +49,7 @@ void TimerClearOverFlowFlag(TimerTypeDef_t TIMx)
 //对定时器模式进行初始化
 void TimeModeInit(TimerTypeDef_t TIMx , timeMode_t timeMode)
 {
-	unsigned char tempCrl = 0;
+	unsigned char xdata tempCrl = 0;
 	
 	//根据输入的模式配置TMOD寄存器
 	
@@ -63,10 +63,10 @@ void TimeModeInit(TimerTypeDef_t TIMx , timeMode_t timeMode)
 }
 
 //对定时器重装载值进行初始化
-void TimeReloadNumInit(TimerTypeDef_t TIMx,timerMode_t timerMode,unsigned short timerPeriod, unsigned short mechinePeriod)
+void TimeReloadNumInit(TimerTypeDef_t TIMx,timerMode_t timerMode,unsigned long timerPeriod, unsigned int mechinePeriod)
 {
-	unsigned short bitNum = 0;
-	unsigned short reloadNum = 0;
+	unsigned int xdata bitNum = 0;
+	unsigned int xdata reloadNum = 0;
 	
 	//根据不同的模式选择最大重装载值 
 	if(timerMode<=1)
@@ -97,7 +97,7 @@ void TimeReloadNumInit(TimerTypeDef_t TIMx,timerMode_t timerMode,unsigned short 
 }
 
 //定时器初始化函数
-void TimeInit(TimerTypeDef_t TIMx , timeMode_t timeMode ,unsigned short timerPeriod, unsigned short mechinePeriod)
+void TimeInit(TimerTypeDef_t TIMx , timeMode_t timeMode ,unsigned long timerPeriod, unsigned int mechinePeriod)
 {
 	
 	//配置定时器工作模式
@@ -105,6 +105,19 @@ void TimeInit(TimerTypeDef_t TIMx , timeMode_t timeMode ,unsigned short timerPer
 	
 	//配置定时器重装载值
 	TimeReloadNumInit(TIMx,timeMode.timerMode,timerPeriod,mechinePeriod);
+	if(timeMode.timeWorkMode==counter)
+	{
+		if(TIMx == TIM0)
+		{
+			TL0 = 0;
+			TH0 = 0;
+		}
+		else if(TIMx == TIM1)
+		{
+			TL1 = 0;
+			TH1 = 0;
+		}		
+	}
 	
 	//使能定时器
 	TimerCmd(TIMx , enable);
