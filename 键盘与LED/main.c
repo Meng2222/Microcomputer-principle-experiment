@@ -15,6 +15,7 @@
 #include "stepMotor.h"
 #include "pwm.h"
 #include "brushDcMotor.h"
+#include "CS5550.h"
 
 #endif
 
@@ -695,44 +696,64 @@ void main(void)
 //	{
 //		StepMotorSpeedControl(PI);
 //	}
-	//定时器初始化结构体 
-	timeMode_t xdata timeMode ={0};
-	
-	//对结构体进行赋值
-	timeMode.isGateCrl = noGateCrl;
-	timeMode.timeWorkMode = timer;
-	timeMode.timeTriggerMode = innerTrigger;
-	timeMode.timerMode = halfWordAutoReload;
-	
-	//初始化定时器
-	TimeInit(TIM0 , timeMode ,100000, TIMERUS);
-	
-	TimerOverFlowItInit(TIM0 , enable);
+//	//定时器初始化结构体 
+//	timeMode_t xdata timeMode ={0};
+//	
+//	//对结构体进行赋值
+//	timeMode.isGateCrl = noGateCrl;
+//	timeMode.timeWorkMode = timer;
+//	timeMode.timeTriggerMode = innerTrigger;
+//	timeMode.timerMode = halfWordAutoReload;
+//	
+//	//初始化定时器
+//	TimeInit(TIM0 , timeMode ,100000, TIMERUS);
+//	
+//	TimerOverFlowItInit(TIM0 , enable);
 
-		//对结构体进行赋值
-	timeMode.isGateCrl = noGateCrl;
-	timeMode.timeWorkMode = counter;
-	timeMode.timeTriggerMode = innerTrigger;
-	timeMode.timerMode = halfWordAutoReload;
-	
-	//初始化定时器
-	TimeInit(TIM1 , timeMode ,0, TIMERUS);
-	
-	PWM0Init();
-	
-	CCP1Init();
-	
-	PWM0SetCompare(0.2f);
-	PWMCmd(enable);
-	
-	DelayMs(5000);
+//		//对结构体进行赋值
+//	timeMode.isGateCrl = noGateCrl;
+//	timeMode.timeWorkMode = counter;
+//	timeMode.timeTriggerMode = innerTrigger;
+//	timeMode.timerMode = halfWordAutoReload;
+//	
+//	//初始化定时器
+//	TimeInit(TIM1 , timeMode ,0, TIMERUS);
+//	
+//	PWM0Init();
+//	
+//	CCP1Init();
+//	
+//	PWM0SetCompare(0.2f);
+//	PWMCmd(enable);
+//	
+//	DelayMs(5000);
 
+unsigned long xdata adcGetValue  = 0;
+float xdata adcFloat = 0.0f;
+
+	CLK_DIV = (CLK_DIV&0x3f)|0x40;
+
+	CS5550WriteRes(SOFT_RESET_CMD, 0xffffff);
+	DelayMs(1);
+	CS5550WriteRes(SYNC1_CMD, 0xfffffe);
+	DelayMs(1);
+	CS5550WriteRes(CONFIG_RES, 0x000011);
+	DelayMs(1);
+	CS5550WriteRes(START_CONTINUE_CONVER_CMD, 0xffffff);
+	DelayMs(1);	
+	CS5550WriteRes(CYCLE_COUNT_RES, 0x000138);
+	DelayMs(2);		
+	
+	
 	while(1)
 	{
 		DelayMs(20);
-		MotorVelCrl(50.0f,actSpeed);
-		LEDShowFloat(actSpeed);	
-		LedWrite(0x97,0x4F);
+		adcGetValue = CS5550ReadRes(FILT_AIN2_RES);
+		adcFloat = adcGetValue/(float)0x01000000;
+		LEDShowFloat(adcFloat);
+//		MotorVelCrl(50.0f,actSpeed);
+//		LEDShowFloat(actSpeed);	
+//		LedWrite(0x97,0x4F);
 	}
 }
 

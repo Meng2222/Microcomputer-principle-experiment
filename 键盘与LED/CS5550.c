@@ -14,9 +14,10 @@ void CS5550WriteByte(unsigned char message)
 		else
 		{
 			CS5550_SDI = 0;
-		}
-		CS5550_SCLK = 1;	
+		}	
+		CS5550_SCLK = 1;		
 		message<<=1;
+
 	}
 	CS5550_SCLK = 0;	
 }
@@ -48,7 +49,7 @@ unsigned char CS5550RecieveByte(void)
 		{
 			recieveData&=(~0x01);
 		}
-		Delay10Us(1);
+//		Delay10Us(1);
 	}
 	return recieveData;
 }
@@ -68,8 +69,8 @@ unsigned long CS5550ReadRes(unsigned char cmd)
 	unsigned long xdata recieveData = 0;
 	CS5550_CS = 0;
 	CS5550WriteByte(cmd);
-	recieveData|=(CS5550RecieveByte()<<16);
-	recieveData|=(CS5550RecieveByte()<<8);
+	recieveData|=((unsigned long)CS5550RecieveByte()<<16);
+	recieveData|=((unsigned long)CS5550RecieveByte()<<8);
 	recieveData|=CS5550RecieveByte();
 	CS5550_CS = 1;
 	return recieveData;
