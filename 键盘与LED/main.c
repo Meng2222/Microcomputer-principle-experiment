@@ -728,28 +728,30 @@ void main(void)
 //	
 //	DelayMs(5000);
 
-unsigned long xdata adcGetValue  = 0;
+unsigned long xdata adcGetValue  = 45;
+unsigned long xdata status = 0;
 float xdata adcFloat = 0.0f;
 
 	CLK_DIV = (CLK_DIV&0x3f)|0x40;
-
-	CS5550WriteRes(SOFT_RESET_CMD, 0xffffff);
+	
+	CS5550WriteCmd(SOFT_RESET_CMD, 0xffffff);
 	DelayMs(1);
-	CS5550WriteRes(SYNC1_CMD, 0xfffffe);
+	CS5550WriteCmd(SYNC1_CMD, 0xfffffe);
 	DelayMs(1);
 	CS5550WriteRes(CONFIG_RES, 0x000011);
 	DelayMs(1);
-	CS5550WriteRes(START_CONTINUE_CONVER_CMD, 0xffffff);
+	CS5550WriteCmd(START_CONTINUE_CONVER_CMD, 0xffffff);
 	DelayMs(1);	
 	CS5550WriteRes(CYCLE_COUNT_RES, 0x000138);
 	DelayMs(2);		
-	
+
 	
 	while(1)
 	{
-		DelayMs(20);
-		adcGetValue = CS5550ReadRes(FILT_AIN2_RES);
+		DelayMs(100);
+		adcGetValue = CS5550ReadRes(FILT_AIN1_RES);
 		adcFloat = adcGetValue/(float)0x01000000;
+//		status = CS5550ReadRes(STATUS_RES);
 		LEDShowFloat(adcFloat);
 //		MotorVelCrl(50.0f,actSpeed);
 //		LEDShowFloat(actSpeed);	

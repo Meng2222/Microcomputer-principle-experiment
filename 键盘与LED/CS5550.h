@@ -39,6 +39,8 @@ sbit CS5550_SCLK = P1^3;
 
 void CS5550WriteByte(unsigned char message);
 
+void CS5550WriteCmd(unsigned char cmd, unsigned long value);
+
 unsigned char CS5550RecieveByte(void);
 
 void CS5550WriteRes(unsigned char cmd, unsigned long value);
