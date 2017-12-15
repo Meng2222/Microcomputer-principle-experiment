@@ -1,4 +1,4 @@
-C51 COMPILER V9.56.0.0   MAIN                                                              12/15/2017 19:57:05 PAGE 1   
+C51 COMPILER V9.56.0.0   MAIN                                                              12/15/2017 20:19:22 PAGE 1   
 
 
 C51 COMPILER V9.56.0.0, COMPILATION OF MODULE MAIN
@@ -62,7 +62,7 @@ line level    source
                       unsigned char i,j = 0;
                       //按键状态，没有按下时为0xff，按下时为按下按键的编号
                       unsigned char keyState = 0;
-C51 COMPILER V9.56.0.0   MAIN                                                              12/15/2017 19:57:05 PAGE 2   
+C51 COMPILER V9.56.0.0   MAIN                                                              12/15/2017 20:19:22 PAGE 2   
 
                       //循环移位周期变量
                       unsigned char rollPeriod = ROLL_PERIOD;
@@ -126,7 +126,7 @@ line level    source
                                               {
                                                       case KEY0:
                                                               for(i = 0 ; i < 8 ; i++)
-C51 COMPILER V9.56.0.0   MAIN                                                              12/15/2017 19:57:05 PAGE 3   
+C51 COMPILER V9.56.0.0   MAIN                                                              12/15/2017 20:19:22 PAGE 3   
 
                                                               {
                                                                       LedWrite(0x97 - i, realCode[0]);
@@ -190,7 +190,7 @@ line level    source
                                                       break;
                                               }       
                                       break;
-C51 COMPILER V9.56.0.0   MAIN                                                              12/15/2017 19:57:05 PAGE 4   
+C51 COMPILER V9.56.0.0   MAIN                                                              12/15/2017 20:19:22 PAGE 4   
 
                                               //每次按键时左移并在最后一位显示对应数字
                                       case inputRoll2Left:
@@ -254,7 +254,7 @@ line level    source
                       }
               }
               #endif
-C51 COMPILER V9.56.0.0   MAIN                                                              12/15/2017 19:57:05 PAGE 5   
+C51 COMPILER V9.56.0.0   MAIN                                                              12/15/2017 20:19:22 PAGE 5   
 
  241          
  242          //简单IO实验
@@ -318,7 +318,7 @@ line level    source
                                       decodeAdress1 = ioOutput;
                               }
                               else
-C51 COMPILER V9.56.0.0   MAIN                                                              12/15/2017 19:57:05 PAGE 6   
+C51 COMPILER V9.56.0.0   MAIN                                                              12/15/2017 20:19:22 PAGE 6   
 
                               {
                                       decodeAdress2 = ioOutput;
@@ -382,7 +382,7 @@ line level    source
               {
                       timerExp1,
                       timerExp2,
-C51 COMPILER V9.56.0.0   MAIN                                                              12/15/2017 19:57:05 PAGE 7   
+C51 COMPILER V9.56.0.0   MAIN                                                              12/15/2017 20:19:22 PAGE 7   
 
                       timerExp3       
               }timerStatus_t;
@@ -446,7 +446,7 @@ line level    source
                                               }
                                       break;
                                       //通过定时器技术控制LED的亮灭
-C51 COMPILER V9.56.0.0   MAIN                                                              12/15/2017 19:57:05 PAGE 8   
+C51 COMPILER V9.56.0.0   MAIN                                                              12/15/2017 20:19:22 PAGE 8   
 
                                       case timerExp2:
                                               {
@@ -510,7 +510,7 @@ line level    source
               void main(void)
               {
                       //中断状态指示枚举变量
-C51 COMPILER V9.56.0.0   MAIN                                                              12/15/2017 19:57:05 PAGE 9   
+C51 COMPILER V9.56.0.0   MAIN                                                              12/15/2017 20:19:22 PAGE 9   
 
                       itStatus_t idata itStatus = itExp3;
                       
@@ -574,7 +574,7 @@ line level    source
               }
               
               #endif
-C51 COMPILER V9.56.0.0   MAIN                                                              12/15/2017 19:57:05 PAGE 10  
+C51 COMPILER V9.56.0.0   MAIN                                                              12/15/2017 20:19:22 PAGE 10  
 
  551          
  552          //数据储存器实验
@@ -638,7 +638,7 @@ line level    source
  610          #ifdef UART_EXP
               unsigned char UART1Recieve = 0;
               
-C51 COMPILER V9.56.0.0   MAIN                                                              12/15/2017 19:57:05 PAGE 11  
+C51 COMPILER V9.56.0.0   MAIN                                                              12/15/2017 20:19:22 PAGE 11  
 
               void main(void)
               {
@@ -702,7 +702,7 @@ line level    source
               void main(void)
               {
                       
-C51 COMPILER V9.56.0.0   MAIN                                                              12/15/2017 19:57:05 PAGE 12  
+C51 COMPILER V9.56.0.0   MAIN                                                              12/15/2017 20:19:22 PAGE 12  
 
                       CLK_DIV = (CLK_DIV&0x3f)|0x40;
                       
@@ -766,7 +766,7 @@ line level    source
                       CCP1Init();
                       
                       PWM0SetCompare(0.5f);
-C51 COMPILER V9.56.0.0   MAIN                                                              12/15/2017 19:57:05 PAGE 13  
+C51 COMPILER V9.56.0.0   MAIN                                                              12/15/2017 20:19:22 PAGE 13  
 
                       PWMCmd(enable);
               //      
@@ -830,7 +830,7 @@ line level    source
  796   1      //      unsigned long xdata tempraturADValue  = 0;
  797   1              unsigned long xdata voltageADValue = 0;
  798   1              unsigned char xdata valueSign = 0;
-C51 COMPILER V9.56.0.0   MAIN                                                              12/15/2017 19:57:05 PAGE 14  
+C51 COMPILER V9.56.0.0   MAIN                                                              12/15/2017 20:19:22 PAGE 14  
 
  799   1      //      float xdata temprature = 0.0f;
  800   1              float xdata resisterValue = 0.0f;
@@ -894,7 +894,7 @@ line level    source
  858   1              DelayMs(1);
  859   1              CS5550WriteCmd(SYNC1_CMD, 0xfffffe);
  860   1              DelayMs(1);
-C51 COMPILER V9.56.0.0   MAIN                                                              12/15/2017 19:57:05 PAGE 15  
+C51 COMPILER V9.56.0.0   MAIN                                                              12/15/2017 20:19:22 PAGE 15  
 
  861   1              CS5550WriteRes(CONFIG_RES, 0x000011);
  862   1              DelayMs(1);
@@ -944,48 +944,48 @@ line level    source
  906   3                              keyFlag = 1;
  907   3                      }
  908   2      
- 909   2                                      voltageADValue = CS5550ReadRes(FILT_AIN1_RES);
- 910   2                      
- 911   2                                      resisterValue = voltageADValue/(float)0x01000000;
+ 909   2                      voltageADValue = CS5550ReadRes(FILT_AIN1_RES);
+ 910   2      
+ 911   2                      resisterValue = voltageADValue/(float)0x01000000;
  912   2      
- 913   2                                      resisterValue = resisterValue*322.4 + 0.3889;
- 914   2                      
- 915   2                                      resisterValue = resisterValue/0.0213219;
- 916   2                      
- 917   2                                      resisterValue = resisterValue/5000.0f*214.0;
- 918   2                      
- 919   2                                      outputVoltage = resisterValue/214.0f * 4.0f + 1.0f;
- 920   2                      
- 921   2                                      PWM0SetCompare((6.51f-outputVoltage)/6.231f);
- 922   2                                      
-C51 COMPILER V9.56.0.0   MAIN                                                              12/15/2017 19:57:05 PAGE 16  
+ 913   2                      resisterValue = resisterValue*322.4 + 0.3889;
+ 914   2      
+ 915   2                      resisterValue = resisterValue/0.0213219;
+ 916   2      
+ 917   2                      resisterValue = resisterValue/5000.0f*214.0;
+ 918   2      
+ 919   2                      outputVoltage = resisterValue/214.0f * 4.0f + 1.0f;
+ 920   2      
+ 921   2                      PWM0SetCompare((6.51f-outputVoltage)/6.231f);
+ 922   2                      
+C51 COMPILER V9.56.0.0   MAIN                                                              12/15/2017 20:19:22 PAGE 16  
 
- 923   2                                      switch(LEDShowStatus)
- 924   2                                      {
- 925   3                                              case LEDShowAnalog:
- 926   3                                                      LEDShowFloat(resisterValue);
- 927   3                                                      LedWrite(0x97,0xe7);                                            
- 928   3                                                      datatransform.floatData = resisterValue;
- 929   3                                                      UARTSendByte(UART1,datatransform.u8data[0]);
- 930   3                                                      UARTSendByte(UART1,datatransform.u8data[1]);
- 931   3                                                      UARTSendByte(UART1,datatransform.u8data[2]);
- 932   3                                                      UARTSendByte(UART1,datatransform.u8data[3]);
+ 923   2                      switch(LEDShowStatus)
+ 924   2                      {
+ 925   3                              case LEDShowAnalog:
+ 926   3                                      LEDShowFloat(resisterValue);
+ 927   3                                      LedWrite(0x97,0xe7);                                            
+ 928   3                                      datatransform.floatData = resisterValue;
+ 929   3                                      UARTSendByte(UART1,datatransform.u8data[0]);
+ 930   3                                      UARTSendByte(UART1,datatransform.u8data[1]);
+ 931   3                                      UARTSendByte(UART1,datatransform.u8data[2]);
+ 932   3                                      UARTSendByte(UART1,datatransform.u8data[3]);
  933   3      
  934   3      
- 935   3                                              break;
- 936   3                                              case LEDShowSpeed:
- 937   3                                                      LEDShowInt((unsigned long)(actSpeed/PI/2.0*60.0f));
- 938   3                                                      LedWrite(0x97,0x5b);                                            
- 939   3                                                      datatransform.floatData = actSpeed/PI/2.0*60.0f;                                        
- 940   3                                                      UARTSendByte(UART1,datatransform.u8data[0]);
- 941   3                                                      UARTSendByte(UART1,datatransform.u8data[1]);
- 942   3                                                      UARTSendByte(UART1,datatransform.u8data[2]);
- 943   3                                                      UARTSendByte(UART1,datatransform.u8data[3]);                    
- 944   3                                                      
- 945   3                                              break;
- 946   3                                              default:
- 947   3                                              break;
- 948   3                                      }
+ 935   3                              break;
+ 936   3                              case LEDShowSpeed:
+ 937   3                                      LEDShowFloat(actSpeed/PI/2.0*60.0f);
+ 938   3                                      LedWrite(0x97,0x5b);                                            
+ 939   3                                      datatransform.floatData = actSpeed/PI/2.0*60.0f;                                        
+ 940   3                                      UARTSendByte(UART1,datatransform.u8data[0]);
+ 941   3                                      UARTSendByte(UART1,datatransform.u8data[1]);
+ 942   3                                      UARTSendByte(UART1,datatransform.u8data[2]);
+ 943   3                                      UARTSendByte(UART1,datatransform.u8data[3]);                    
+ 944   3                                      
+ 945   3                              break;
+ 946   3                              default:
+ 947   3                              break;
+ 948   3                      }
  949   2      
  950   2                      
  951   2                      
@@ -997,7 +997,7 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    935    ----
+   CODE SIZE        =    932    ----
    CONSTANT SIZE    =     16    ----
    XDATA SIZE       =      1      33
    PDATA SIZE       =   ----    ----

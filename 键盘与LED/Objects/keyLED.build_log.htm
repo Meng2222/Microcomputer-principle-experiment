@@ -26,8 +26,11 @@ Project File Date:  12/14/2017
 
 <h2>Output:</h2>
 Build target 'Target 1'
-compiling stepMotor.c...
+compiling main.c...
+compiling 89C51_it.c...
 linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LEDSHOWINT?HD7279
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_BLINKIN4?P1IO
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
@@ -83,23 +86,23 @@ linking...
 *** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
     SYMBOL:  LEDITSTATUS
     MODULE:  .\Objects\89C51_it.obj (89C51_IT)
-    ADDRESS: 24DAH
+    ADDRESS: 24E2H
 *** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
     SYMBOL:  LEDITSTATUS
     MODULE:  .\Objects\89C51_it.obj (89C51_IT)
-    ADDRESS: 24DEH
+    ADDRESS: 24E6H
 *** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
     SYMBOL:  LEDITSTATUS
     MODULE:  .\Objects\89C51_it.obj (89C51_IT)
-    ADDRESS: 24E3H
+    ADDRESS: 24EBH
 *** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
     SYMBOL:  UART1RECIEVE
     MODULE:  .\Objects\89C51_it.obj (89C51_IT)
-    ADDRESS: 1C5EH
-Program Size: data=65.1 xdata=117 code=9535
+    ADDRESS: 1C66H
+Program Size: data=69.1 xdata=135 code=9543
 creating hex file from ".\Objects\keyLED"...
-".\Objects\keyLED" - 0 Error(s), 28 Warning(s).
-Build Time Elapsed:  00:00:01
+".\Objects\keyLED" - 0 Error(s), 29 Warning(s).
+Build Time Elapsed:  00:00:02
 </pre>
 </body>
 </html>

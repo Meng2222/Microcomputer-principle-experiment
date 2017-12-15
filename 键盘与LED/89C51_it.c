@@ -68,7 +68,7 @@ void ExIT1_Handler() interrupt 2
 		semapher = 1;
 	}
 	
-	StepMotorSpeedControl(actSpeed);
+	StepMotorSpeedControl(actSpeed/6.366f);
 }
 //定时器0溢出中断服务函数
 void time0()interrupt 1

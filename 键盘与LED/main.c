@@ -906,46 +906,46 @@ void main(void)
 			keyFlag = 1;
 		}
 
-				voltageADValue = CS5550ReadRes(FILT_AIN1_RES);
-		
-				resisterValue = voltageADValue/(float)0x01000000;
+		voltageADValue = CS5550ReadRes(FILT_AIN1_RES);
 
-				resisterValue = resisterValue*322.4 + 0.3889;
+		resisterValue = voltageADValue/(float)0x01000000;
+
+		resisterValue = resisterValue*322.4 + 0.3889;
+
+		resisterValue = resisterValue/0.0213219;
+
+		resisterValue = resisterValue/5000.0f*214.0;
+
+		outputVoltage = resisterValue/214.0f * 4.0f + 1.0f;
+
+		PWM0SetCompare((6.51f-outputVoltage)/6.231f);
 		
-				resisterValue = resisterValue/0.0213219;
-		
-				resisterValue = resisterValue/5000.0f*214.0;
-		
-				outputVoltage = resisterValue/214.0f * 4.0f + 1.0f;
-		
-				PWM0SetCompare((6.51f-outputVoltage)/6.231f);
+		switch(LEDShowStatus)
+		{
+			case LEDShowAnalog:
+				LEDShowFloat(resisterValue);
+				LedWrite(0x97,0xe7);						
+				datatransform.floatData = resisterValue;
+				UARTSendByte(UART1,datatransform.u8data[0]);
+				UARTSendByte(UART1,datatransform.u8data[1]);
+				UARTSendByte(UART1,datatransform.u8data[2]);
+				UARTSendByte(UART1,datatransform.u8data[3]);
+
+
+			break;
+			case LEDShowSpeed:
+				LEDShowFloat(actSpeed/PI/2.0*60.0f);
+				LedWrite(0x97,0x5b);						
+				datatransform.floatData = actSpeed/PI/2.0*60.0f;					
+				UARTSendByte(UART1,datatransform.u8data[0]);
+				UARTSendByte(UART1,datatransform.u8data[1]);
+				UARTSendByte(UART1,datatransform.u8data[2]);
+				UARTSendByte(UART1,datatransform.u8data[3]);			
 				
-				switch(LEDShowStatus)
-				{
-					case LEDShowAnalog:
-						LEDShowFloat(resisterValue);
-						LedWrite(0x97,0xe7);						
-						datatransform.floatData = resisterValue;
-						UARTSendByte(UART1,datatransform.u8data[0]);
-						UARTSendByte(UART1,datatransform.u8data[1]);
-						UARTSendByte(UART1,datatransform.u8data[2]);
-						UARTSendByte(UART1,datatransform.u8data[3]);
-
-
-					break;
-					case LEDShowSpeed:
-						LEDShowInt((unsigned long)(actSpeed/PI/2.0*60.0f));
-						LedWrite(0x97,0x5b);						
-						datatransform.floatData = actSpeed/PI/2.0*60.0f;					
-						UARTSendByte(UART1,datatransform.u8data[0]);
-						UARTSendByte(UART1,datatransform.u8data[1]);
-						UARTSendByte(UART1,datatransform.u8data[2]);
-						UARTSendByte(UART1,datatransform.u8data[3]);			
-						
-					break;
-					default:
-					break;
-				}
+			break;
+			default:
+			break;
+		}
 
 		
 		
