@@ -821,18 +821,18 @@ void main(void)
 	//时钟输出1分频
 	CLK_DIV = (CLK_DIV&0x3f)|0x40;
 	
-//	//8255初始化
-//	IO8255InitStuct.portAInit.IO8255Mode = IO8255_MODE0;
-//	IO8255InitStuct.portAInit.IOInOrOut = IO8255_OUTPUT;
+	//8255初始化
+	IO8255InitStuct.portAInit.IO8255Mode = IO8255_MODE0;
+	IO8255InitStuct.portAInit.IOInOrOut = IO8255_OUTPUT;
 
-//	IO8255InitStuct.portBInit.IO8255Mode = IO8255_MODE0;
-//	IO8255InitStuct.portBInit.IOInOrOut = IO8255_INPUT;
-//	
-//	IO8255InitStuct.portCUInit.IOInOrOut = IO8255_OUTPUT;
-//	IO8255InitStuct.portCLInit.IOInOrOut = IO8255_OUTPUT;
+	IO8255InitStuct.portBInit.IO8255Mode = IO8255_MODE0;
+	IO8255InitStuct.portBInit.IOInOrOut = IO8255_INPUT;
+	
+	IO8255InitStuct.portCUInit.IOInOrOut = IO8255_OUTPUT;
+	IO8255InitStuct.portCLInit.IOInOrOut = IO8255_OUTPUT;
 
-//	IO8255Init(IO8255InitStuct);
-//	
+	IO8255Init(IO8255InitStuct);
+	
 //	//8254初始化
 	Timer8254PrescalerModeInit(timer8254Timer1, 500);
 	
@@ -867,8 +867,6 @@ void main(void)
 
 	//PWM初始化
 	PWM0Init();
-	
-//	CCP1Init();
 	
 	PWM0SetCompare(0.0f);
 	PWMCmd(enable);		
