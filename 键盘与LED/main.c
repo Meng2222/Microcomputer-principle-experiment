@@ -671,15 +671,25 @@ void main(void)
 
 void main(void)
 {
+	
 	CLK_DIV = (CLK_DIV&0x3f)|0x40;
+	
+	EA = 1;
 	
 	Timer8254CounterModeInit(timer8254Timer0, 10000);
 	
-	Timer8254PrescalerModeInit(timer8254Timer1, 10);
+	Timer8254PrescalerModeInit(timer8254Timer1, 500);
+	
+	StepMotorPinInit();
 
+	ExternalITInit(exIT1 , EXIT_DOWN_TRIGGER);
+	ExternalITCmd(exIT1, enable);
+
+	
 	while(1)
 	{
-		LEDShowInt(Timer8254GetCounter(timer8254Timer0));
+	
+//		LEDShowInt(Timer8254GetCounter(timer8254Timer0));
 		DelayMs(20);
 	}
 }
@@ -719,21 +729,126 @@ void main(void)
 //	//初始化定时器
 //	TimeInit(TIM1 , timeMode ,0, TIMERUS);
 //	
-//	PWM0Init();
-//	
-//	CCP1Init();
-//	
-//	PWM0SetCompare(0.2f);
-//	PWMCmd(enable);
+	PWM0Init();
+	
+	CCP1Init();
+	
+	PWM0SetCompare(0.5f);
+	PWMCmd(enable);
 //	
 //	DelayMs(5000);
 
-unsigned long xdata adcGetValue  = 45;
-unsigned long xdata status = 0;
-float xdata adcFloat = 0.0f;
+//unsigned long xdata adcGetValue  = 45;
+//unsigned long xdata status = 0;
+//float xdata adcFloat = 0.0f;
 
 	CLK_DIV = (CLK_DIV&0x3f)|0x40;
 	
+//	CS5550WriteCmd(SOFT_RESET_CMD, 0xffffff);
+//	DelayMs(1);
+//	CS5550WriteCmd(SYNC1_CMD, 0xfffffe);
+//	DelayMs(1);
+//	CS5550WriteRes(CONFIG_RES, 0x000011);
+//	DelayMs(1);
+//	CS5550WriteCmd(START_CONTINUE_CONVER_CMD, 0xffffff);
+//	DelayMs(1);	
+//	CS5550WriteRes(CYCLE_COUNT_RES, 0x000138);
+//	DelayMs(2);		
+
+	
+	while(1)
+	{
+//		DelayMs(100);
+//		adcGetValue = CS5550ReadRes(FILT_AIN1_RES);
+//		adcFloat = adcGetValue/(float)0x01000000;
+//		status = CS5550ReadRes(STATUS_RES);
+//		LEDShowFloat(adcFloat);
+//		MotorVelCrl(50.0f,actSpeed);
+//		LEDShowFloat(actSpeed);	
+//		LedWrite(0x97,0x4F);
+	}
+}
+
+#endif
+
+
+#ifdef FINAL_EXAM
+
+typedef enum
+{
+	readTemparature,
+	readResister
+}taskStatus_t;
+
+typedef enum
+{
+	LEDShowAnalog,
+	LEDShowSpeed
+}LEDShowStatus_t;
+
+//float xdata motorSpeed = 0.0f;
+unsigned char xdata semapher = 0;
+extern float xdata actSpeed;
+
+void main(void)
+{
+
+//	unsigned long xdata tempraturADValue  = 0;
+	unsigned long xdata voltageADValue = 0;
+	unsigned char xdata valueSign = 0;
+//	float xdata temprature = 0.0f;
+	float xdata resisterValue = 0.0f;
+	float xdata outputVoltage = 0.0f;
+	taskStatus_t xdata taskStatus = readResister;
+	LEDShowStatus_t xdata LEDShowStatus = LEDShowAnalog;
+	unsigned char xdata keyState = 0;
+	unsigned char xdata keyFlag = 0;
+	
+	//定时器初始化结构体 
+	timeMode_t xdata timeMode ={0};
+	
+	//8255初始化结构体
+	IO8255Init_t xdata IO8255InitStuct = {0};
+	
+	//串口初始化结构体
+	UARTMode_t xdata UARTInitStruct = {0};
+
+	//时钟输出1分频
+	CLK_DIV = (CLK_DIV&0x3f)|0x40;
+	
+//	//8255初始化
+//	IO8255InitStuct.portAInit.IO8255Mode = IO8255_MODE0;
+//	IO8255InitStuct.portAInit.IOInOrOut = IO8255_OUTPUT;
+
+//	IO8255InitStuct.portBInit.IO8255Mode = IO8255_MODE0;
+//	IO8255InitStuct.portBInit.IOInOrOut = IO8255_INPUT;
+//	
+//	IO8255InitStuct.portCUInit.IOInOrOut = IO8255_OUTPUT;
+//	IO8255InitStuct.portCLInit.IOInOrOut = IO8255_OUTPUT;
+
+//	IO8255Init(IO8255InitStuct);
+//	
+//	//8254初始化
+	Timer8254PrescalerModeInit(timer8254Timer1, 500);
+	
+	//对结构体进行赋值
+	timeMode.isGateCrl = noGateCrl;
+	timeMode.timeWorkMode = counter;
+	timeMode.timeTriggerMode = innerTrigger;
+	timeMode.timerMode = halfWordAutoReload;
+	
+	//初始化定时器
+	TimeInit(TIM0 , timeMode ,0, TIMERUS);
+//	
+//	//串口初始化
+//	UARTInitStruct.UARTMode = UART_MODE_1;
+//	UARTInitStruct.UARTIsMulti = 0;
+//	UARTInitStruct.isUARTBaudrateDouble = UART_BAUDRATE_NORMAL;
+//	UARTInitStruct.itPriority = 0;
+//	
+//	UARTInit(UART1,UARTInitStruct,9600);
+//	
+	//CS5550初始化
 	CS5550WriteCmd(SOFT_RESET_CMD, 0xffffff);
 	DelayMs(1);
 	CS5550WriteCmd(SYNC1_CMD, 0xfffffe);
@@ -743,19 +858,83 @@ float xdata adcFloat = 0.0f;
 	CS5550WriteCmd(START_CONTINUE_CONVER_CMD, 0xffffff);
 	DelayMs(1);	
 	CS5550WriteRes(CYCLE_COUNT_RES, 0x000138);
-	DelayMs(2);		
+	DelayMs(2);
 
+	//PWM初始化
+	PWM0Init();
+	
+//	CCP1Init();
+	
+	PWM0SetCompare(0.0f);
+	PWMCmd(enable);		
+	
+	EA = 1;
+//	
+////	StepMotorPinInit();
+
+	ExternalITInit(exIT1 , EXIT_DOWN_TRIGGER);
+	ExternalITCmd(exIT1, enable);
+	
 	
 	while(1)
 	{
-		DelayMs(100);
-		adcGetValue = CS5550ReadRes(FILT_AIN1_RES);
-		adcFloat = adcGetValue/(float)0x01000000;
-//		status = CS5550ReadRes(STATUS_RES);
-		LEDShowFloat(adcFloat);
-//		MotorVelCrl(50.0f,actSpeed);
-//		LEDShowFloat(actSpeed);	
-//		LedWrite(0x97,0x4F);
+		while(semapher==0);
+		
+		//读取按键状态
+		keyState = KeyRead();
+		
+		if(keyState==0xff)
+		{
+			keyFlag = 0;
+		}		
+		if(keyFlag==0&&keyState!=0xff)
+		{
+			if(keyState==KEY0)
+			{
+				if(LEDShowStatus)
+				{
+					LEDShowStatus = LEDShowAnalog;
+				}
+				else
+				{
+					LEDShowStatus = LEDShowSpeed;
+				}
+			}
+			keyFlag = 1;
+		}
+
+				voltageADValue = CS5550ReadRes(FILT_AIN1_RES);
+		
+				resisterValue = voltageADValue/(float)0x01000000;
+		
+
+		
+				resisterValue = resisterValue*322.4 + 0.3889;
+		
+				resisterValue = resisterValue/0.0213219;
+		
+				resisterValue = resisterValue/5000.0f*214.0;
+		
+				outputVoltage = resisterValue/214.0f * 4.0f + 1.0f;
+		
+				PWM0SetCompare((6.51f-outputVoltage)/6.231f);
+				
+				switch(LEDShowStatus)
+				{
+					case LEDShowAnalog:
+						LEDShowFloat(resisterValue);				
+						LedWrite(0x97,0xe7);
+					break;
+					case LEDShowSpeed:
+						LEDShowInt((unsigned long)(actSpeed/PI/2.0*60.0f));				
+						LedWrite(0x97,0x5b);						
+					break;
+					default:
+					break;
+				}
+
+		
+		
 	}
 }
 

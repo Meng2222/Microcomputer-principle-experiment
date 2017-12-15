@@ -12,6 +12,8 @@ void StepMotorPinInit(void)
 void StepMotorSpeedControl(float vel)
 {
 	static unsigned char xdata state = 0x00;
+	static unsigned long xdata counter = 0;
+	
 	switch(state)
 	{
 		case 0:
@@ -65,20 +67,27 @@ void StepMotorSpeedControl(float vel)
 		default:
 		break;
 	}
-	if(vel>0)
+	
+	counter++;
+ 	
+	if(counter==((unsigned long)((STEP_RESOLUTION/(vel))*1000.0f)))
 	{
-		DelayMs((int)((STEP_RESOLUTION/vel)*1000));
-		state++;
-		state%=8;
-	}
-	else if(vel<0)
-	{
-		DelayMs((int)((STEP_RESOLUTION/(-vel))*1000));
-		if(state==0)
+		counter=0;
+		if(vel>0)
 		{
-			state=8;
+	//		DelayMs((int)((STEP_RESOLUTION/vel)*1000));
+			state++;
+			state%=8;
 		}
-		state--;	
+		else if(vel<0)
+		{
+	//		DelayMs((int)((STEP_RESOLUTION/(-vel))*1000));
+			if(state==0)
+			{
+				state=8;
+			}
+			state--;	
+		}
 	}
 }
 

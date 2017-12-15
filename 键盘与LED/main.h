@@ -35,7 +35,9 @@
 
 //#define TIMER_8254_EXP
 
-#define STEPMOTOR_EXP
+//#define STEPMOTOR_EXP
+
+#define FINAL_EXAM
 
 typedef enum {RESET = 0, SET = 1} FlagStatus, ITStatus;
 typedef enum {disable = 0, enable}FunctionalState_t;

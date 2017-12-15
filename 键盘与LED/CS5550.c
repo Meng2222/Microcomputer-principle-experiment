@@ -1,5 +1,6 @@
 #include "CS5550.h"
 #include "delay.h"
+#include "8255.h"
 
 void CS5550WriteByte(unsigned char message)
 {
@@ -22,7 +23,7 @@ void CS5550WriteByte(unsigned char message)
 		message<<=1;
 
 	}
-	CS5550_SCLK = 0;	
+	CS5550_SCLK = 0;
 }
 
 unsigned char CS5550RecieveByte(void)
@@ -40,8 +41,8 @@ unsigned char CS5550RecieveByte(void)
 		{
 			CS5550_SDI = 1;
 		}
-		
-		CS5550_SCLK = 0;
+
+		CS5550_SCLK = 0;	
 		recieveData<<=1;
 		Delay10Us(2);
 		CS5550_SCLK = 1;

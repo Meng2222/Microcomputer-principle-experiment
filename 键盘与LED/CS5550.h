@@ -33,9 +33,9 @@
 #define CONTROL_RES (0x1c<<1)
 
 sbit CS5550_SDO = P1^0;
-sbit CS5550_SDI = P1^1;
-sbit CS5550_CS = P1^2;
-sbit CS5550_SCLK = P1^3;
+sbit CS5550_SDI = P1^7;
+sbit CS5550_CS = P1^6;
+sbit CS5550_SCLK = P3^2;
 
 void CS5550WriteByte(unsigned char message);
 

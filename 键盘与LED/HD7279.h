@@ -2,11 +2,13 @@
 #define __HD7279_H
 
 #include "main.h"
+#include "8255.h"
 
 sbit dat = P1^4;
 sbit key = P1^5;
-sbit cs = P1^6;
-sbit clk = P1^7;
+sbit cs = P1^2;
+sbit clk = P1^3;
+
 
 #define CMD_RESET 0xa4
 #define CMD_TEST 0xbf
