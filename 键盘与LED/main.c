@@ -803,6 +803,11 @@ void main(void)
 	LEDShowStatus_t xdata LEDShowStatus = LEDShowAnalog;
 	unsigned char xdata keyState = 0;
 	unsigned char xdata keyFlag = 0;
+	union
+    {
+		unsigned char u8data[4];
+		float floatData;
+    }datatransform;
 	
 	//定时器初始化结构体 
 	timeMode_t xdata timeMode ={0};
@@ -840,13 +845,13 @@ void main(void)
 	//初始化定时器
 	TimeInit(TIM0 , timeMode ,0, TIMERUS);
 //	
-//	//串口初始化
-//	UARTInitStruct.UARTMode = UART_MODE_1;
-//	UARTInitStruct.UARTIsMulti = 0;
-//	UARTInitStruct.isUARTBaudrateDouble = UART_BAUDRATE_NORMAL;
-//	UARTInitStruct.itPriority = 0;
-//	
-//	UARTInit(UART1,UARTInitStruct,9600);
+	//串口初始化
+	UARTInitStruct.UARTMode = UART_MODE_1;
+	UARTInitStruct.UARTIsMulti = 0;
+	UARTInitStruct.isUARTBaudrateDouble = UART_BAUDRATE_NORMAL;
+	UARTInitStruct.itPriority = 0;
+	
+	UARTInit(UART1,UARTInitStruct,9600);
 //	
 	//CS5550初始化
 	CS5550WriteCmd(SOFT_RESET_CMD, 0xffffff);
@@ -922,12 +927,25 @@ void main(void)
 				switch(LEDShowStatus)
 				{
 					case LEDShowAnalog:
-						LEDShowFloat(resisterValue);				
-						LedWrite(0x97,0xe7);
+						LEDShowFloat(resisterValue);
+						LedWrite(0x97,0xe7);						
+						datatransform.floatData = resisterValue;
+						UARTSendByte(UART1,datatransform.u8data[0]);
+						UARTSendByte(UART1,datatransform.u8data[1]);
+						UARTSendByte(UART1,datatransform.u8data[2]);
+						UARTSendByte(UART1,datatransform.u8data[3]);
+
+
 					break;
 					case LEDShowSpeed:
-						LEDShowInt((unsigned long)(actSpeed/PI/2.0*60.0f));				
+						LEDShowInt((unsigned long)(actSpeed/PI/2.0*60.0f));
 						LedWrite(0x97,0x5b);						
+						datatransform.floatData = actSpeed/PI/2.0*60.0f;					
+						UARTSendByte(UART1,datatransform.u8data[0]);
+						UARTSendByte(UART1,datatransform.u8data[1]);
+						UARTSendByte(UART1,datatransform.u8data[2]);
+						UARTSendByte(UART1,datatransform.u8data[3]);			
+						
 					break;
 					default:
 					break;
