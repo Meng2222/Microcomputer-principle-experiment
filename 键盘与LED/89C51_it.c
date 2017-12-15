@@ -64,7 +64,7 @@ void ExIT1_Handler() interrupt 2
 		TL0 = 0;
 		TimerCmd(TIM0 ,enable);	
 
-		actSpeed = relativePos*10/COUNT_PER_CIRCLE*PI;
+		actSpeed = relativePos*10/COUNT_PER_CIRCLE*2.0*PI;
 		semapher = 1;
 	}
 	

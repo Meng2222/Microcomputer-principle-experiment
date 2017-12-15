@@ -911,9 +911,7 @@ void main(void)
 				voltageADValue = CS5550ReadRes(FILT_AIN1_RES);
 		
 				resisterValue = voltageADValue/(float)0x01000000;
-		
 
-		
 				resisterValue = resisterValue*322.4 + 0.3889;
 		
 				resisterValue = resisterValue/0.0213219;
