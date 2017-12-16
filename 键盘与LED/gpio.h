@@ -1,8 +1,11 @@
+/***********************gpio.h************************/
+
 #ifndef __GPIO_H
 #define __GPIO_H
 
 #include "main.h"
 
+//IO端口号枚举类型定义
 typedef enum
 {
 	GPIOPort0 = 0,
@@ -11,11 +14,13 @@ typedef enum
 	GPIOPort3
 }GPIOTypeDef_t;
 
+//IO口对饮寄存器宏定义
 #define GPIO_PORT0 (P0)
 #define GPIO_PORT1 (P1)
 #define GPIO_PORT2 (P2)
 #define GPIO_PORT3 (P3)
 
+//IO口引脚宏定义
 #define GPIO_PIN0 (0x01)
 #define GPIO_PIN1 (0x02)
 #define GPIO_PIN2 (0x04)
@@ -25,6 +30,7 @@ typedef enum
 #define GPIO_PIN6 (0x40)
 #define GPIO_PIN7 (0x80)
 
+//IO口工作模式宏定义
 #define GPIO_MULTIDIREC (0x00)
 #define GPIO_PUSHPULL (0x01)
 #define GPIO_HIGHRES (0x02)

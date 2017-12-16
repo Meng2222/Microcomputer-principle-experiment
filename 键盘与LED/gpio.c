@@ -1,7 +1,11 @@
+/****************************gpio.c********************************/
+
 #include "gpio.h"
 
+//通用IO引脚初始化
 void GPIOInit(GPIOTypeDef_t GPIOPort, unsigned char GPIOPin, unsigned char GPIOMode)
 {
+	//根据输入端口，引脚和模式配置对应寄存器
 	switch(GPIOPort)
 	{
 		case GPIOPort0:
@@ -82,6 +86,7 @@ void GPIOInit(GPIOTypeDef_t GPIOPort, unsigned char GPIOPin, unsigned char GPIOM
 
 }
 
+//引脚置位函数
 void GPIOSetBit(GPIOTypeDef_t GPIOPort, unsigned char GPIOPin)
 {
 	switch(GPIOPort)
@@ -104,6 +109,7 @@ void GPIOSetBit(GPIOTypeDef_t GPIOPort, unsigned char GPIOPin)
 
 }
 
+//引脚复位函数
 void GPIOResetBit(GPIOTypeDef_t GPIOPort, unsigned char GPIOPin)
 {
 	switch(GPIOPort)
@@ -125,6 +131,7 @@ void GPIOResetBit(GPIOTypeDef_t GPIOPort, unsigned char GPIOPin)
 	}
 }
 
+//读取引脚输入函数
 unsigned char GPIOReadBit(unsigned char GPIOPort, unsigned char GPIOPin)
 {
 	switch(GPIOPort)

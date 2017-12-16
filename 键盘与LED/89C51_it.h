@@ -1,7 +1,10 @@
+/*********************89C51_it.h***************************/
+
 #ifndef __89C51_IT_H
 #define __89C51_IT_H
 #include "main.h"
 
+//中断标号枚举类型定义
 typedef enum
 {
 	exIT0,

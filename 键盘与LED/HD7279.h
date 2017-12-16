@@ -1,15 +1,17 @@
+/*************************HD7279.h********************************/
 #ifndef __HD7279_H
 #define __HD7279_H
 
 #include "main.h"
 #include "8255.h"
 
+//输出引脚定义
 sbit dat = P1^4;
 sbit key = P1^5;
 sbit cs = P1^2;
 sbit clk = P1^3;
 
-
+//HD7279命令宏定义
 #define CMD_RESET 0xa4
 #define CMD_TEST 0xbf
 #define DECODE0 0x80
@@ -25,6 +27,7 @@ sbit clk = P1^3;
 #define SEGOFF 0xc0
 #define BLINKCTL 0x88
 
+//按键对应值宏定义
 #define KEY0 (27)
 #define KEY1 (19)
 #define KEY2 (11)
@@ -42,6 +45,7 @@ sbit clk = P1^3;
 #define KEY14 (8)
 #define KEY15 (0)
 
+//LED对应命令宏定义
 #define LED1 (0x97 - 7)
 #define LED2 (0x97 - 6)
 #define LED3 (0x97 - 5)

@@ -1,8 +1,10 @@
+/********************CS5550.h************************/
 #ifndef __CS5550_H
 #define __CS5550_H
 
 #include "main.h"
 
+//CS5550命令字宏定义
 #define START_SINGLE_CONVER_CMD (0xe0)
 #define START_CONTINUE_CONVER_CMD (0xe8)
 #define SYNC0_CMD (0xfe)
@@ -18,6 +20,7 @@
 #define AIN12_GAIN_CMD (0xda)
 #define AIN12_OFFSET_CMD (0xd9)
 
+//CS5550寄存器读取地址
 #define CONFIG_RES (0x00<<1)
 #define AIN1_OFFSET_RES (0x01<<1)
 #define AIN1_GAIN_RES (0x02<<1)
@@ -32,6 +35,7 @@
 #define MASK_RES (0x1a<<1)
 #define CONTROL_RES (0x1c<<1)
 
+//CS5550用引脚定义
 sbit CS5550_SDO = P1^0;
 sbit CS5550_SDI = P1^7;
 sbit CS5550_CS = P1^6;

@@ -1,3 +1,6 @@
+
+/*******************************main.c***********************************/
+
 #include "HD7279.h"
 #include "delay.h"
 #include "main.h"
@@ -780,6 +783,8 @@ typedef enum
 	readResister
 }taskStatus_t;
 
+
+//数码管显示状态枚举类型定义
 typedef enum
 {
 	LEDShowAnalog,
@@ -787,22 +792,29 @@ typedef enum
 }LEDShowStatus_t;
 
 //float xdata motorSpeed = 0.0f;
+//信号量定义
 unsigned char xdata semapher = 0;
+//引用外部变量电机速度
 extern float xdata actSpeed;
 
 void main(void)
 {
-
-//	unsigned long xdata tempraturADValue  = 0;
+	//采样电压AD转换结果
 	unsigned long xdata voltageADValue = 0;
+	//AD转换结果符号
 	unsigned char xdata valueSign = 0;
-//	float xdata temprature = 0.0f;
+	//电阻值
 	float xdata resisterValue = 0.0f;
+	//输出电压值
 	float xdata outputVoltage = 0.0f;
 	taskStatus_t xdata taskStatus = readResister;
+	//LED显示状态
 	LEDShowStatus_t xdata LEDShowStatus = LEDShowAnalog;
+	//按键状态
 	unsigned char xdata keyState = 0;
+	//按键是否按下标志位
 	unsigned char xdata keyFlag = 0;
+	//浮点类型变量和无符号8位转换联合体
 	union
     {
 		unsigned char u8data[4];
@@ -822,76 +834,95 @@ void main(void)
 	CLK_DIV = (CLK_DIV&0x3f)|0x40;
 	
 	//8255初始化
+	//端口A模式0输出
 	IO8255InitStuct.portAInit.IO8255Mode = IO8255_MODE0;
 	IO8255InitStuct.portAInit.IOInOrOut = IO8255_OUTPUT;
-
+	
+	//端口B模式0输入
 	IO8255InitStuct.portBInit.IO8255Mode = IO8255_MODE0;
 	IO8255InitStuct.portBInit.IOInOrOut = IO8255_INPUT;
 	
+	//端口C输出	
 	IO8255InitStuct.portCUInit.IOInOrOut = IO8255_OUTPUT;
 	IO8255InitStuct.portCLInit.IOInOrOut = IO8255_OUTPUT;
 
+	//8255初始化
 	IO8255Init(IO8255InitStuct);
 	
-//	//8254初始化
+	//8254初始化，定时器1作为分频器使用500分频
 	Timer8254PrescalerModeInit(timer8254Timer1, 500);
 	
-	//对结构体进行赋值
+	//对定时器初始化结构体进行赋值，无门控，161位自动重装计数器
 	timeMode.isGateCrl = noGateCrl;
 	timeMode.timeWorkMode = counter;
-	timeMode.timeTriggerMode = innerTrigger;
 	timeMode.timerMode = halfWordAutoReload;
 	
 	//初始化定时器
 	TimeInit(TIM0 , timeMode ,0, TIMERUS);
-//	
-	//串口初始化
+	
+	//串口初始化，模式一，无多机通信，波特率不加倍，优先级0
 	UARTInitStruct.UARTMode = UART_MODE_1;
 	UARTInitStruct.UARTIsMulti = 0;
 	UARTInitStruct.isUARTBaudrateDouble = UART_BAUDRATE_NORMAL;
 	UARTInitStruct.itPriority = 0;
 	
+	//串口初始化 波特率9600
 	UARTInit(UART1,UARTInitStruct,9600);
-//	
+	
 	//CS5550初始化
+	//软件复位命令
 	CS5550WriteCmd(SOFT_RESET_CMD, 0xffffff);
 	DelayMs(1);
+	//同步命令
 	CS5550WriteCmd(SYNC1_CMD, 0xfffffe);
 	DelayMs(1);
+	//配置config寄存器，增益为10，一分频，反转时钟信号极性减小噪音
 	CS5550WriteRes(CONFIG_RES, 0x000011);
 	DelayMs(1);
+	//开始连续转换
 	CS5550WriteCmd(START_CONTINUE_CONVER_CMD, 0xffffff);
 	DelayMs(1);	
-	CS5550WriteRes(CYCLE_COUNT_RES, 0x000138);
+	//配置计算的周期约为50ms
+	CS5550WriteRes(CYCLE_COUNT_RES, 0x000013);
 	DelayMs(2);
 
 	//PWM初始化
 	PWM0Init();
 	
-	PWM0SetCompare(0.0f);
+	//PWM占空比配位1，初始输出电压为0
+	PWM0SetCompare(1.0f);
+	//启动PWM输出
 	PWMCmd(enable);		
 	
+	//使能中断
 	EA = 1;
-//	
-////	StepMotorPinInit();
 
+	//初始化外部中断一为下降沿触发
 	ExternalITInit(exIT1 , EXIT_DOWN_TRIGGER);
+	//使能外部中断1
 	ExternalITCmd(exIT1, enable);
 	
 	
 	while(1)
 	{
+		//等待信号量
 		while(semapher==0);
+		//每次执行对信号量进行清0
+		semapher = 0;
 		
 		//读取按键状态
 		keyState = KeyRead();
 		
+		//按键没有按下时复位按键按下标志
 		if(keyState==0xff)
 		{
 			keyFlag = 0;
-		}		
+		}
+		
+		//判断按键被按下
 		if(keyFlag==0&&keyState!=0xff)
 		{
+			//如果为按键0是转换数码管显示内容
 			if(keyState==KEY0)
 			{
 				if(LEDShowStatus)
@@ -903,45 +934,57 @@ void main(void)
 					LEDShowStatus = LEDShowSpeed;
 				}
 			}
+			//对按键按下标志进行置位
 			keyFlag = 1;
 		}
 
+		//读取AD转换结果
 		voltageADValue = CS5550ReadRes(FILT_AIN1_RES);
-
+		
+		//将24位数转换为0.0f到1.0f的浮点数
 		resisterValue = voltageADValue/(float)0x01000000;
-
+		
+		//计算CS5550芯片引脚对应的输入电压（mV）
 		resisterValue = resisterValue*322.4 + 0.3889;
 
+		//计算对应电压通道的输入的电压（mV）
 		resisterValue = resisterValue/0.0213219;
-
+		
+		//根据电压计算对应电阻值
 		resisterValue = resisterValue/5000.0f*214.0;
-
+		
+		//计算对应的输出电压
 		outputVoltage = resisterValue/214.0f * 4.0f + 1.0f;
-
+		
+		//根据要输出的电压计算输出PWM的占空比
 		PWM0SetCompare((6.51f-outputVoltage)/6.231f);
 		
+		//数码管输出
 		switch(LEDShowStatus)
 		{
 			case LEDShowAnalog:
+				//模拟量输出浮点数
 				LEDShowFloat(resisterValue);
-				LedWrite(0x97,0xe7);						
+				//第一位显示P.
+				LedWrite(0x97,0xe7);
+				//将显示的数值通过串口发送
 				datatransform.floatData = resisterValue;
 				UARTSendByte(UART1,datatransform.u8data[0]);
 				UARTSendByte(UART1,datatransform.u8data[1]);
 				UARTSendByte(UART1,datatransform.u8data[2]);
 				UARTSendByte(UART1,datatransform.u8data[3]);
-
-
 			break;
 			case LEDShowSpeed:
-				LEDShowFloat(actSpeed/PI/2.0*60.0f);
-				LedWrite(0x97,0x5b);						
+				//显示速度
+				LEDShowInt((unsigned long)(actSpeed/PI/2.0*60.0f));
+				//第一位显示S
+				LedWrite(0x97,0x5b);
+				//将速度通过串口发送
 				datatransform.floatData = actSpeed/PI/2.0*60.0f;					
 				UARTSendByte(UART1,datatransform.u8data[0]);
 				UARTSendByte(UART1,datatransform.u8data[1]);
 				UARTSendByte(UART1,datatransform.u8data[2]);
-				UARTSendByte(UART1,datatransform.u8data[3]);			
-				
+				UARTSendByte(UART1,datatransform.u8data[3]);
 			break;
 			default:
 			break;
